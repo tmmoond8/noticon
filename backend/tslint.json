@@ -1,0 +1,21 @@
+{
+  "extends": [
+    "tslint:recommended",
+    "tslint-config-airbnb",
+    "tslint-config-prettier"
+  ],
+  "linterOptions": {
+    "exclude": [
+      "node_modules/**/*"
+    ]
+  },
+  "rules": {
+    "import-name": false,
+    "interface-name": false,
+    "semicolon": [true, "always", "ignore-bound-class-methods"],
+    "variable-name": false,
+    "member-access": false,
+    "object-shorthand-properties-first": false,
+    "member-ordering": false
+  }
+}
