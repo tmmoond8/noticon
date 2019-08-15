@@ -17,6 +17,12 @@ const GlobalStyle = createGlobalStyle`
     font-family: source-code-pro, Menlo, Monaco, Consolas, "Courier New",
       monospace;
   }
+
+  input {
+    background-color: transparent;
+    border: none;
+    outline: none;
+  }
 `;
 
 export default GlobalStyle;
