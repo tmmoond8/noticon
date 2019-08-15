@@ -8,9 +8,9 @@ const sizes = {
 
 // Iterate through the sizes and create a media template
 const media = {
-  desktop: () => undefined,
-  tablet: () => undefined,
-  phone: () => undefined,
+  desktop: (_: any) => undefined,
+  tablet: (_: any) => undefined,
+  phone: (_: any) => undefined,
 }
 
 Object.keys(sizes).reduce((acc: any, label: string) => {
