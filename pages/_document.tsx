@@ -22,18 +22,10 @@ export default class MyDocument extends Document<IProps> {
       <html>
         <Head>
           <title>My page</title>
-          {/* Step 5: Output the styles in the head  */}
           {this.props.styleTags}
         </Head>
         <body>
-          <Main>
-            {/* <StyledApp>
-              <GlobalStyles/>
-              <ThemeProvider theme={theme}>
-                <Component {...pageProps}/>
-              </ThemeProvider>
-            </StyledApp> */}
-          </Main>
+          <Main/>
           <NextScript />
         </body>
       </html>

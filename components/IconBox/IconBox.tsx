@@ -33,9 +33,14 @@ const StyledIconBox = styled.div`
     transform: translateX(0);
   }
 
+  .invisible {
+    position: absolute;
+    transform: translateX(-9999px);
+  }
+
   .copy {
     display: flex;
-    transform: translateX(-1000px);
+    transform: translateX(-9999px);
     justify-content: center;
     align-items: center;
     position: absolute;
@@ -45,6 +50,12 @@ const StyledIconBox = styled.div`
     color: white;
     font-size: 2rem;
     cursor: pointer;
+    -webkit-touch-callout: none;
+    -webkit-user-select: none;
+     -khtml-user-select: none;
+       -moz-user-select: none;
+        -ms-user-select: none;
+            user-select: none;
   }
 `;
 
@@ -59,7 +70,12 @@ const IconBox = (props: IProps) => {
   return (
     <StyledIconBox>
       <div>
-        <textarea ref={copyTextRef} value={imgUrl} readOnly={true}/>
+        <textarea 
+          ref={copyTextRef} 
+          value={imgUrl} 
+          readOnly={true}
+          className="invisible"
+        />
         <img src={imgUrl}/>
         <p>{title}</p>
       </div>
