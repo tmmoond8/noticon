@@ -11,13 +11,13 @@ const StyledIconBox = styled.div`
   position: relative;
   justify-content: center;
   align-items: center;
-  width: 15rem;
-  height: 15rem;
+  width: 100%;
+  height: 100%;
   text-align: center;
 
   img {
-    width: 120px;
-    height: 120px;
+    width: 60%;
+    height: 60%;
   }
 
   span {
@@ -27,6 +27,13 @@ const StyledIconBox = styled.div`
   p {
     padding-top: 1rem;
     font-size: 1.5rem;
+    ${props => props.theme.media.tablet`
+      font-size: 1.2rem;
+    `}
+
+    ${props => props.theme.media.phone`
+      font-size: 1rem;
+    `}
   }
 
   &:hover > .copy {
@@ -61,17 +68,17 @@ const StyledIconBox = styled.div`
 
 const IconBox = (props: IProps) => {
   const { imgUrl, title } = props;
-  const copyTextRef: React.RefObject<any> = useRef(null);
+  const refCopyText: React.RefObject<any> = useRef(null);
 
   const handleCopy = (event) => {
-    copyTextRef.current.select();
+    refCopyText.current.select();
     document.execCommand('copy');
   }
   return (
     <StyledIconBox>
       <div>
         <textarea 
-          ref={copyTextRef} 
+          ref={refCopyText} 
           value={imgUrl} 
           readOnly={true}
           className="invisible"
