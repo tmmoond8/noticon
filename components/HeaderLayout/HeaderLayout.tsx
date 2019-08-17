@@ -20,7 +20,7 @@ const StyledLayout = styled.div`
     div:nth-child(2) {
       max-width: 20rem;
     }
-    ${props => props.theme.media.phone`
+    ${props => props.theme.media.tablet`
       display: block;
       div:nth-child(2) {
         max-width: none;

@@ -4,6 +4,7 @@
     "next": "^9.0.3",
     "react": "^16.9.0",
     "react-dom": "^16.9.0",
+    "react-toastify": "^5.3.2",
     "styled-components": "^4.3.2",
     "styled-reset": "^3.0.0"
   },
@@ -17,6 +18,7 @@
     "@types/express": "^4.17.0",
     "@types/node": "^12.7.1",
     "@types/react": "^16.9.1",
+    "@types/react-toastify": "^4.0.2",
     "@types/storybook__react": "^4.0.2",
     "@types/styled-components": "^4.1.18",
     "@zeit/next-typescript": "^1.1.1",

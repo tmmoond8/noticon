@@ -2,6 +2,7 @@ import App from 'next/app';
 import React from 'react';
 import GlobalStyles from '../styles/global-styles';
 import styled, { ThemeProvider } from '../styles/typed-components';
+import HeaderLayout from '../components/HeaderLayout';
 import { theme } from '../styles/theme';
 
 const StyledApp = styled.div``;
@@ -24,7 +25,9 @@ class ReactApp extends App {
       <StyledApp>
         <GlobalStyles/>
         <ThemeProvider theme={theme}>
-          <Component {...pageProps}/>
+          <HeaderLayout>
+            <Component {...pageProps}/>
+          </HeaderLayout>
         </ThemeProvider>
       </StyledApp>
     );
