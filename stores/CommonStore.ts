@@ -3,7 +3,7 @@ import {
   get
 } from '../lib/dataRequest';
 
-type IconType = 'logo' | 'normal';
+type IconType = 'all' | 'logo' | 'normal';
 
 interface IIcon {
   id: string;
@@ -17,7 +17,7 @@ const defaultProps = {
   search: '',
   logoIconList: [],
   normalIconList: [],
-  filter: 'logo',
+  filter: 'all',
 }
 
 class CommonStore {
@@ -36,7 +36,12 @@ class CommonStore {
 
   private fetchIconData = () => {
     get('logo').then((data) => {
-      this.logoIconList = data;
+      this.logoIconList = data || [];
+    }, (error) => {
+      console.error(error);
+    });
+    get('normal').then((data) => {
+      this.normalIconList = data || [];
     }, (error) => {
       console.error(error);
     });
@@ -51,8 +56,11 @@ class CommonStore {
   public get iconList() {
     if (this.filter === 'normal') {
       return this.normalIconList;
+    } else if (this.filter === 'logo') {
+      return this.logoIconList;
     }
-    return this.logoIconList;
+    return [...this.logoIconList, ...this.normalIconList]
+      .sort((a: IIcon, b: IIcon) => a.title > b.title ? 1 : -1)
   }
 
   @computed

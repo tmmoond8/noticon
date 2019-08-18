@@ -19,6 +19,7 @@
     "@babel/plugin-proposal-decorators": "^7.4.4",
     "@storybook/addon-actions": "^5.1.10",
     "@storybook/addon-info": "^5.1.10",
+    "@storybook/addon-knobs": "^5.1.10",
     "@storybook/addon-links": "^5.1.10",
     "@storybook/addons": "^5.1.10",
     "@storybook/react": "^5.1.10",
