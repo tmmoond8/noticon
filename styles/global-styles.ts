@@ -18,6 +18,10 @@ const GlobalStyle = createGlobalStyle`
       monospace;
   }
 
+  * {
+    box-sizing: border-box;
+  }
+
   input {
     background-color: transparent;
     border: none;
