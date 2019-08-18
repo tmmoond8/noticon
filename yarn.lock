@@ -1598,6 +1598,11 @@
     "@types/prop-types" "*"
     "@types/react" "*"
 
+"@types/react-sizes@^2.0.0":
+  version "2.0.0"
+  resolved "https://registry.yarnpkg.com/@types/react-sizes/-/react-sizes-2.0.0.tgz#28dab82c402527cfdaf4ad933f844276412bbaf6"
+  integrity sha512-XS3lv09Hxmy6AMnnzoUoZcuPAinhVjYPa5dUwfKz5HnEKbeT4dv06xYtM/BKUVsFQmjnkSmegLcfBYK0cOc1aw==
+
 "@types/react-toastify@^4.0.2":
   version "4.0.2"
   resolved "https://registry.yarnpkg.com/@types/react-toastify/-/react-toastify-4.0.2.tgz#a7db2002c0b3080b28969e9d6a8d4daeb18baa6d"
@@ -7182,6 +7187,14 @@ react-resize-detector@^4.0.5:
     prop-types "^15.7.2"
     raf-schd "^4.0.0"
     resize-observer-polyfill "^1.5.1"
+
+react-sizes@^2.0.0:
+  version "2.0.0"
+  resolved "https://registry.yarnpkg.com/react-sizes/-/react-sizes-2.0.0.tgz#c2100daf3bf74077fb410f09204340c1af5c1d4f"
+  integrity sha512-YNGPQGJTxNMD4wdFRmVmqlLZlwhETVW06H7dVbOjj+OV1ckz/gkH3/5MfRuSO8t99nMOmi+Uj14jkvG+zlP57w==
+  dependencies:
+    lodash.throttle "^4.1.1"
+    prop-types "^15.6.0"
 
 react-syntax-highlighter@^8.0.1:
   version "8.1.0"

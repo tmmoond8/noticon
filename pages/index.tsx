@@ -1,14 +1,15 @@
 import Gallery from '../components/Gallery';
+import withSizes from '../lib/withSizes';
 
 const Index = (props) => {
-  const { iconList } = props;
-  return (
+  const { iconList, device } = props;
+  return device === 'ssr' ? null : (
     <Gallery
       iconList={iconList}
       hitIconList={new Set(iconList.map(i => i.id))}
-      device={'desktop'}
+      device={device}
     />
   )
 }
 
-export default Index
+export default withSizes(Index);
