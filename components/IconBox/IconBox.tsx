@@ -1,12 +1,12 @@
 import React, { useRef } from 'react';
-import styled from '../../styles/typed-components';
+import styled, { withProps } from '../../styles/typed-components';
 
 interface IProps {
   imgUrl: string;
   title: string;
 }
 
-const StyledIconBox = styled.div`
+const StyledIconBox = withProps<any, HTMLDivElement>(styled.div)`
   display: flex;
   position: relative;
   justify-content: center;
@@ -26,7 +26,7 @@ const StyledIconBox = styled.div`
 
   p {
     padding-top: 1rem;
-    font-size: 1.5rem;
+    font-size: ${props => props.isLongText ? '1.0rem' : '1.5rem'};
     ${props => props.theme.media.tablet`
       font-size: 1.2rem;
     `}
@@ -75,7 +75,7 @@ const IconBox = (props: IProps) => {
     document.execCommand('copy');
   }
   return (
-    <StyledIconBox>
+    <StyledIconBox isLongText={title.length > 14}>
       <div>
         <textarea 
           ref={refCopyText} 

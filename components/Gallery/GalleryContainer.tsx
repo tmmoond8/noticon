@@ -14,14 +14,12 @@ interface IProps {
 class GalleryContainer extends React.Component<IProps> {
   render() {
     const { device="ssr", commonStore } = this.props;
-    const { search } = commonStore;
-    console.log(search);
-    const iconList = [];
+    const { iconList, hitIconSet } = commonStore;
 
     return (
       <Gallery 
         iconList={iconList}
-        hitIconList={new Set(iconList.map(i => i['id'])) as any}
+        hitIconList={hitIconSet}
         device={device}
       />
     )
