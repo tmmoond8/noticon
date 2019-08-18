@@ -3,11 +3,12 @@ import styled from '../../styles/typed-components';
 import TextInput from './TextInput';
 
 interface IProps {
-  title?: string;
-  imgUrl?: string;
-  keyword1?: string;
-  keyword2?: string;
+  title: string;
+  imgUrl: string;
+  keyword1: string;
+  keyword2: string;
   onInputChange: any;
+  onFileChange: any;
 }
 
 const StyledIconEditForm = styled.div`
@@ -42,7 +43,8 @@ const StyledIconEditForm = styled.div`
         opacity: 0;
       }
       & > img {
-        padding: 2rem 2rem 2rem 0;
+        padding: 2rem;
+        object-fit: contain;
       }
     }
 
@@ -81,14 +83,13 @@ const StyledIconEditForm = styled.div`
 
 
 const IconEditForm = (props: IProps) => {
-  const defaultImgUrl="data:image/svg+xml;base64,PHN2ZyB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciIHdpZHRoPSIyNCIgaGVpZ2h0PSIyNCIgdmlld0JveD0iMCAwIDI0IDI0Ij48cGF0aCBkPSJNMCAxMmMwIDYuNjI3IDUuMzczIDEyIDEyIDEyczEyLTUuMzczIDEyLTEyLTUuMzczLTEyLTEyLTEyLTEyIDUuMzczLTEyIDEyem0xOC0xaC00djdoLTR2LTdoLTRsNi02IDYgNnoiLz48L3N2Zz4="
-  const { title="", imgUrl=defaultImgUrl, keyword1="", keyword2="", onInputChange } = props;
+  const { title, imgUrl, keyword1, keyword2, onInputChange, onFileChange } = props;
   return (
     <StyledIconEditForm>
       <div>
         <form>
           <div>
-            <input type="file"/>
+            <input type="file" name="file" onChange={onFileChange}/>
             <img src={imgUrl}/>
           </div>
           <ul>

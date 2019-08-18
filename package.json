@@ -1,6 +1,7 @@
 {
   "dependencies": {
     "axios": "^0.19.0",
+    "browser-image-compression": "^1.0.6",
     "express": "^4.17.1",
     "mobx": "^5.13.0",
     "mobx-react": "^6.1.3",

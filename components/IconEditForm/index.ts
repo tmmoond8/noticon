@@ -1,1 +1,1 @@
-export { default } from './IconEditForm'
+export { default } from './IconEditFormContainer'

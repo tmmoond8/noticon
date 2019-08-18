@@ -1,0 +1,55 @@
+import React from 'react';
+
+import IconEditForm from './IconEditForm';
+import { resize } from '../../lib/image';
+
+interface IProps {}
+interface IState {
+  title: string;
+  imgUrl: string;
+  keyword1: string;
+  keyword2: string;
+}
+
+class IconEditFormContainer extends React.Component<IProps, IState> {
+  state = {
+    title: '',
+    imgUrl: 'data:image/svg+xml;base64,PHN2ZyB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciIHdpZHRoPSIyNCIgaGVpZ2h0PSIyNCIgdmlld0JveD0iMCAwIDI0IDI0Ij48cGF0aCBkPSJNMCAxMmMwIDYuNjI3IDUuMzczIDEyIDEyIDEyczEyLTUuMzczIDEyLTEyLTUuMzczLTEyLTEyLTEyLTEyIDUuMzczLTEyIDEyem0xOC0xaC00djdoLTR2LTdoLTRsNi02IDYgNnoiLz48L3N2Zz4=',
+    keyword1: '',
+    keyword2: '',
+  }
+  render() {
+    const { title, imgUrl, keyword1, keyword2 } = this.state;
+    return (
+      <IconEditForm 
+        title={title}
+        imgUrl={imgUrl}
+        keyword1={keyword1}
+        keyword2={keyword2}
+        onInputChange={this.handleInputChange} 
+        onFileChange={this.handleFileChange}
+      />
+    )
+  }
+
+  handleInputChange = (event) => {
+    const { target: { name, value } } = event;
+    this.setState({
+      [name]: value
+    } as any)
+  }
+
+  handleFileChange = async (event) => {
+    const file = event.target.files[0];
+    const result = await resize(file);
+    if (result) {
+      this.setState({
+        imgUrl: result
+      })
+    } else {
+      // 실패
+    }
+  }
+}
+
+export default IconEditFormContainer;
