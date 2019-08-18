@@ -4,7 +4,7 @@ import styled, { withProps } from '../../styles/typed-components';
 
 const devices = {
   desktop: {
-    size: 153.33,
+    size: 165.33,
     unit: 'px',
     column: 6,
   },
@@ -32,7 +32,7 @@ interface IIconItemProps {
 }
 
 interface IBoxSize {
-  size: number;
+  size: number; 
   unit: string;
   column: number;
 }

@@ -28,12 +28,11 @@ class ReactApp extends App<any> {
     this.mobxStore = isServer
       ? props.initialMobxState
       : initializeStore(props.initialMobxState);
-    console.log(this.mobxStore);
   }
 
   public render() {
     const { Component, pageProps } = this.props;
-    console.log('_app render', pageProps);
+    console.log('_app render');
     return (
       <Container>
         <Provider {...this.mobxStore}>
