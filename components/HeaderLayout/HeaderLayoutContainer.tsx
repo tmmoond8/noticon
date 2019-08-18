@@ -1,17 +1,20 @@
 import React from 'react';
 import HeaderLayout from './HeaderLayout';
+import { inject, observer } from 'mobx-react';
+import CommonStore from '../../stores/CommonStore';
 
 interface IProps {
-  search: string;
+  commonStore?: CommonStore;
   children: React.ReactNode;
-  onSearchChange: React.ChangeEventHandler<HTMLInputElement>;
 }
 
+@inject('commonStore')
+@observer
 class HeaderLayoutContainer extends React.Component<IProps> {
   render() {
-    const { children, search, onSearchChange } = this.props;
+    const { children, commonStore } = this.props;
     return (
-      <HeaderLayout search={search} onSearchChange={onSearchChange}>
+      <HeaderLayout search={commonStore!.search} onSearchChange={commonStore!.setSearch}>
         {children}
       </HeaderLayout>
     )

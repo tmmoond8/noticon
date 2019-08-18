@@ -16,4 +16,4 @@ const mapSizesToProps = (sizes: any) => {
   };
 }
 
-export default reactSizes(mapSizesToProps);
+export default reactSizes(mapSizesToProps as any);

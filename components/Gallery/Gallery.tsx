@@ -23,7 +23,7 @@ const devices = {
 interface IProps {
   iconList: any[];
   hitIconList: Set<any>;
-  device: 'desktop' | 'tablet' | 'phone';
+  device: 'desktop' | 'tablet' | 'phone' | 'ssr';
 }
 
 interface IIconItemProps {
@@ -92,9 +92,11 @@ const Gallery = (props: IProps) => {
 
   return (
     <StyledGallery>
-      <ul style={{ height: `${(Math.floor((hitIconList.size - 1) / boxSize.column) + 1) * boxSize.size}${boxSize.unit}`}}>
-        {renderIconList(boxSize, iconList, hitIconList)}
-      </ul>
+      { device === 'ssr' ? null : (
+        <ul style={{ height: `${(Math.floor((hitIconList.size - 1) / boxSize.column) + 1) * boxSize.size}${boxSize.unit}`}}>
+          {renderIconList(boxSize, iconList, hitIconList)}
+        </ul>
+      )}
     </StyledGallery>
   )
 }

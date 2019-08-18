@@ -6,7 +6,7 @@ import styled from '../../styles/typed-components';
 interface IProps {
   search: string;
   children: React.ReactNode;
-  onSearchChange: React.ChangeEventHandler<HTMLInputElement>;
+  onSearchChange: (search: string) => void;
 }
 
 const StyledLayout = styled.div`
