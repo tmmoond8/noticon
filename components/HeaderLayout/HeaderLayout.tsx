@@ -4,6 +4,7 @@ import SearchBar from './SearchBar';
 import styled from '../../styles/typed-components';
 
 interface IProps {
+  search: string;
   children: React.ReactNode;
   onSearchChange: React.ChangeEventHandler<HTMLInputElement>;
 }
@@ -33,7 +34,7 @@ const HeaderLayout = (props: IProps) => (
   <StyledLayout>
     <header>
       <Header/>
-      <SearchBar onSearchChange={props.onSearchChange}/>
+      <SearchBar search={props.search} onSearchChange={props.onSearchChange}/>
     </header>
     {props.children}
   </StyledLayout>

@@ -9,5 +9,5 @@ const onSearchChange = action('onSearchChange');
 
 storiesOf('Header', module)
   .add('Header', () => <Header/>)
-  .add('SearchBar', () => <SearchBar onSearchChange={onSearchChange}/>)
-  .add('HeaderLayout', () => (<HeaderLayout onSearchChange={onSearchChange}>dff</HeaderLayout>))
+  .add('SearchBar', () => <SearchBar search="dido" onSearchChange={onSearchChange}/>)
+  .add('HeaderLayout', () => (<HeaderLayout search="str" onSearchChange={onSearchChange}>dff</HeaderLayout>))
