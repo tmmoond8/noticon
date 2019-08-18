@@ -1,6 +1,7 @@
 {
   "presets": [
-    "next/babel"
+    "next/babel",
+    "@zeit/next-typescript/babel"
   ],
   "plugins": [
     [
@@ -10,6 +11,8 @@
         "displayName": true,
         "preprocess": false
       }
-    ]
+    ],
+    ["@babel/plugin-proposal-decorators", { "legacy": true }],
+    ["@babel/plugin-proposal-class-properties", { "loose": true }]
   ]
 }

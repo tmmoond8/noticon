@@ -4,7 +4,7 @@ import styled, { withProps } from '../../styles/typed-components';
 
 const devices = {
   desktop: {
-    size: 163.33,
+    size: 153.33,
     unit: 'px',
     column: 6,
   },
@@ -23,7 +23,7 @@ const devices = {
 interface IProps {
   iconList: any[];
   hitIconList: Set<any>;
-  device: 'desktop' | 'tablet' | 'phone';
+  device: 'desktop' | 'tablet' | 'phone' | 'ssr';
 }
 
 interface IIconItemProps {
@@ -31,7 +31,7 @@ interface IIconItemProps {
   y: string;
 }
 
-interface IBoxSixe {
+interface IBoxSize {
   size: number;
   unit: string;
   column: number;
@@ -41,9 +41,8 @@ const StyledGallery = withProps<any, HTMLDivElement>(styled.div)`
   ul {
     position: relative;
     height: 400px;
-    width: 980px;
-    background-color: lightgrey;
-    margin: 20px auto 0 auto;
+    width: 992px;
+    margin: 2rem auto 0 auto;
 
     ${props => props.theme.media.tablet`
       width: 100%;
@@ -51,8 +50,8 @@ const StyledGallery = withProps<any, HTMLDivElement>(styled.div)`
   }
   li {
     position: absolute;
-    width: 163.33px;
-    height: 163.33px;
+    width: ${devices.desktop.size}${devices.desktop.unit};
+    height: ${devices.desktop.size}${devices.desktop.unit};
 
     ${props => props.theme.media.tablet`
       width: 25vw;
@@ -69,7 +68,7 @@ const IconItem = withProps<IIconItemProps, HTMLLIElement>(styled.li)`
   transform: translate(${props => props.x}, ${props => props.y});
 `
 
-const renderIconList = (boxSize: IBoxSixe, iconList: any[], hitIconList: Set<number>) => {
+const renderIconList = (boxSize: IBoxSize, iconList: any[], hitIconList: Set<number>) => {
   const { size, unit, column } = boxSize;
   let index = -1;
   return (
@@ -93,9 +92,11 @@ const Gallery = (props: IProps) => {
 
   return (
     <StyledGallery>
-      <ul style={{ height: `${(Math.floor((hitIconList.size - 1) / boxSize.column) + 1) * boxSize.size}${boxSize.unit}`}}>
-        {renderIconList(boxSize, iconList, hitIconList)}
-      </ul>
+      { device === 'ssr' ? null : (
+        <ul style={{ height: `${(Math.floor((hitIconList.size - 1) / boxSize.column) + 1) * boxSize.size}${boxSize.unit}`}}>
+          {renderIconList(boxSize, iconList, hitIconList)}
+        </ul>
+      )}
     </StyledGallery>
   )
 }

@@ -1,61 +1,51 @@
-import App from 'next/app';
+import App, { Container } from 'next/app';
 import React from 'react';
+import { Provider } from 'mobx-react';
+import { initializeStore } from '../stores'
 import GlobalStyles from '../styles/global-styles';
-import styled, { ThemeProvider } from '../styles/typed-components';
+import { ThemeProvider } from '../styles/typed-components';
 import HeaderLayout from '../components/HeaderLayout';
 import { theme } from '../styles/theme';
-import {
-  get
-} from '../lib/dataRequest';
 
-const StyledApp = styled.div``;
-
-interface IState {
-  search: string;
-}
-
-class ReactApp extends App<any, IState> {
-  state = {
-    search: ''
-  }
+class ReactApp extends App<any> {
   public static async getInitialProps(appContext) {
     console.log('_app getInitialProps');
+    const mobxStore = initializeStore(undefined)
+    appContext.ctx.mobxStore = mobxStore
+
     const appProps = await App.getInitialProps(appContext);
-    const iconList = await get('logo');
-    appProps.pageProps = {
-      iconList,
-    }
     return {
       ...appProps,
+      initialMobxState: mobxStore,
     };
   }
+  
+  private mobxStore: any = null;
 
   constructor(props: any) {
     super(props);
+    const isServer = !process.browser;
+    this.mobxStore = isServer
+      ? props.initialMobxState
+      : initializeStore(props.initialMobxState);
+    console.log(this.mobxStore);
   }
 
   public render() {
     const { Component, pageProps } = this.props;
-    const { search } = this.state;
     console.log('_app render', pageProps);
     return (
-      <StyledApp>
-        <GlobalStyles/>
-        <ThemeProvider theme={theme}>
-          <HeaderLayout search={search} onSearchChange={this.handleChangeInput}>
-            <Component {...pageProps}/>
-          </HeaderLayout>
-        </ThemeProvider>
-      </StyledApp>
+      <Container>
+        <Provider {...this.mobxStore}>
+          <GlobalStyles/>
+          <ThemeProvider theme={theme}>
+            <HeaderLayout>
+              <Component {...pageProps}/>
+            </HeaderLayout>
+          </ThemeProvider>
+        </Provider>
+      </Container>
     );
-  }
-
-  handleChangeInput:React.ChangeEventHandler<HTMLInputElement> = (event) => {
-    const { target: { name, value} } = event;
-    console.log(name, value);
-    this.setState({
-      [name]: value
-    });
   }
 }
 
