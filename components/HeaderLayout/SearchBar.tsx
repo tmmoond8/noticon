@@ -2,6 +2,7 @@ import React from 'react';
 import styled from '../../styles/typed-components';
 
 interface IProps {
+  search: string;
   onSearchChange: React.ChangeEventHandler<HTMLInputElement>
 }
 
@@ -31,7 +32,14 @@ const StyledSearchBar = styled.div`
 const SearchBar = (props: IProps) => (
   <StyledSearchBar>
     <label htmlFor="search_input"/>
-    <input id="search_input" type="text" value="abc" placeholder="Search..."/>
+    <input 
+      id="search_input" 
+      name="search" 
+      type="text" 
+      value={props.search} 
+      placeholder="Search..."
+      onChange={props.onSearchChange}
+    />
   </StyledSearchBar>
 )
 

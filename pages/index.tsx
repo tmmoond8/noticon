@@ -1,12 +1,14 @@
-import Test from '../components/Test';
-import ImageBox from '../components/IconBox';
+import Gallery from '../components/Gallery';
 
-const Index = () => (
-  <div>
-    <p>Hello Next.js</p>
-    <Test text="test"/>
-    <ImageBox imgUrl="https://ucarecdn.com/13da67ee-9243-4022-9981-4d0c191b072b/-/resize/x120/" title="test"/>
-  </div>
-)
+const Index = (props) => {
+  const { iconList } = props;
+  return (
+    <Gallery
+      iconList={iconList}
+      hitIconList={new Set(iconList.map(i => i.id))}
+      device={'desktop'}
+    />
+  )
+}
 
 export default Index

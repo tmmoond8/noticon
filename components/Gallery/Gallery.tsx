@@ -1,11 +1,28 @@
-import React, { useRef } from 'react';
+import React from 'react';
 import IconBox from '../IconBox';
 import styled, { withProps } from '../../styles/typed-components';
+
+const devices = {
+  desktop: {
+    size: 163.33,
+    unit: 'px',
+    column: 6,
+  },
+  tablet: {
+    size: 25,
+    unit: 'vw',
+    column: 4,
+  },
+  phone: {
+    size: 33.33,
+    unit: 'vw',
+    column: 3,
+  }
+}
 
 interface IProps {
   iconList: any[];
   hitIconList: Set<any>;
-  setHeight: (height: number) => undefined;
   device: 'desktop' | 'tablet' | 'phone';
 }
 
@@ -26,6 +43,7 @@ const StyledGallery = withProps<any, HTMLDivElement>(styled.div)`
     height: 400px;
     width: 980px;
     background-color: lightgrey;
+    margin: 20px auto 0 auto;
 
     ${props => props.theme.media.tablet`
       width: 100%;
@@ -70,22 +88,8 @@ const renderIconList = (boxSize: IBoxSixe, iconList: any[], hitIconList: Set<num
 }
 
 const Gallery = (props: IProps) => {
-  const { iconList=[], setHeight, device, hitIconList } = props;
-  setHeight(433);
-  const boxSize = {
-    size: 163.33,
-    unit: 'px',
-    column: 6,
-  };
-  if (device === 'tablet') {
-    boxSize.size = 25;
-    boxSize.unit = 'vw';
-    boxSize.column = 4;
-  } else if(device === 'phone') {
-    boxSize.size = 33.33;
-    boxSize.unit = 'vw';
-    boxSize.column = 3;
-  }
+  const { iconList=[], device, hitIconList } = props;
+  const boxSize = devices[device];
 
   return (
     <StyledGallery>

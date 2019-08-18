@@ -2,8 +2,6 @@ import React from 'react';
 
 import { storiesOf } from '@storybook/react';
 import Gallery from  './Gallery';
-import { action } from '@storybook/addon-actions';
-const setHeight = action('setHeight') as any;
 
 const iconList = [
   { id: 1, imgUrl: 'https://ucarecdn.com/c8bdc957-8600-490f-8d7f-e0b2931d017a/dino.png', title: 'digital nomad'},
@@ -22,7 +20,6 @@ storiesOf('Gallery', module)
     <Gallery 
       iconList={iconList} 
       hitIconList={hitIconList}
-      setHeight={setHeight} 
       device="desktop"
     />
   ))
@@ -30,7 +27,6 @@ storiesOf('Gallery', module)
     <Gallery 
       iconList={iconList} 
       hitIconList={hitIconList}
-      setHeight={setHeight} 
       device="tablet"
     />
   ))
@@ -38,7 +34,6 @@ storiesOf('Gallery', module)
     <Gallery 
       iconList={iconList} 
       hitIconList={hitIconList}
-      setHeight={setHeight} 
       device="phone"
     />
   ))
@@ -46,7 +41,6 @@ storiesOf('Gallery', module)
     <Gallery 
       iconList={iconList} 
       hitIconList={new Set([1,3,6,7])}
-      setHeight={setHeight} 
       device="phone"
     />
   ))
