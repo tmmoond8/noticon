@@ -2,6 +2,7 @@ import React from 'react';
 
 import IconEditForm from './IconEditForm';
 import { resize } from '../../lib/image';
+import { post } from '../../lib/dataRequest';
 
 interface IProps {}
 interface IState {
@@ -26,8 +27,9 @@ class IconEditFormContainer extends React.Component<IProps, IState> {
         imgUrl={imgUrl}
         keyword1={keyword1}
         keyword2={keyword2}
-        onInputChange={this.handleInputChange} 
-        onFileChange={this.handleFileChange}
+        onChangeInput={this.handleInputChange} 
+        onChangeFile={this.handleFileChange}
+        onClickSendBtn={this.handleSendIconForm}
       />
     )
   }
@@ -49,6 +51,10 @@ class IconEditFormContainer extends React.Component<IProps, IState> {
     } else {
       // 실패
     }
+  }
+
+  handleSendIconForm = async (event) => {
+    await post('logo');
   }
 }
 
