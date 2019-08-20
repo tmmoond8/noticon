@@ -1,6 +1,6 @@
 import styled from '../../styles/typed-components';
 const StyledP = styled.p`
-  color: ${props => props.theme.color.deepViolet};
+  color: ${props => props.theme.color.blue};
 `;
 
 

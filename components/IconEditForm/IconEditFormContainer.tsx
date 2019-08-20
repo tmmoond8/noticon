@@ -1,7 +1,6 @@
 import React from 'react';
 
 import IconEditForm from './IconEditForm';
-import { resize } from '../../lib/image';
 import { post } from '../../lib/dataRequest';
 
 interface IProps {}
@@ -41,16 +40,14 @@ class IconEditFormContainer extends React.Component<IProps, IState> {
     } as any)
   }
 
-  handleFileChange = async (event) => {
-    const file = event.target.files[0];
-    const result = await resize(file);
-    if (result) {
-      this.setState({
-        imgUrl: result
-      })
-    } else {
-      // 실패
-    }
+  handleFileChange = (event) => {
+    event.preventDefault();
+    const files = event.target.files;
+    if (files.length < 1) return;
+
+    this.setState({
+      imgUrl: URL.createObjectURL(event.target.files[0])
+    });
   }
 
   handleSendIconForm = async (event) => {
