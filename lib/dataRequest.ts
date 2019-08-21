@@ -7,20 +7,7 @@ export const get = async (sheet: 'logo' | 'normal') => {
   return data;
 }
 
-export const post = async (sheet: 'logo' | 'normal', noticon: Noticon) => {
+export const upload = async (sheet: 'logo' | 'normal', noticon: Noticon) => {
   // await axios.post(`${process.env.REACT_APP_GOOGLE_SHEET_URL}?sheetName=${sheet}`, 
-  await axios.post(`https://script.google.com/macros/s/AKfycbw6zKYeWddESrtPTNZP-fjGUF_uWpMyeIVR7zkT16_IlNkMqYo/exec?sheetName=logo&title=test&imgUrl=https://res.cloudinary.com/dgggcrkxq/image/upload/v1565787727/dino_irt34g.png&keywords=bbb,aaa&id=ldskssds`, 
-    noticon,
-    { 
-      headers: { 
-        "": "",
-        "": "",
-        "": "",
-        "": "",
-        "": "",
-        "": "",
-        "": "",
-        "": "",
-      }
-    });
+  await axios.get(`${process.env.REACT_APP_GOOGLE_SHEET_URL}?sheetName=${sheet}`, { params: noticon });
 }

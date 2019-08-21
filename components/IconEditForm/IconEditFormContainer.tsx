@@ -2,7 +2,7 @@ import React from 'react';
 
 import { upload } from '../../lib/imageUploader';
 import IconEditForm from './IconEditForm';
-import { post } from '../../lib/dataRequest';
+import * as dataRequest from '../../lib/dataRequest';
 import { Noticon } from '../../types';
 
 interface IProps {}
@@ -65,8 +65,9 @@ class IconEditFormContainer extends React.Component<IProps, IState> {
       ...this.state,
       keywords: `${this.state.keyword1},${this.state.keyword2}`
     }
+    console.log(noticon);
     try {
-      const result = await post('logo', noticon);
+      const result = await dataRequest.upload('logo', noticon);
       console.log(result);
     } catch (error) {
       // error handle
