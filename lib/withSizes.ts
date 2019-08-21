@@ -1,8 +1,9 @@
 import reactSizes from 'react-sizes';
+export type Size = "desktop" | "ssr" | "phone" | "tablet";
 
-const mapSizesToProps = (sizes: any) => {
+const withSizes = (sizes: any) => {
   const { width } = sizes;
-  let device = 'desktop';
+  let device: Size = 'desktop';
   if (!width) {
     device = 'ssr';
   }
@@ -16,4 +17,4 @@ const mapSizesToProps = (sizes: any) => {
   };
 }
 
-export default reactSizes(mapSizesToProps as any);
+export default reactSizes(withSizes as any);
