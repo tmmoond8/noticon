@@ -5,7 +5,10 @@ import IconEditForm from './IconEditForm';
 import * as dataRequest from '../../lib/dataRequest';
 import { Noticon } from '../../types';
 
-interface IProps {}
+interface IProps {
+  isOpen?: boolean;
+  onClickCancelBtn: any;
+}
 interface IState {
   title: string;
   imgUrl: string;
@@ -23,6 +26,7 @@ class IconEditFormContainer extends React.Component<IProps, IState> {
     keyword2: '',
   }
   render() {
+    const { isOpen, onClickCancelBtn } = this.props;
     const { title, imgUrl, keyword1, keyword2 } = this.state;
     return (
       <IconEditForm 
@@ -33,6 +37,8 @@ class IconEditFormContainer extends React.Component<IProps, IState> {
         onChangeInput={this.handleInputChange} 
         onChangeFile={this.handleFileChange}
         onClickSendBtn={this.handleSendIconForm}
+        onClickCancelBtn={onClickCancelBtn}
+        isOpen={isOpen}
       />
     )
   }
@@ -65,7 +71,6 @@ class IconEditFormContainer extends React.Component<IProps, IState> {
       ...this.state,
       keywords: `${this.state.keyword1},${this.state.keyword2}`
     }
-    console.log(noticon);
     try {
       const result = await dataRequest.upload('logo', noticon);
       console.log(result);

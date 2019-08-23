@@ -1,8 +1,9 @@
 import React from 'react';
-import styled from '../../styles/typed-components';
+import styled, { withProps } from '../../styles/typed-components';
 import TextInput from './TextInput';
 
 interface IProps {
+  isOpen?: boolean;
   title: string;
   imgUrl: string;
   keyword1: string;
@@ -10,13 +11,16 @@ interface IProps {
   onChangeInput: any;
   onChangeFile: any;
   onClickSendBtn: any;
+  onClickCancelBtn: any;
 }
 
-const StyledIconEditForm = styled.div`
+const StyledIconEditForm = withProps<IProps, HTMLDivElement>(styled.div)`
   width: 100%;
   max-width: 660px;
   padding: 2rem;
   margin: auto;
+  transition: all .3s ease-out;
+  transform: translateY(${props => props.isOpen ? '0' : '-250%'});
   ${props => props.theme.media.tablet`
     padding: 1rem;
   `};
@@ -86,7 +90,6 @@ const StyledIconEditForm = styled.div`
         background-color: black;
         color: white;
       }
-    }
 
     button + button {
       margin-left: 1rem;
@@ -104,9 +107,11 @@ const IconEditForm = (props: IProps) => {
     onChangeInput, 
     onChangeFile, 
     onClickSendBtn,
+    onClickCancelBtn,
+    isOpen,
   } = props;
   return (
-    <StyledIconEditForm>
+    <StyledIconEditForm className="icon-edit-form" isOpen={isOpen}>
       <div>
         <form>
           <div>
@@ -127,7 +132,7 @@ const IconEditForm = (props: IProps) => {
         </form>
         <div className="buttons">
           <button onClick={onClickSendBtn}>send</button>
-          <button>cancel</button>
+          <button onClick={onClickCancelBtn}>cancel</button>
         </div>
       </div>
     </StyledIconEditForm>

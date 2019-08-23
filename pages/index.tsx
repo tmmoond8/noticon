@@ -1,10 +1,10 @@
 import Gallery from '../components/Gallery';
-import IconEdit from '../components/IconEditForm';
+import UploadScreen from '../components/UploadScreen';
 
 const Index = () => (
   <>
     <Gallery/>
-    <IconEdit/>
+    <UploadScreen/>
   </>
 )
 
