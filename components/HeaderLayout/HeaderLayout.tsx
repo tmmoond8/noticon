@@ -10,11 +10,17 @@ interface IProps {
 }
 
 const StyledLayout = styled.div`
-  header {
+  display: flex;
+  flex-direction: column;
+  & > header {
     display: flex;
+    position: fixed;
     flex-direction: row;
     justify-content: space-between;
-
+    width: 100vw;
+    z-index: 10;
+    padding: .5rem;
+    background-color: rgba(255, 255, 255, .95);
     div:nth-child(1) {
       width: 7rem;
     }
@@ -28,6 +34,9 @@ const StyledLayout = styled.div`
       }
     `}
   }
+  & > div {
+    margin-top: 5rem;
+  }
 `;
 
 const HeaderLayout = (props: IProps) => (
@@ -36,7 +45,9 @@ const HeaderLayout = (props: IProps) => (
       <Header/>
       <SearchBar search={props.search} onSearchChange={props.onSearchChange}/>
     </header>
-    {props.children}
+    <div>
+      {props.children}
+    </div>
   </StyledLayout>
 );
 

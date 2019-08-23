@@ -1,13 +1,16 @@
 import React from 'react';
 import { action } from '@storybook/addon-actions';
+import { boolean, withKnobs } from '@storybook/addon-knobs';
 import { storiesOf } from '@storybook/react';
 import IconEditForm from  '././IconEditForm';
 import TextInput from  '././TextInput';
+
 const onChangeInput = action('onChangeInput');
 const onChangeFile = action('onChangeFile');
 const onClickSendBtn = action('onClickSendBtn');
+const onClickCancelBtn = action('onClickCancelBtn');
 
-storiesOf('IconEditForm', module)
+storiesOf('IconEditForm', module).addDecorator(withKnobs)
   .add('TextInput', () => <TextInput name="test" value="2323" onChangeInput={onChangeInput}/>)
   .add('TextInput empty', () => <TextInput name="test" value="" onChangeInput={onChangeInput}/>)
   .add('IconEditForm', () => (
@@ -19,5 +22,7 @@ storiesOf('IconEditForm', module)
       onChangeInput={onChangeInput} 
       onChangeFile={onChangeFile}
       onClickSendBtn={onClickSendBtn}
+      onClickCancelBtn={onClickCancelBtn}
+      isOpen={boolean('Disabled', false)}
     />
   ))
