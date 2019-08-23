@@ -11,6 +11,7 @@ const ScreenWrapper = withProps<{scrollTop}, HTMLDivElement>(styled.div)`
   width: 100%;
   & > div {
     position: relative;
+    height: 1px;
   }
 
   .floating-button {
