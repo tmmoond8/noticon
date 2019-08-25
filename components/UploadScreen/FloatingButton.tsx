@@ -8,8 +8,8 @@ interface IProps {
 
 const StyledFloatingButton = withProps<IProps, HTMLParagraphElement>(styled.p)`
   position: absolute;
-  width: 3rem;
-  height: 3rem;
+  width: 4rem;
+  height: 4rem;
   left: 75vw;
   top: 75vh;
   background-color: white;
