@@ -3,7 +3,8 @@ import { action } from '@storybook/addon-actions';
 import { boolean, withKnobs } from '@storybook/addon-knobs';
 import { storiesOf } from '@storybook/react';
 import FloatingButton from './FloatingButton';
-import ScreenSkin from './UploadScreen';
+import OverScreen from './OverScreen';
+import Loading from './Loading';
 
 const floatingAction = action('onClickFloating');
 const onClickFloating = (() => {
@@ -15,7 +16,8 @@ const onClickFloating = (() => {
   }
 })();
 
-storiesOf('ScreenSkin', module).addDecorator(withKnobs)
+storiesOf('OverScreen', module).addDecorator(withKnobs)
   .add('FloatingButton', () => <FloatingButton isOpen={boolean('Disabled', false)} onClick={onClickFloating}/>)
-  .add('ScreenSkin', () => <ScreenSkin/>)
+  .add('Loading', () => <Loading isLoading={true}/>)
+  .add('OverScreen', () => <OverScreen/>)
   

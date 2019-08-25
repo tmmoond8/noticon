@@ -39,7 +39,7 @@ const handleScroll = (setSticky) => {
 
 interface IProps {}
 
-const ScreenSkin = (props: IProps) => {
+const OverScreen = (props: IProps) => {
   const [isOpen, setOpen ] = useState(false);
   const [scrollTop, setScrollTop ] = useState(0);
   handleScroll(setScrollTop);
@@ -53,4 +53,4 @@ const ScreenSkin = (props: IProps) => {
   )
 }
 
-export default ScreenSkin;
+export default OverScreen;

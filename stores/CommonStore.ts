@@ -18,6 +18,7 @@ const defaultProps = {
   logoIconList: [],
   normalIconList: [],
   filter: 'all',
+  loading: false,
 }
 
 class CommonStore {
@@ -25,26 +26,39 @@ class CommonStore {
   @observable logoIconList: IIcon[];
   @observable normalIconList: IIcon[];
   @observable filter: IconType;
+  @observable loading: boolean;
 
   constructor(props= defaultProps) {
     this.search = props.search;
+    this.loading = props.loading;
     this.logoIconList = props.logoIconList;
     this.normalIconList = props.normalIconList;
     this.filter = props.filter as IconType;
     this.fetchIconData();
   }
 
-  private fetchIconData = () => {
-    get('logo').then((data) => {
-      this.logoIconList = data || [];
-    }, (error) => {
-      console.error(error);
-    });
-    get('normal').then((data) => {
-      this.normalIconList = data || [];
-    }, (error) => {
-      console.error(error);
-    });
+  private fetchIconData = async () => {
+    const logoPromise = get('logo');
+    const normalPromise = get('normal');
+    this.loading = true;
+
+    const logoData = await logoPromise;
+    const normalData = await normalPromise;
+
+    this.logoIconList = logoData || [];
+    this.normalIconList = normalData || [];
+
+    this.loading = false;
+    // get('logo').then((data) => {
+    //   this.logoIconList = data || [];
+    // }, (error) => {
+    //   console.error(error);
+    // });
+    // get('normal').then((data) => {
+    //   this.normalIconList = data || [];
+    // }, (error) => {
+    //   console.error(error);
+    // });
   }
 
   @action

@@ -1,5 +1,5 @@
 import Gallery from '../components/Gallery';
-import UploadScreen from '../components/UploadScreen';
+import UploadScreen from '../components/OverScreen';
 
 const Index = () => (
   <>
