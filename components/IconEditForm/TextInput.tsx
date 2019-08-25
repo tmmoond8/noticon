@@ -5,6 +5,7 @@ interface IProps {
   name: string;
   value: string;
   onChangeInput: any;
+  onBlurImgSrc?: any;
 }
 
 const StyledTextInput = withProps<any, HTMLDivElement>(styled.div)`
@@ -55,17 +56,23 @@ const StyledTextInput = withProps<any, HTMLDivElement>(styled.div)`
   }
 `;
 
-
-
 const TextInput = (props: IProps) => {
+  const {
+    name,
+    value,
+    onChangeInput,
+    onBlurImgSrc=() => "",
+  } = props;
   return (
     <StyledTextInput isEmpty={props.value.length === 0}>
       <input 
         type="text" 
-        id={props.name} 
-        name={props.name} 
-        value={props.value} 
-        onChange={props.onChangeInput}/>
+        id={name} 
+        name={name} 
+        value={value} 
+        onChange={onChangeInput}
+        onBlur={onBlurImgSrc}
+        />
       <label htmlFor={props.name}>{props.name}</label>
     </StyledTextInput>
   )

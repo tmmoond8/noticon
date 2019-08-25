@@ -27,15 +27,17 @@ const GlobalStyle = createGlobalStyle`
     border: none;
     outline: none;
   }
-
+  html {
+    font-size: 16px;
+  }
   @media only screen and (max-width: 768px) {
-    body {
+    html {
       font-size: 12px;
     }
   }
 
   @media only screen and (max-width: 576px) {
-    body {
+    html {
       font-size: 10px;
     }
   }

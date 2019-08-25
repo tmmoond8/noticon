@@ -7,7 +7,7 @@ export const get = async (sheet: 'logo' | 'normal') => {
   return data;
 }
 
-export const upload = async (sheet: 'logo' | 'normal', noticon: Noticon) => {
+export const append = async (sheet: 'logo' | 'normal', noticon: Noticon) => {
   // await axios.post(`${process.env.REACT_APP_GOOGLE_SHEET_URL}?sheetName=${sheet}`, 
   await axios.get(`${process.env.REACT_APP_GOOGLE_SHEET_URL}?sheetName=${sheet}`, { params: noticon });
 }

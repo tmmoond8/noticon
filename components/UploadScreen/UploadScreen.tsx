@@ -40,14 +40,14 @@ const handleScroll = (setSticky) => {
 interface IProps {}
 
 const ScreenSkin = (props: IProps) => {
-  const [isOpen, toggleOpen ] = useState(false);
+  const [isOpen, setOpen ] = useState(false);
   const [scrollTop, setScrollTop ] = useState(0);
   handleScroll(setScrollTop);
   return (
     <ScreenWrapper scrollTop={scrollTop}>
       <div>
-        <FloatingButton isOpen={isOpen} onClick={() => toggleOpen(!isOpen)}/>
-        <IconEditForm isOpen={isOpen} onClickCancelBtn={() => toggleOpen(false)}/>
+        <FloatingButton isOpen={isOpen} onClick={() => setOpen(!isOpen)}/>
+        <IconEditForm isOpen={isOpen} onSetOpen={setOpen}/>
       </div>
     </ScreenWrapper>
   )

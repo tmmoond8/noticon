@@ -6,10 +6,12 @@ interface IProps {
   isOpen?: boolean;
   title: string;
   imgUrl: string;
+  imgSrc: string;
   keyword1: string;
   keyword2: string;
   onChangeInput: any;
   onChangeFile: any;
+  onBlurImgSrc: any;
   onClickSendBtn: any;
   onClickCancelBtn: any;
 }
@@ -34,106 +36,150 @@ const StyledIconEditForm = withProps<IProps, HTMLDivElement>(styled.div)`
     background-color: white;
     transform: translate(0);
   }
+`;
 
-  form {
-    display: flex;
-    & > div {
-      position: relative;
-      ${props => props.theme.media.tablet`
-        width: 186px;
-        height: 186px;
-      `}
-      width: 240px;
-      height: 240px;
-      & > * {
-        position: absolute;
-        width: inherit;
-        height: inherit;
-      }
-
-      & > input {
-        z-index: 10;
-        opacity: 0;
-      }
-      & > img {
-        ${props => props.theme.media.tablet`
-          padding: 1.5rem;
-        `}
-        padding: 3rem;
-        object-fit: contain;
-      }
+const FormBody = styled.form`
+  display: flex;
+  & > div {
+    position: relative;
+    ${props => props.theme.media.tablet`
+      width: 186px;
+      height: 186px;
+    `}
+    ${props => props.theme.media.phone`
+      width: 128px;
+      height: 128px;
+    `}
+    width: 240px;
+    height: 240px;
+    & > img {
+      position: absolute;
+      width: inherit;
+      height: inherit;
     }
 
-    ul {
-      display: flex;
-      flex-direction: column;
-      flex: 1;
-      padding-right: 2rem;
-      li {
-        flex: 1;
-      }
+    & > input {
+      z-index: 10;
+      opacity: 0;
+    }
+    & > img {
+      padding: 2rem 2rem 4rem 2rem;
+      object-fit: contain;
     }
   }
 
-  .buttons {
-    text-align: center;
-    padding: 2rem;
-    button {
-      font-size: 1.4rem;
-      background-color: white;
-      border-radius: 4px;
-      padding: .5rem;
-      outline: none;
-      cursor: pointer;
+  ul {
+    display: flex;
+    flex-direction: column;
+    flex: 1;
 
-      &:hover, &:active {
-        background-color: black;
-        color: white;
+    li {
+      display: flex;
+      flex: 1;
+      div {
+        flex: 1;
+        margin-right: 2rem;
       }
-
-    button + button {
-      margin-left: 1rem;
     }
   }
 `;
 
+const ImageUploadButton = styled.label`
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  width: 6rem;
+  border: 1px solid #bbbbbb;
+  border-radius: 4px;
+  margin: auto 2rem auto 0;
+  font-size: 1.4rem;
+  background-color: white;
+  padding: .5rem;
+  cursor: pointer;
+
+  &:hover, &:active {
+    background-color: black;
+    color: white;
+  }
+  
+  input {
+    width: 0;
+  }
+`;
+
+const FormFooter = styled.div`
+  text-align: center;
+  padding: 2rem;
+  button {
+    font-size: 1.4rem;
+    background-color: white;
+    border-radius: 4px;
+    padding: .5rem;
+    outline: none;
+    cursor: pointer;
+
+    &:hover, &:active {
+      background-color: black;
+      color: white;
+    }
+  }
+
+  .disabled {
+    background-color: #fafafa;
+    color: #bbb;
+    pointer-events: none;
+  }
+
+  button + button {
+    margin-left: 1rem;
+  }
+`;
 
 const IconEditForm = (props: IProps) => {
   const { 
     title, 
     imgUrl, 
+    imgSrc,
     keyword1, 
     keyword2, 
     onChangeInput, 
     onChangeFile, 
+    onBlurImgSrc,
     onClickSendBtn,
     onClickCancelBtn,
     isOpen,
   } = props;
+
+  const isUploadable = title.length !== 0 && imgUrl.length !== 0;
+  
   return (
     <StyledIconEditForm className="icon-edit-form" isOpen={isOpen}>
       <div>
-        <form>
+        <FormBody>
           <div>
-            <input type="file" name="file" onChange={onChangeFile}/>
-            <img src={imgUrl}/>
+            <img src={imgUrl || 'data:image/svg+xml;base64,PHN2ZyB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciIHdpZHRoPSIyNCIgaGVpZ2h0PSIyNCIgdmlld0JveD0iMCAwIDI0IDI0Ij48cGF0aCBkPSJNMCAxMmMwIDYuNjI3IDUuMzczIDEyIDEyIDEyczEyLTUuMzczIDEyLTEyLTUuMzczLTEyLTEyLTEyLTEyIDUuMzczLTEyIDEyem0xOC0xaC00djdoLTR2LTdoLTRsNi02IDYgNnoiLz48L3N2Zz4='}/>
           </div>
           <ul>
             <li key="title">
               <TextInput onChangeInput={onChangeInput} name="title" value={title}/>
             </li>
-            <li key="keyword1">
-              <TextInput onChangeInput={onChangeInput} name="keyword1" value={keyword1}/>
+            <li key="file">
+              <TextInput onChangeInput={onChangeInput} onBlurImgSrc={onBlurImgSrc} name="imgSrc" value={imgSrc}/>
+                <ImageUploadButton htmlFor="local_file">
+                  pc file
+                  <input id="local_file" type="file" name="file" onChange={onChangeFile}/>
+              </ImageUploadButton>
             </li>
-            <li key="keyword2">
+            <li key="keyword">
+              <TextInput onChangeInput={onChangeInput} name="keyword1" value={keyword1}/>
               <TextInput onChangeInput={onChangeInput} name="keyword2" value={keyword2}/>
             </li>
           </ul>
-        </form>
-        <div className="buttons">
-          <button onClick={onClickSendBtn}>send</button>
+        </FormBody>
+        <FormFooter>
+          <button className={isUploadable ? '' : 'disabled'} onClick={onClickSendBtn}>send</button>
           <button onClick={onClickCancelBtn}>cancel</button>
-        </div>
+        </FormFooter>
       </div>
     </StyledIconEditForm>
   )

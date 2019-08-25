@@ -1,6 +1,6 @@
 import axios from 'axios';
 
-export const upload = async (file: File) =>  {
+export const upload = async (file: File | string) =>  {
   let form = new FormData();
   form.append('file', file);
   form.append('api_key', process.env.REACT_APP_CLOUDINARY_API_KEY || "")
