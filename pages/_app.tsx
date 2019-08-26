@@ -9,7 +9,6 @@ import { theme } from '../styles/theme';
 
 class ReactApp extends App<any> {
   public static async getInitialProps(appContext) {
-    console.log('_app getInitialProps');
     const mobxStore = initializeStore(undefined)
     appContext.ctx.mobxStore = mobxStore
 
@@ -32,7 +31,6 @@ class ReactApp extends App<any> {
 
   public render() {
     const { Component, pageProps } = this.props;
-    console.log('_app render');
     return (
       <Container>
         <Provider {...this.mobxStore}>

@@ -80,6 +80,11 @@ class CommonStore {
       searchRegExp.test(i.title) || searchRegExp.test(i.keywords)
     )).map(i => i.id))
   }
+
+  @action
+  public unshiftIcon(icon: IIcon) {
+    this.logoIconList = [icon, ...this.logoIconList];
+  }
 }
 
 export default CommonStore;
