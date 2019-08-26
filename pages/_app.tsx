@@ -1,5 +1,6 @@
 import App, { Container } from 'next/app';
 import React from 'react';
+import { ToastContainer } from 'react-toastify';
 import { Provider } from 'mobx-react';
 import { initializeStore } from '../stores'
 import GlobalStyles from '../styles/global-styles';
@@ -35,6 +36,7 @@ class ReactApp extends App<any> {
       <Container>
         <Provider {...this.mobxStore}>
           <GlobalStyles/>
+          <ToastContainer position="top-center"/>
           <ThemeProvider theme={theme}>
             <HeaderLayout>
               <Component {...pageProps}/>
