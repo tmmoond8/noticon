@@ -11,7 +11,7 @@ const StyledFloatingButton = withProps<IProps, HTMLParagraphElement>(styled.p)`
   width: 4rem;
   height: 4rem;
   left: 75vw;
-  top: 75vh;
+  top: 65vh;
   background-color: white;
   border-radius: 50%;
   box-shadow: 2px 2px 3px rgba(0,0,0, .5);

@@ -66,12 +66,27 @@ const StyledIconBox = withProps<any, HTMLDivElement>(styled.div)`
   }
 `;
 
+const isIOS = () => {
+  const isClient = typeof window === 'object';
+  if (!isClient) return false;
+  return navigator.userAgent.match(/ipad|iphone/i);
+}
+
 const IconBox = (props: IProps) => {
   const { imgUrl, title } = props;
   const refCopyText: React.RefObject<any> = useRef(null);
 
   const handleCopy = (event) => {
-    refCopyText.current.select();
+    if (isIOS()) {
+      const range = document.createRange();
+      range.selectNodeContents(refCopyText.current);
+      const selection = window.getSelection();
+      selection!.removeAllRanges();
+      selection!.addRange(range);
+      refCopyText.current.setSelectionRange(0, 999999);
+    } else {
+      refCopyText.current.select();
+    }
     document.execCommand('copy');
   }
   return (
