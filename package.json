@@ -47,7 +47,8 @@
   "scripts": {
     "dev": "node server.js",
     "build": "next build",
-    "start": "NODE_ENV=production node server.js",
+    "start": "NODE_ENV=production pm2 start server.js -i 0 --name noticon",
+    "stop": "pm2 stop noticon",
     "storybook": "start-storybook -p 6006",
     "build-storybook": "build-storybook"
   }
