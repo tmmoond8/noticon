@@ -2,6 +2,7 @@ import { action, observable, computed } from 'mobx';
 import {
   get
 } from '../lib/dataRequest';
+import { LoadingProps } from 'react-loading';
 
 type IconType = 'all' | 'logo' | 'normal';
 
@@ -18,6 +19,7 @@ const defaultProps = {
   logoIconList: [],
   normalIconList: [],
   filter: 'all',
+  loading: null,
 }
 
 class CommonStore {
@@ -25,26 +27,34 @@ class CommonStore {
   @observable logoIconList: IIcon[];
   @observable normalIconList: IIcon[];
   @observable filter: IconType;
+  @observable loading: LoadingProps | null;
 
   constructor(props= defaultProps) {
     this.search = props.search;
+    this.loading = props.loading;
     this.logoIconList = props.logoIconList;
     this.normalIconList = props.normalIconList;
     this.filter = props.filter as IconType;
     this.fetchIconData();
   }
 
-  private fetchIconData = () => {
-    get('logo').then((data) => {
-      this.logoIconList = data || [];
-    }, (error) => {
-      console.error(error);
-    });
-    get('normal').then((data) => {
-      this.normalIconList = data || [];
-    }, (error) => {
-      console.error(error);
-    });
+  private fetchIconData = async () => {
+    const logoPromise = get('logo');
+    const normalPromise = get('normal');
+    this.loading = { type: "cubes"};
+
+    const logoData = await logoPromise;
+    const normalData = await normalPromise;
+
+    this.logoIconList = logoData || [];
+    this.normalIconList = normalData || [];
+
+    this.loading = null;
+  }
+
+  @action
+  public setLoading = (loading: LoadingProps) => {
+    this.loading= loading;
   }
 
   @action
