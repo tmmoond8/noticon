@@ -6,6 +6,7 @@ import { initializeStore } from '../stores'
 import GlobalStyles from '../styles/global-styles';
 import { ThemeProvider } from '../styles/typed-components';
 import HeaderLayout from '../components/HeaderLayout';
+import NHelmet from '../components/NHelmet';
 import { theme } from '../styles/theme';
 
 class ReactApp extends App<any> {
@@ -35,6 +36,7 @@ class ReactApp extends App<any> {
     return (
       <Container>
         <Provider {...this.mobxStore}>
+          <NHelmet/>
           <GlobalStyles/>
           <ToastContainer position="top-center"/>
           <ThemeProvider theme={theme}>
