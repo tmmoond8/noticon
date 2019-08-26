@@ -1,5 +1,6 @@
 import React from 'react';
 
+import { inject, observer } from 'mobx-react';
 import { upload } from '../../lib/imageUploader';
 import IconEditForm from './IconEditForm';
 import * as dataRequest from '../../lib/dataRequest';
@@ -8,6 +9,7 @@ import { Noticon } from '../../types';
 interface IProps {
   isOpen?: boolean;
   onSetOpen: any;
+  commonStore?: any;
 }
 interface IState {
   title: string;
@@ -18,6 +20,8 @@ interface IState {
   id: string;
 }
 
+@inject('commonStore')
+@observer
 class IconEditFormContainer extends React.Component<IProps, IState> {
   state = {
     id: '',
@@ -67,6 +71,9 @@ class IconEditFormContainer extends React.Component<IProps, IState> {
       });
     } catch (error) {
       // error handle
+      this.setState({
+        imgUrl: '',
+      });
     }
   }
 
@@ -75,6 +82,9 @@ class IconEditFormContainer extends React.Component<IProps, IState> {
     const imgSrc = event.target.value;
     if (imgSrc.length < 1) return;
     try {
+      this.setState({
+        imgUrl: 'data:image/svg+xml;base64,PHN2ZyB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciIHdpZHRoPSIyNCIgaGVpZ2h0PSIyNCIgdmlld0JveD0iMCAwIDI0IDI0Ij48cGF0aCBkPSJNMCAxMmMwIDYuNjI3IDUuMzczIDEyIDEyIDEyczEyLTUuMzczIDEyLTEyLTUuMzczLTEyLTEyLTEyLTEyIDUuMzczLTEyIDEyem0xOC0xaC00djdoLTR2LTdoLTRsNi02IDYgNnoiLz48L3N2Zz4='
+      })
       const { id, imgUrl } = await upload(imgSrc);
       this.setState({
         imgUrl,
@@ -86,17 +96,28 @@ class IconEditFormContainer extends React.Component<IProps, IState> {
   }
 
   handleSendIconForm = async (event) => {
-    const { onSetOpen } = this.props;
+    const { onSetOpen, commonStore } = this.props;
+    const { setLoading } = commonStore;
     const noticon: Noticon = {
       ...this.state,
       keywords: `${this.state.keyword1}‡${this.state.keyword2}`
     }
     try {
+      setLoading({ type: "cylon"})
       await dataRequest.append('logo', noticon);
     } catch (error) {
       // error handle
     }
+    setLoading(null)
     onSetOpen(false);
+    this.setState({
+      id: '',
+      title: '',
+      imgUrl: '',
+      imgSrc: '',
+      keyword1: '',
+      keyword2: '',
+    });
   }
 }
 
