@@ -1,5 +1,5 @@
 import React from 'react';
-
+import { toast } from 'react-toastify';
 import { inject, observer } from 'mobx-react';
 import { upload } from '../../lib/imageUploader';
 import IconEditForm from './IconEditForm';
@@ -31,6 +31,7 @@ class IconEditFormContainer extends React.Component<IProps, IState> {
     keyword1: '',
     keyword2: '',
   }
+
   render() {
     const { isOpen, onSetOpen } = this.props;
     const { title, imgUrl, imgSrc, keyword1, keyword2 } = this.state;
@@ -92,6 +93,7 @@ class IconEditFormContainer extends React.Component<IProps, IState> {
       });
     } catch (error) {
       console.error(error);
+      toast.error('이미지 업로드에 실패했습니다.');
     }
   }
 
@@ -106,8 +108,10 @@ class IconEditFormContainer extends React.Component<IProps, IState> {
       setLoading({ type: "cylon"})
       await dataRequest.append('logo', noticon);
       commonStore.unshiftIcon(noticon);
+      toast.success('새로운 아이콘을 추가했습니다.');
     } catch (error) {
       // error handle
+      toast.error('아이콘 업로드에 실패했습니다.');
     }
     setLoading(null)
     onSetOpen(false);
