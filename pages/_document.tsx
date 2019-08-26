@@ -8,7 +8,6 @@ interface IProps {
 
 export default class MyDocument extends Document<IProps> {
   static getInitialProps({ renderPage }) {
-    console.log('_document getInitialProps');
     const sheet = new ServerStyleSheet();
     const page = renderPage((App) => (props) =>
       sheet.collectStyles(<App {...props} />),
@@ -19,11 +18,9 @@ export default class MyDocument extends Document<IProps> {
   }
 
   render() {
-    console.log('_document render');
     return (
       <html>
         <Head>
-          <title>My page</title>
           {this.props.styleTags}
         </Head>
         <body>

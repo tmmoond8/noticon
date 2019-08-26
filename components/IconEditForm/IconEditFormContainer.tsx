@@ -105,6 +105,7 @@ class IconEditFormContainer extends React.Component<IProps, IState> {
     try {
       setLoading({ type: "cylon"})
       await dataRequest.append('logo', noticon);
+      commonStore.unshiftIcon(noticon);
     } catch (error) {
       // error handle
     }
