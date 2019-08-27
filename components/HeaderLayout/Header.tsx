@@ -1,21 +1,28 @@
 import React from 'react';
 import styled from '../../styles/typed-components';
+import SearchBar from './SearchBar';
 
-interface IProps {}
+interface IProps {
+  search: string;
+  onSearchChange: (search: string) => void;
+}
 
 const StyledHeader = styled.div`
-  height: 2.7rem;
+  display: flex;
+  justify-content: space-between;
   line-height: 2.7rem;
-  padding-left: 1rem;
+  padding: 1rem;
   
   p {
     position: relative;
-    padding-left: 2rem;
+    padding-left: 4rem;
+    font-size: 1.5rem;
+
     &::before {
       content: "";
       position: absolute;
-      height: 1.5rem;
-      width: 1.5rem;
+      height: 3rem;
+      width: 3rem;
       left: 0;
       top: 0;
       bottom: 0;
@@ -30,6 +37,7 @@ const StyledHeader = styled.div`
 const Header = (props: IProps) => (
   <StyledHeader>
     <p>Noticon</p>
+    <SearchBar search={props.search} onSearchChange={props.onSearchChange}/>
   </StyledHeader> 
 )
 

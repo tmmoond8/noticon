@@ -3,6 +3,7 @@ import {
   get
 } from '../lib/dataRequest';
 import { LoadingProps } from 'react-loading';
+import storage from '../lib/storage';
 
 type IconType = 'all' | 'logo' | 'normal';
 
@@ -42,13 +43,16 @@ class CommonStore {
     const logoPromise = get('logo');
     const normalPromise = get('normal');
     this.loading = { type: "cubes"};
+    const storedIcons =  storage.get();
+    this.logoIconList = storedIcons || [];
 
     const logoData = await logoPromise;
     const normalData = await normalPromise;
+    
 
     this.logoIconList = logoData || [];
     this.normalIconList = normalData || [];
-
+    storage.set(logoData);
     this.loading = null;
   }
 
@@ -75,7 +79,7 @@ class CommonStore {
 
   @computed
   public get hitIconSet() {
-    const searchRegExp = new RegExp(this.search);
+    const searchRegExp = new RegExp(this.search, "i");
     return new Set(this.iconList.filter(i => (
       searchRegExp.test(i.title) || searchRegExp.test(i.keywords)
     )).map(i => i.id))

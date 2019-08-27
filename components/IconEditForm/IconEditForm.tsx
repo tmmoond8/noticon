@@ -1,6 +1,7 @@
-import React from 'react';
+import React, { useState } from 'react';
 import styled, { withProps } from '../../styles/typed-components';
 import TextInput from './TextInput';
+import UploadModeSwitch from './UploadModeSwitch';
 
 interface IProps {
   isOpen?: boolean;
@@ -52,19 +53,22 @@ const FormBody = styled.form`
     `}
     width: 240px;
     height: 240px;
+    
+    & > div {
+      margin: 2rem auto 0 auto;
+    }
+
     & > img {
       position: absolute;
       width: inherit;
       height: inherit;
+      padding: 1rem 3rem 2rem 3rem;
+      object-fit: contain;
     }
 
     & > input {
       z-index: 10;
       opacity: 0;
-    }
-    & > img {
-      padding: 2rem 2rem 4rem 2rem;
-      object-fit: contain;
     }
   }
 
@@ -150,6 +154,8 @@ const IconEditForm = (props: IProps) => {
     isOpen,
   } = props;
 
+  const [isURL, toggleUploadMode ] = useState(true);
+
   const isUploadable = title.length !== 0 && imgUrl.length !== 0;
   
   return (
@@ -157,18 +163,21 @@ const IconEditForm = (props: IProps) => {
       <div>
         <FormBody>
           <div>
+            <UploadModeSwitch isURL={isURL} toggleMode={toggleUploadMode}/>
             <img src={imgUrl} alt=""/>
           </div>
           <ul>
-            <li key="title">
-              <TextInput onChangeInput={onChangeInput} name="title" value={title}/>
-            </li>
             <li key="file">
-              <TextInput onChangeInput={onChangeInput} onBlurImgSrc={onBlurImgSrc} name="imgSrc" value={imgSrc}/>
+              {isURL ? (<TextInput onChangeInput={onChangeInput} onBlurImgSrc={onBlurImgSrc} name="imgSrc" value={imgSrc}/>)
+              : (
                 <ImageUploadButton htmlFor="local_file">
                   pc file
                   <input id="local_file" type="file" name="file" onChange={onChangeFile}/>
-              </ImageUploadButton>
+                </ImageUploadButton>
+              )}
+            </li>
+            <li key="title">
+              <TextInput onChangeInput={onChangeInput} name="title" value={title}/>
             </li>
             <li key="keyword">
               <TextInput onChangeInput={onChangeInput} name="keyword1" value={keyword1}/>

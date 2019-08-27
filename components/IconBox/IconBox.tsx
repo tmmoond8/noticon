@@ -1,4 +1,5 @@
-import React, { useRef } from 'react';
+import React, { useRef, useState } from 'react';
+import { toast } from 'react-toastify';
 import styled, { withProps } from '../../styles/typed-components';
 
 interface IProps {
@@ -75,6 +76,7 @@ const isIOS = () => {
 const IconBox = (props: IProps) => {
   const { imgUrl, title } = props;
   const refCopyText: React.RefObject<any> = useRef(null);
+  const [copyText, setCopyText] = useState('COPY');
 
   const handleCopy = (event) => {
     if (isIOS()) {
@@ -88,6 +90,8 @@ const IconBox = (props: IProps) => {
       refCopyText.current.select();
     }
     document.execCommand('copy');
+    toast.success(`${title} copied`)
+    setCopyText('COPIED');
   }
   return (
     <StyledIconBox isLongText={title.length > 14}>
@@ -104,7 +108,8 @@ const IconBox = (props: IProps) => {
       <div 
         className="copy"
         onClick={handleCopy}
-      >COPY</div>
+        onMouseLeave={() => setCopyText('COPY')}
+      >{copyText}</div>
     </StyledIconBox>
   )
 

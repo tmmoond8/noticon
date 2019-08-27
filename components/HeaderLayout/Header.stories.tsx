@@ -8,6 +8,6 @@ import { action } from '@storybook/addon-actions';
 const onSearchChange = action('onSearchChange');
 
 storiesOf('Header', module)
-  .add('Header', () => <Header/>)
+  .add('Header', () => <Header search="dido" onSearchChange={onSearchChange}/>)
   .add('SearchBar', () => <SearchBar search="dido" onSearchChange={onSearchChange}/>)
   .add('HeaderLayout', () => (<HeaderLayout search="str" onSearchChange={onSearchChange}>dff</HeaderLayout>))

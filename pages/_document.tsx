@@ -4,35 +4,23 @@ import { ServerStyleSheet } from '../styles/typed-components';
 
 interface IProps {
   styleTags: Array<React.ReactElement<{}>>;
-  helmetContext: any;
 }
 
 export default class MyDocument extends Document<IProps> {
   static getInitialProps({ renderPage }) {
-    let app;
     const sheet = new ServerStyleSheet();
     const page = renderPage((App) => (props) =>
-      app = sheet.collectStyles(<App {...props} />),
-      app
+      sheet.collectStyles(<App {...props} />)
     );
 
     const styleTags = sheet.getStyleElement();
-    return { ...page, styleTags, helmetContext: app.helmetContext };
+    return { ...page, styleTags };
   }
 
   render() {
-    const { helmetContext } = this.props;
     return (
       <html>
         <Head>
-          {!!helmetContext && !! helmetContext.helmet && (
-            <>
-              {helmetContext.helmet.meta.toComponent()}
-              {helmetContext.helmet.link.toComponent()}
-              {helmetContext.helmet.title.toComponent()}
-              {helmetContext.helmet.script.toComponent()}
-            </>
-          )}
           {this.props.styleTags}
         </Head>
         <body>

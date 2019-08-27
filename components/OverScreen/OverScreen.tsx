@@ -7,6 +7,7 @@ import IconEditForm from '../IconEditForm';
 const ScreenWrapper = withProps<{scrollTop}, HTMLDivElement>(styled.div)`
   position: absolute;
   top: ${props => props.scrollTop}px;
+  height: 1px;
   width: 100%;
   & > div {
     position: relative;

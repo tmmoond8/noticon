@@ -38,7 +38,7 @@ class ReactApp extends App<any> {
         <Provider {...this.mobxStore}>
           <NHelmet/>
           <GlobalStyles/>
-          <ToastContainer position="top-center"/>
+          <ToastContainer position="top-center" style={{textAlign: 'center'}} autoClose={2000}/>
           <ThemeProvider theme={theme}>
             <HeaderLayout>
               <Component {...pageProps}/>
