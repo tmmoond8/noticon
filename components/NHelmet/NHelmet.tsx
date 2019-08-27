@@ -1,5 +1,5 @@
 import React from 'react';
-import Helmet from 'react-helmet';
+import Head from 'next/head';
 
 const title = 'Noticon';
 const description = 'Icon Storage for Notion';
@@ -26,17 +26,12 @@ const twitterTags = {
 
 const NHelmet = () => {
   return (
-    <Helmet 
-      title={`Noticon`}
-      meta={[
-        ...Object.keys(ogTags).map(key => ({ property: key, content: ogTags[key] })),
-        ...Object.keys(twitterTags).map(key => ({ name: key, content: ogTags[key] })),
-
-      ]}
-      link={[
-        { rel: 'shortcut icon', href: "https://res.cloudinary.com/dgggcrkxq/image/upload/v1566826573/noticon/favicon_j7lf1k.ico" }
-      ]}
-    />
+    <Head>
+      <title>Noticon</title>
+      {<>{Object.keys(ogTags).map(key => <meta name={key} content={ogTags[key]}/>)}</>}
+      {<>{Object.keys(twitterTags).map(key => <meta name={key} content={ogTags[key]}/>)}</>}
+      <link rel="shortcut icon" href="https://res.cloudinary.com/dgggcrkxq/image/upload/v1566826573/noticon/favicon_j7lf1k.ico"/>
+    </Head>
   )
 }
 
