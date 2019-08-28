@@ -7,7 +7,7 @@ interface IProps {
 }
 
 const StyledFloatingButton = withProps<IProps, HTMLParagraphElement>(styled.p)`
-  position: absolute;
+  position: fixed;
   width: 4rem;
   height: 4rem;
   left: 75vw;
@@ -16,6 +16,13 @@ const StyledFloatingButton = withProps<IProps, HTMLParagraphElement>(styled.p)`
   border-radius: 50%;
   box-shadow: 2px 2px 3px rgba(0,0,0, .5);
   cursor: pointer;
+  transform: ${props => props.isOpen ? 'scale(0) !important' : 'scale(1)'};
+  transition: all .3s ease-out;
+  
+  &:hover {
+    transform: scale(1.3);
+  }
+
   &::before {
     position: absolute;
     content: "";
@@ -28,8 +35,6 @@ const StyledFloatingButton = withProps<IProps, HTMLParagraphElement>(styled.p)`
     backgrournd-repeat: no-repeat;
     background-size: contain;
   }
-  transform: scale(${props => props.isOpen ? '0' : '1'});
-  transition: all .3s ease-out;
 `;
 
 const FloatingButton = (props: IProps) => <StyledFloatingButton isOpen={props.isOpen} onClick={props.onClick}/>
