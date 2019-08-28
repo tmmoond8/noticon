@@ -41,8 +41,8 @@ const StyledGallery = withProps<any, HTMLDivElement>(styled.div)`
   ul {
     position: relative;
     height: 400px;
-    width: 992px;
-    margin: 2rem auto 0 auto;
+    max-width: 992px;
+    margin: 0 auto;
 
     ${props => props.theme.media.tablet`
       width: 100%;
