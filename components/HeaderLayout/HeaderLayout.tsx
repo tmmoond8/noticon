@@ -1,11 +1,16 @@
 import React from 'react';
+import { LoadingProps } from 'react-loading';
 import Header from './Header';
 import styled from '../../styles/typed-components';
+import { SortMode } from '../../types';
 
 interface IProps {
   search: string;
   children: React.ReactNode;
   onSearchChange: (search: string) => void;
+  sortMode: SortMode;
+  onToggleSortMode: () => void;
+  onSetLoading: (loading: LoadingProps | null) => void;
 }
 
 const StyledLayout = styled.div`
@@ -26,7 +31,13 @@ const StyledLayout = styled.div`
 const HeaderLayout = (props: IProps) => (
   <StyledLayout>
     <header>
-      <Header search={props.search} onSearchChange={props.onSearchChange}/>
+      <Header 
+        search={props.search} 
+        onSearchChange={props.onSearchChange}
+        sortMode={props.sortMode}
+        onToggleSortMode={props.onToggleSortMode}
+        onSetLoading={props.onSetLoading}
+      />
     </header>
     <div>
       {props.children}

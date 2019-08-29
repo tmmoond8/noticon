@@ -4,3 +4,5 @@ export interface Noticon {
   imgUrl: string;
   keywords: string;
 }
+
+export type SortMode = "date" | "alphabet";
