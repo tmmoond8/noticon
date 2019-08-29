@@ -107,7 +107,7 @@ class IconEditFormContainer extends React.Component<IProps, IState> {
     try {
       setLoading({ type: "cylon"})
       await dataRequest.append('logo', noticon);
-      commonStore.unshiftIcon(noticon);
+      commonStore.unshiftIcon({...noticon, date: new Date().getTime()});
       toast.success('added a new icon');
     } catch (error) {
       // error handle
