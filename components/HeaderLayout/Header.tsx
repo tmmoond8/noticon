@@ -1,10 +1,16 @@
-import React from 'react';
+import React, { useState } from 'react';
+import { LoadingProps } from 'react-loading';
+import Switch from '../../components/Switch';
 import styled from '../../styles/typed-components';
+import { SortMode } from '../../types';
 import SearchBar from './SearchBar';
 
 interface IProps {
   search: string;
   onSearchChange: (search: string) => void;
+  sortMode: SortMode;
+  onToggleSortMode: () => void;
+  onSetLoading: (loading: LoadingProps | null) => void;
 }
 
 const StyledHeader = styled.div`
@@ -34,11 +40,30 @@ const StyledHeader = styled.div`
   }
 `;
 
-const Header = (props: IProps) => (
-  <StyledHeader>
-    <p>Noticon</p>
-    <SearchBar search={props.search} onSearchChange={props.onSearchChange}/>
-  </StyledHeader> 
-)
+const Header = (props: IProps) => {
+  const { search, sortMode, onSetLoading, onSearchChange } = props;
+  const [ sort, toggleSort ] = useState(sortMode);
+  const toggleSortMode = () => {
+    toggleSort(sort === "date" ? "alphabet" : "date");
+    onSetLoading({ type: "cubes"})
+    setTimeout(() => {
+      props.onToggleSortMode();
+      onSetLoading(null);
+    }, 500);
+  }
+  return (
+    <StyledHeader>
+      <p>Noticon</p>
+      <Switch 
+        isTrue={sort === "date"} 
+        trueText="latest" 
+        falseText="alphabet" 
+        onToggle={toggleSortMode}
+        style={{ width: '10rem', margin: 'auto 0 auto auto'}}
+      />
+      <SearchBar search={search} onSearchChange={onSearchChange}/>
+    </StyledHeader> 
+  )
+}
 
 export default Header;

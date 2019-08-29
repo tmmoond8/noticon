@@ -4,7 +4,6 @@ import { boolean, withKnobs } from '@storybook/addon-knobs';
 import { storiesOf } from '@storybook/react';
 import IconEditForm from  './IconEditForm';
 import TextInput from  './TextInput';
-import UploadModeSwitch from  './UploadModeSwitch';
 
 const onChangeInput = action('onChangeInput');
 const onChangeFile = action('onChangeFile');
@@ -15,7 +14,6 @@ const onClickCancelBtn = action('onClickCancelBtn');
 storiesOf('IconEditForm', module).addDecorator(withKnobs)
   .add('TextInput', () => <TextInput name="test" value="2323" onChangeInput={onChangeInput}/>)
   .add('TextInput empty', () => <TextInput name="test" value="" onChangeInput={onChangeInput}/>)
-  .add('UploadModeSwitch', () => <UploadModeSwitch isURL={boolean('mode', true)} toggleMode={action('toggle')}/>)
   .add('IconEditForm', () => (
     <IconEditForm 
       title=""

@@ -1,7 +1,7 @@
 import React, { useState } from 'react';
-import styled, { withProps } from '../../styles/typed-components';
 import TextInput from './TextInput';
-import UploadModeSwitch from './UploadModeSwitch';
+import styled, { withProps } from '../../styles/typed-components';
+import Switch from '../Switch';
 
 interface IProps {
   isOpen?: boolean;
@@ -154,7 +154,7 @@ const IconEditForm = (props: IProps) => {
     isOpen,
   } = props;
 
-  const [isURL, toggleUploadMode ] = useState(true);
+  const [isURLUpload, toggleUploadMode ] = useState(true);
 
   const isUploadable = title.length !== 0 && imgUrl.length !== 0;
   
@@ -163,12 +163,18 @@ const IconEditForm = (props: IProps) => {
       <div>
         <FormBody>
           <div>
-            <UploadModeSwitch isURL={isURL} toggleMode={toggleUploadMode}/>
+            <Switch 
+              isTrue={isURLUpload} 
+              trueText="URL" 
+              falseText="PC" 
+              onToggle={() => toggleUploadMode(!isURLUpload)}
+              style={{ width: "8rem"}}
+            />
             <img src={imgUrl} alt=""/>
           </div>
           <ul>
             <li key="file">
-              {isURL ? (<TextInput onChangeInput={onChangeInput} onBlurImgSrc={onBlurImgSrc} name="imgSrc" value={imgSrc}/>)
+              {isURLUpload ? (<TextInput onChangeInput={onChangeInput} onBlurImgSrc={onBlurImgSrc} name="imgSrc" value={imgSrc}/>)
               : (
                 <ImageUploadButton htmlFor="local_file">
                   pc file
