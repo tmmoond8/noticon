@@ -8,7 +8,7 @@ interface IProps {
 const Wrapper = withProps<any, HTMLDivElement>(styled.div)`
   display: flex;
   position: relative;
-  width: 7rem;
+  width: 8rem;
   height: 2rem;
   text-align: center;
   background-color: #f1f1f1;

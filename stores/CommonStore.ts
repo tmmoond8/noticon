@@ -4,8 +4,18 @@ import {
 } from '../lib/dataRequest';
 import { LoadingProps } from 'react-loading';
 import storage from '../lib/storage';
+import { SortMode } from '../types';
 
 type IconType = 'all' | 'logo' | 'normal';
+
+const sortFn = {
+  "date": (a: IIcon, b: IIcon) => {
+    const aDate = a.date ? a.date : 0;
+    const bDate = b.date ? b.date : 0;
+    return aDate > bDate ? 1 : -1;
+  },
+  "alphabet": (a: IIcon, b: IIcon) => a.title.toLowerCase() > b.title.toLowerCase() ? 1 : -1
+}
 
 interface IIcon {
   id: string;
@@ -13,6 +23,8 @@ interface IIcon {
   imgUrl: string;
   description: string;
   keywords: string;
+  sortMode: SortMode;
+  date?: number;
 }
 
 const defaultProps = {
@@ -21,6 +33,7 @@ const defaultProps = {
   normalIconList: [],
   filter: 'all',
   loading: null,
+  sortMode: "date",
 }
 
 class CommonStore {
@@ -29,6 +42,7 @@ class CommonStore {
   @observable normalIconList: IIcon[];
   @observable filter: IconType;
   @observable loading: LoadingProps | null;
+  @observable sortMode: SortMode;
 
   constructor(props= defaultProps) {
     this.search = props.search;
@@ -36,6 +50,7 @@ class CommonStore {
     this.logoIconList = props.logoIconList;
     this.normalIconList = props.normalIconList;
     this.filter = props.filter as IconType;
+    this.sortMode = props.sortMode as SortMode;
     this.fetchIconData();
   }
 
@@ -43,7 +58,8 @@ class CommonStore {
     const logoPromise = get('logo');
     const normalPromise = get('normal');
     this.loading = { type: "cubes"};
-    const storedIcons =  storage.get();
+    this.sortMode = storage.getMode();
+    const storedIcons =  storage.getIcons();
     this.logoIconList = storedIcons || [];
 
     const logoData = await logoPromise;
@@ -52,7 +68,7 @@ class CommonStore {
 
     this.logoIconList = logoData || [];
     this.normalIconList = normalData || [];
-    storage.set(logoData);
+    storage.setIcons(logoData);
     this.loading = null;
   }
 
@@ -66,6 +82,13 @@ class CommonStore {
     this.search = search;
   }
 
+  @action
+  public toggleSortMode = () => {
+    setTimeout(() => {
+      this.sortMode = this.sortMode === "date" ? "alphabet" : "date";
+    }, 300);
+  }
+
   @computed
   public get iconList() {
     if (this.filter === 'normal') {
@@ -74,7 +97,7 @@ class CommonStore {
       return this.logoIconList;
     }
     return [...this.logoIconList, ...this.normalIconList]
-      .sort((a: IIcon, b: IIcon) => a.title > b.title ? 1 : -1)
+      .sort(sortFn[this.sortMode])
   }
 
   @computed

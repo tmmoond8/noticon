@@ -1,10 +1,14 @@
 import React from 'react';
+import Switch from '../../components/Switch';
 import styled from '../../styles/typed-components';
+import { SortMode } from '../../types';
 import SearchBar from './SearchBar';
 
 interface IProps {
   search: string;
   onSearchChange: (search: string) => void;
+  sortMode: SortMode;
+  onToggleSortMode: () => void;
 }
 
 const StyledHeader = styled.div`
@@ -37,6 +41,13 @@ const StyledHeader = styled.div`
 const Header = (props: IProps) => (
   <StyledHeader>
     <p>Noticon</p>
+    <Switch 
+      isTrue={props.sortMode === "date"} 
+      trueText="latest" 
+      falseText="alphabet" 
+      onToggleMode={props.onToggleSortMode}
+      style={{ width: '10rem', margin: 'auto 0 auto auto'}}
+    />
     <SearchBar search={props.search} onSearchChange={props.onSearchChange}/>
   </StyledHeader> 
 )

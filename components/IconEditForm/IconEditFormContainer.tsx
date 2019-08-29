@@ -108,10 +108,10 @@ class IconEditFormContainer extends React.Component<IProps, IState> {
       setLoading({ type: "cylon"})
       await dataRequest.append('logo', noticon);
       commonStore.unshiftIcon(noticon);
-      toast.success('새로운 아이콘을 추가했습니다.');
+      toast.success('added a new icon');
     } catch (error) {
       // error handle
-      toast.error('아이콘 업로드에 실패했습니다.');
+      toast.error('failed to upload the icon');
     }
     setLoading(null)
     onSetOpen(false);
