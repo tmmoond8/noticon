@@ -12,7 +12,7 @@ const sortFn = {
   "date": (a: IIcon, b: IIcon) => {
     const aDate = a.date ? a.date : 0;
     const bDate = b.date ? b.date : 0;
-    return aDate > bDate ? 1 : -1;
+    return aDate > bDate ? -1 : 1;
   },
   "alphabet": (a: IIcon, b: IIcon) => a.title.toLowerCase() > b.title.toLowerCase() ? 1 : -1
 }
@@ -108,6 +108,7 @@ class CommonStore {
 
   @action
   public unshiftIcon(icon: IIcon) {
+    console.log(icon);
     this.logoIconList = [icon, ...this.logoIconList];
   }
 }
