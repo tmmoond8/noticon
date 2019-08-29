@@ -23,7 +23,6 @@ storiesOf('OverScreen', module).addDecorator(withKnobs)
   .add('Loading', () => <Loading type={"cubes"} color="#ffffff"/>)
   .add('OverScreen', () => (
     <OverScreen 
-      scrollTop={0} 
       isOpenUploading={boolean('isOpenUploading', false)} 
       setOpenUploading={setOpenUploading}
       loading={object('loading', undefined)}

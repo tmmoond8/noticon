@@ -32,10 +32,9 @@ class OverScreenContainer extends React.Component<IProps, IState> {
 
   render() {
     const { loading } = this.props.commonStore!;
-    const { scrollTop, isOpenUploading } = this.state;
+    const { isOpenUploading } = this.state;
     return (
       <OverScreen 
-        scrollTop={scrollTop}
         isOpenUploading={isOpenUploading}
         setOpenUploading={this.handleSetOpenUploading}
         loading={loading}
