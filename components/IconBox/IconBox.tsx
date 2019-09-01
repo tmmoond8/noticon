@@ -1,11 +1,18 @@
 import React, { useRef, useState } from 'react';
 import { toast } from 'react-toastify';
 import styled, { withProps } from '../../styles/typed-components';
+import { keyframes } from 'styled-components';
 
 interface IProps {
   imgUrl: string;
   title: string;
 }
+
+const pop = keyframes`
+  0% { transform: scale(0) }
+  50% { transform: scale(.8) }
+  100% { transform: scale(1) }
+`;
 
 const StyledIconBox = withProps<any, HTMLDivElement>(styled.div)`
   display: flex;
@@ -17,6 +24,7 @@ const StyledIconBox = withProps<any, HTMLDivElement>(styled.div)`
   text-align: center;
 
   img {
+    animation: ${pop} .6s ease-out;
     width: 60%;
     height: 60%;
   }

@@ -183,7 +183,7 @@ const IconEditForm = (props: IProps) => {
               )}
             </li>
             <li key="title">
-              <TextInput onChangeInput={onChangeInput} name="title" value={title} maxLength={16}/>
+              <TextInput onChangeInput={onChangeInput} name="title" value={title} maxLength={20}/>
             </li>
             <li key="keyword">
               <TextInput onChangeInput={onChangeInput} name="keyword1" value={keyword1} maxLength={12}/>

@@ -12,6 +12,19 @@ interface IProps {
 @inject('commonStore')
 @observer
 class GalleryContainer extends React.Component<IProps> {
+
+  componentDidMount = () => {
+    const isClient = typeof window === 'object';
+    if (!isClient) return;
+    const { iconScaleOut } = this.props.commonStore;
+    window.addEventListener('scroll', () => {
+      const currentScroll = window.scrollY + window.innerHeight;
+      if (document.body.scrollHeight - currentScroll < 80) {
+        iconScaleOut();
+      }
+    })
+  }
+
   render() {
     const { device="ssr", commonStore } = this.props;
     const { iconList, hitIconSet } = commonStore;

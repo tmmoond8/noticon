@@ -8,7 +8,6 @@ interface IProps {
 }
 
 interface IState {
-  scrollTop: number;
   isOpenUploading: boolean;
 }
 
@@ -16,18 +15,7 @@ interface IState {
 @observer
 class OverScreenContainer extends React.Component<IProps, IState> {
   state = {
-    scrollTop: 0,
     isOpenUploading: false,
-  }
-
-  componentDidMount = () => {
-    const isClient = typeof window === 'object';
-    if (!isClient) return;
-    window.addEventListener('scroll', () => {
-      this.setState({
-        scrollTop: window.scrollY
-      })
-    })
   }
 
   render() {

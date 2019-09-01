@@ -34,6 +34,7 @@ const defaultProps = {
   filter: 'all',
   loading: null,
   sortMode: "date",
+  iconListMax: 100,
 }
 
 class CommonStore {
@@ -43,6 +44,7 @@ class CommonStore {
   @observable filter: IconType;
   @observable loading: LoadingProps | null;
   @observable sortMode: SortMode;
+  @observable iconListMax: number;
 
   constructor(props= defaultProps) {
     this.search = props.search;
@@ -51,6 +53,7 @@ class CommonStore {
     this.normalIconList = props.normalIconList;
     this.filter = props.filter as IconType;
     this.sortMode = props.sortMode as SortMode;
+    this.iconListMax = props.iconListMax;
     this.fetchIconData();
   }
 
@@ -95,7 +98,7 @@ class CommonStore {
       return this.logoIconList;
     }
     return [...this.logoIconList, ...this.normalIconList]
-      .sort(sortFn[this.sortMode])
+      .sort(sortFn[this.sortMode]).filter((_, index) => index < this.iconListMax)
   }
 
   @computed
@@ -108,8 +111,12 @@ class CommonStore {
 
   @action
   public unshiftIcon(icon: IIcon) {
-    console.log(icon);
     this.logoIconList = [icon, ...this.logoIconList];
+  }
+
+  @action
+  public iconScaleOut = () => {
+    this.iconListMax += 30;
   }
 }
 
