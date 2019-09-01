@@ -156,7 +156,7 @@ const IconEditForm = (props: IProps) => {
 
   const [isURLUpload, toggleUploadMode ] = useState(true);
 
-  const isUploadable = title.length !== 0 && imgUrl.length !== 0;
+  const isUploadable = title.length !== 0 && imgUrl.length !== 0 && !imgUrl.startsWith("data:image/svg+xml;base64");
   
   return (
     <StyledIconEditForm className="icon-edit-form" isOpen={isOpen}>
@@ -183,11 +183,11 @@ const IconEditForm = (props: IProps) => {
               )}
             </li>
             <li key="title">
-              <TextInput onChangeInput={onChangeInput} name="title" value={title}/>
+              <TextInput onChangeInput={onChangeInput} name="title" value={title} maxLength={16}/>
             </li>
             <li key="keyword">
-              <TextInput onChangeInput={onChangeInput} name="keyword1" value={keyword1}/>
-              <TextInput onChangeInput={onChangeInput} name="keyword2" value={keyword2}/>
+              <TextInput onChangeInput={onChangeInput} name="keyword1" value={keyword1} maxLength={12}/>
+              <TextInput onChangeInput={onChangeInput} name="keyword2" value={keyword2} maxLength={12}/>
             </li>
           </ul>
         </FormBody>
