@@ -27,13 +27,14 @@ class GalleryContainer extends React.Component<IProps> {
 
   render() {
     const { device="ssr", commonStore } = this.props;
-    const { iconList, hitIconSet } = commonStore;
+    const { iconList, hitIconSet, iconListMax } = commonStore;
 
     return (
       <Gallery 
         iconList={iconList}
         hitIconList={hitIconSet}
         device={device}
+        iconListMax={iconListMax}
       />
     )
   }

@@ -98,13 +98,13 @@ class CommonStore {
       return this.logoIconList;
     }
     return [...this.logoIconList, ...this.normalIconList]
-      .sort(sortFn[this.sortMode]).filter((_, index) => index < this.iconListMax)
+      .sort(sortFn[this.sortMode])
   }
 
   @computed
   public get hitIconSet() {
     const searchRegExp = new RegExp(this.search, "i");
-    return new Set(this.iconList.filter(i => (
+    return new Set(this.logoIconList.filter(i => (
       searchRegExp.test(i.title) || searchRegExp.test(i.keywords)
     )).map(i => i.id))
   }
