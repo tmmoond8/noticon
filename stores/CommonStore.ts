@@ -59,18 +59,25 @@ class CommonStore {
 
   private fetchIconData = async () => {
     const logoPromise = get('logo');
-    const normalPromise = get('normal');
     this.loading = { type: "cubes"};
     this.sortMode = storage.getMode();
     const storedIcons =  storage.getIcons();
     this.logoIconList = storedIcons || [];
 
-    const logoData = await logoPromise;
-    const normalData = await normalPromise;
-    
+    const timeoutPromise = new Promise(async (resolve, reject) => {
+      const id = setTimeout(() => {
+        clearTimeout(id);
+        resolve(this.logoIconList);
+      }, 5000);
+      const logoData = await logoPromise;
+      clearTimeout(id);
+      resolve(logoData);
+    })
 
-    this.logoIconList = logoData || [];
-    this.normalIconList = normalData || [];
+    const logoData = await timeoutPromise;
+
+    this.logoIconList = logoData as any || [];
+    this.normalIconList = [];
     storage.setIcons(logoData);
     this.loading = null;
   }
