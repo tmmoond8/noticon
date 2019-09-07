@@ -1,11 +1,19 @@
 import React, { useRef, useState } from 'react';
 import { toast } from 'react-toastify';
 import styled, { withProps } from '../../styles/typed-components';
+import { keyframes } from 'styled-components';
 
 interface IProps {
   imgUrl: string;
   title: string;
+  visible: boolean;
 }
+
+const pop = keyframes`
+  0% { transform: scale(0) }
+  50% { transform: scale(.8) }
+  100% { transform: scale(1) }
+`;
 
 const StyledIconBox = withProps<any, HTMLDivElement>(styled.div)`
   display: flex;
@@ -17,6 +25,8 @@ const StyledIconBox = withProps<any, HTMLDivElement>(styled.div)`
   text-align: center;
 
   img {
+    display: ${props => props.visible ? 'inline-block' : 'none'};
+    animation: ${pop} .6s ease-out;
     width: 60%;
     height: 60%;
   }
@@ -74,7 +84,7 @@ const isIOS = () => {
 }
 
 const IconBox = (props: IProps) => {
-  const { imgUrl, title } = props;
+  const { imgUrl, title, visible } = props;
   const refCopyText: React.RefObject<any> = useRef(null);
   const [copyText, setCopyText] = useState('COPY');
 
@@ -94,7 +104,7 @@ const IconBox = (props: IProps) => {
     setCopyText('COPIED');
   }
   return (
-    <StyledIconBox isLongText={title.length > 14}>
+    <StyledIconBox isLongText={title.length > 14} visible={visible}>
       <div>
         <textarea 
           ref={refCopyText} 

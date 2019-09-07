@@ -34,6 +34,7 @@ const defaultProps = {
   filter: 'all',
   loading: null,
   sortMode: "date",
+  iconListMax: 100,
 }
 
 class CommonStore {
@@ -43,6 +44,7 @@ class CommonStore {
   @observable filter: IconType;
   @observable loading: LoadingProps | null;
   @observable sortMode: SortMode;
+  @observable iconListMax: number;
 
   constructor(props= defaultProps) {
     this.search = props.search;
@@ -51,23 +53,31 @@ class CommonStore {
     this.normalIconList = props.normalIconList;
     this.filter = props.filter as IconType;
     this.sortMode = props.sortMode as SortMode;
+    this.iconListMax = props.iconListMax;
     this.fetchIconData();
   }
 
   private fetchIconData = async () => {
     const logoPromise = get('logo');
-    const normalPromise = get('normal');
     this.loading = { type: "cubes"};
     this.sortMode = storage.getMode();
     const storedIcons =  storage.getIcons();
     this.logoIconList = storedIcons || [];
 
-    const logoData = await logoPromise;
-    const normalData = await normalPromise;
-    
+    const timeoutPromise = new Promise(async (resolve, reject) => {
+      const id = setTimeout(() => {
+        clearTimeout(id);
+        resolve(this.logoIconList);
+      }, 5000);
+      const logoData = await logoPromise;
+      clearTimeout(id);
+      resolve(logoData);
+    })
 
-    this.logoIconList = logoData || [];
-    this.normalIconList = normalData || [];
+    const logoData = await timeoutPromise;
+
+    this.logoIconList = logoData as any || [];
+    this.normalIconList = [];
     storage.setIcons(logoData);
     this.loading = null;
   }
@@ -101,15 +111,19 @@ class CommonStore {
   @computed
   public get hitIconSet() {
     const searchRegExp = new RegExp(this.search, "i");
-    return new Set(this.iconList.filter(i => (
+    return new Set(this.logoIconList.filter(i => (
       searchRegExp.test(i.title) || searchRegExp.test(i.keywords)
     )).map(i => i.id))
   }
 
   @action
   public unshiftIcon(icon: IIcon) {
-    console.log(icon);
     this.logoIconList = [icon, ...this.logoIconList];
+  }
+
+  @action
+  public iconScaleOut = () => {
+    this.iconListMax += 30;
   }
 }
 

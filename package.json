@@ -1,4 +1,14 @@
 {
+  "name": "noticon",
+  "version": "0.1.1",
+  "description": "a icon storage for Notion",
+  "author": "tmmoond8",
+  "keywords": ["icon", "react", "next.js"],
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/tmmoond8/noticon"
+  },
+  "private": true,
   "dependencies": {
     "axios": "^0.19.0",
     "express": "^4.17.1",

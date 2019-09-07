@@ -21,6 +21,7 @@ storiesOf('Gallery', module)
       iconList={iconList} 
       hitIconList={hitIconList}
       device="desktop"
+      iconListMax={100}
     />
   ))
   .add('tablet', () => (
@@ -28,6 +29,7 @@ storiesOf('Gallery', module)
       iconList={iconList} 
       hitIconList={hitIconList}
       device="tablet"
+      iconListMax={100}
     />
   ))
   .add('phone', () => (
@@ -35,6 +37,7 @@ storiesOf('Gallery', module)
       iconList={iconList} 
       hitIconList={hitIconList}
       device="phone"
+      iconListMax={100}
     />
   ))
   .add('filterd phone', () => (
@@ -42,5 +45,6 @@ storiesOf('Gallery', module)
       iconList={iconList} 
       hitIconList={new Set([1,3,6,7])}
       device="phone"
+      iconListMax={100}
     />
   ))

@@ -6,6 +6,7 @@ interface IProps {
   value: string;
   onChangeInput: any;
   onBlurImgSrc?: any;
+  maxLength?: number;
 }
 
 const StyledTextInput = withProps<any, HTMLDivElement>(styled.div)`
@@ -62,6 +63,7 @@ const TextInput = (props: IProps) => {
     value,
     onChangeInput,
     onBlurImgSrc=() => "",
+    maxLength
   } = props;
   return (
     <StyledTextInput isEmpty={props.value.length === 0}>
@@ -72,6 +74,7 @@ const TextInput = (props: IProps) => {
         value={value} 
         onChange={onChangeInput}
         onBlur={onBlurImgSrc}
+        maxLength={maxLength}
         />
       <label htmlFor={props.name}>{props.name}</label>
     </StyledTextInput>

@@ -93,7 +93,7 @@ class IconEditFormContainer extends React.Component<IProps, IState> {
       });
     } catch (error) {
       console.error(error);
-      toast.error('이미지 업로드에 실패했습니다.');
+      toast.error('failed to upload the icon');
     }
   }
 

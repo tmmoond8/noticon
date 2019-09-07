@@ -24,6 +24,7 @@ interface IProps {
   iconList: any[];
   hitIconList: Set<any>;
   device: 'desktop' | 'tablet' | 'phone' | 'ssr';
+  iconListMax: number;
 }
 
 interface IIconItemProps {
@@ -65,21 +66,22 @@ const StyledGallery = withProps<any, HTMLDivElement>(styled.div)`
 `;
 
 const IconItem = withProps<IIconItemProps, HTMLLIElement>(styled.li)`
-  transform: translate(${props => props.x}, ${props => props.y});
+  transform: translate(${props => props.x}, ${props => props.y}); 
 `
 
-const renderIconList = (boxSize: IBoxSize, iconList: any[], hitIconList: Set<number>) => {
+const reservedSet = new Set();
+
+const renderIconList = (boxSize: IBoxSize, iconList: any[], hitIconList: Set<number>, iconListMax: number) => {
   const { size, unit, column } = boxSize;
-  let index = -1;
   return (
     <>
-      {iconList.map((item) => (
-        hitIconList.has(item.id) && index++,
+      {iconList.filter(item => hitIconList.has(item.id)).map((item, index) => (
         <IconItem key={item.id} 
-          x={`${hitIconList.has(item.id) ? (index % column) * size : -9999}${unit}`} 
-          y={`${(Math.floor(index / column)) * size}${unit}`}
+          x={`${index < iconListMax ? (index % column) * size : -9999}${unit}`} 
+          y={`${index < iconListMax ? (Math.floor(index / column)) * size : 0 }${unit}`}
         >
-          <IconBox imgUrl={item.imgUrl} title={item.title}/>
+          {index < iconListMax && reservedSet.add(item.id) && false}
+          <IconBox visible={reservedSet.has(item.id)} imgUrl={!reservedSet.has(item.id) ? 'https://res.cloudinary.com/dgggcrkxq/image/upload/v1566997355/noticon/ozi8wvb2o2qdcijs2u29.png' : item.imgUrl} title={item.title}/>
         </IconItem>
       ))}
     </>
@@ -87,14 +89,14 @@ const renderIconList = (boxSize: IBoxSize, iconList: any[], hitIconList: Set<num
 }
 
 const Gallery = (props: IProps) => {
-  const { iconList=[], device, hitIconList } = props;
+  const { iconList=[], device, hitIconList, iconListMax } = props;
   const boxSize = devices[device];
 
   return (
     <StyledGallery>
       { device === 'ssr' ? null : (
-        <ul style={{ height: `${(Math.floor((hitIconList.size - 1) / boxSize.column) + 1) * boxSize.size}${boxSize.unit}`}}>
-          {renderIconList(boxSize, iconList, hitIconList)}
+        <ul >
+          {renderIconList(boxSize, iconList, hitIconList, iconListMax)}
         </ul>
       )}
     </StyledGallery>
