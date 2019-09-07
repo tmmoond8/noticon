@@ -8,5 +8,6 @@ storiesOf('IconBox', module)
     <IconBox 
       imgUrl="https://ucarecdn.com/13da67ee-9243-4022-9981-4d0c191b072b/-/resize/x120/"
       title="log"
+      visible={true}
     />
   ))

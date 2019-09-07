@@ -6,6 +6,7 @@ import { keyframes } from 'styled-components';
 interface IProps {
   imgUrl: string;
   title: string;
+  visible: boolean;
 }
 
 const pop = keyframes`
@@ -24,6 +25,7 @@ const StyledIconBox = withProps<any, HTMLDivElement>(styled.div)`
   text-align: center;
 
   img {
+    display: ${props => props.visible ? 'inline-block' : 'none'};
     animation: ${pop} .6s ease-out;
     width: 60%;
     height: 60%;
@@ -82,7 +84,7 @@ const isIOS = () => {
 }
 
 const IconBox = (props: IProps) => {
-  const { imgUrl, title } = props;
+  const { imgUrl, title, visible } = props;
   const refCopyText: React.RefObject<any> = useRef(null);
   const [copyText, setCopyText] = useState('COPY');
 
@@ -102,7 +104,7 @@ const IconBox = (props: IProps) => {
     setCopyText('COPIED');
   }
   return (
-    <StyledIconBox isLongText={title.length > 14}>
+    <StyledIconBox isLongText={title.length > 14} visible={visible}>
       <div>
         <textarea 
           ref={refCopyText} 

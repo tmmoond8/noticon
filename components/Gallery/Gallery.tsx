@@ -69,18 +69,19 @@ const IconItem = withProps<IIconItemProps, HTMLLIElement>(styled.li)`
   transform: translate(${props => props.x}, ${props => props.y}); 
 `
 
+const reservedSet = new Set();
+
 const renderIconList = (boxSize: IBoxSize, iconList: any[], hitIconList: Set<number>, iconListMax: number) => {
   const { size, unit, column } = boxSize;
-  let index = -1;
   return (
     <>
-      {iconList.map((item) => (
-        hitIconList.has(item.id) && index++,
+      {iconList.filter(item => hitIconList.has(item.id)).map((item, index) => (
         <IconItem key={item.id} 
-          x={`${hitIconList.has(item.id) && index < iconListMax ? (index % column) * size : -9999}${unit}`} 
-          y={`${hitIconList.has(item.id) && index < iconListMax ? (Math.floor(index / column)) * size : 0 }${unit}`}
+          x={`${index < iconListMax ? (index % column) * size : -9999}${unit}`} 
+          y={`${index < iconListMax ? (Math.floor(index / column)) * size : 0 }${unit}`}
         >
-          <IconBox imgUrl={item.imgUrl} title={item.title}/>
+          {index < iconListMax && reservedSet.add(item.id) && false}
+          <IconBox visible={reservedSet.has(item.id)} imgUrl={!reservedSet.has(item.id) ? 'https://res.cloudinary.com/dgggcrkxq/image/upload/v1566997355/noticon/ozi8wvb2o2qdcijs2u29.png' : item.imgUrl} title={item.title}/>
         </IconItem>
       ))}
     </>
