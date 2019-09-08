@@ -6,7 +6,7 @@
   "keywords": ["icon", "react", "next.js"],
   "repository": {
     "type": "git",
-    "url": "https://github.com/tmmoond8/noticon"
+    "url": "http://noticon.tammolo.com"
   },
   "private": true,
   "dependencies": {
@@ -57,6 +57,8 @@
     "build": "next build",
     "start": "NODE_ENV=production pm2 start server.js -i 0 --name noticon",
     "stop": "pm2 stop noticon",
+    "export": "next export",
+    "deploy": "yarn build && yarn export",
     "storybook": "start-storybook -p 6006",
     "build-storybook": "build-storybook"
   }

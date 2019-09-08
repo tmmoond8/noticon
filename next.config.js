@@ -6,7 +6,7 @@ const Dotenv = require('dotenv-webpack');
 module.exports = {
   webpack: config => {
     config.plugins = config.plugins || []
-
+    
     config.plugins = [
       ...config.plugins,
       new Dotenv({
@@ -16,5 +16,10 @@ module.exports = {
     ]
 
     return config
+  },
+  exportPathMap: function() {
+    return {
+      '/':  {  page: '/' }
+    };
   }
 }
