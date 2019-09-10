@@ -34,7 +34,7 @@ const defaultProps = {
   filter: 'all',
   loading: null,
   sortMode: "date",
-  iconListMax: 100,
+  iconListMax: 73,
 }
 
 class CommonStore {
@@ -57,14 +57,36 @@ class CommonStore {
     this.fetchIconData();
   }
 
+  private bbbLoading = (iconList: any[]) => {
+    if (iconList.length === 0) return;
+    const _iconList: any[] = [];
+    while(iconList.length > 0) {
+      _iconList.push(iconList.pop());
+    }
+    const id = setInterval(() => {
+      const chunk: any[] = [];
+      let index = 0;
+      let item = _iconList.pop();
+      while(item && index < 24) {
+        chunk.push(item);
+        item = _iconList.pop();
+      }
+      this.logoIconList = this.logoIconList.concat(chunk);
+      if(_iconList.length === 0) {
+        clearInterval(id)
+        this.loading = null;
+      }
+    }, 50)
+  };
+
   private fetchIconData = async () => {
     const logoPromise = get('logo');
     this.loading = { type: "cubes"};
     this.sortMode = storage.getMode();
-    const storedIcons =  storage.getIcons();
-    this.logoIconList = storedIcons || [];
+    const storedIcons =  storage.getIcons() || [];
+    this.bbbLoading(storedIcons);
 
-    const timeoutPromise = new Promise(async (resolve, reject) => {
+    const timeoutPromise = new Promise(async (resolve, reject): Promise<any> => {
       const id = setTimeout(() => {
         clearTimeout(id);
         resolve(this.logoIconList);
@@ -74,10 +96,13 @@ class CommonStore {
       resolve(logoData);
     })
 
-    const logoData = await timeoutPromise;
+    const logoData: any = await timeoutPromise;
 
-    this.logoIconList = logoData as any || [];
-    this.normalIconList = [];
+    if (this.logoIconList.length === 0) {
+      this.bbbLoading(logoData);
+    } else {
+      this.logoIconList = logoData as any || [];
+    }
     storage.setIcons(logoData);
     this.loading = null;
   }
@@ -99,13 +124,7 @@ class CommonStore {
 
   @computed
   public get iconList() {
-    if (this.filter === 'normal') {
-      return this.normalIconList;
-    } else if (this.filter === 'logo') {
-      return this.logoIconList;
-    }
-    return [...this.logoIconList, ...this.normalIconList]
-      .sort(sortFn[this.sortMode])
+    return this.logoIconList.sort(sortFn[this.sortMode])
   }
 
   @computed
@@ -123,7 +142,7 @@ class CommonStore {
 
   @action
   public iconScaleOut = () => {
-    this.iconListMax += 30;
+    this.iconListMax += 24;
   }
 }
 
