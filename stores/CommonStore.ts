@@ -34,7 +34,7 @@ const defaultProps = {
   filter: 'all',
   loading: null,
   sortMode: "date",
-  iconListMax: 100,
+  iconListMax: 73,
 }
 
 class CommonStore {
@@ -57,12 +57,35 @@ class CommonStore {
     this.fetchIconData();
   }
 
+  private bbbLoading = (iconList) => {
+    const _iconList = [ ...iconList ];
+    const id = setInterval(() => {
+      const chunk: any[] = [];
+      let index = 0;
+      let item = _iconList.pop();
+      while(item && index < 100) {
+        chunk.push(item);
+        item = _iconList.pop();
+      }
+      this.logoIconList = this.logoIconList.concat(chunk);
+      if(_iconList.length === 0) {
+        clearInterval(id)
+        this.loading = null;
+      }
+    }, 600)
+  };
+
   private fetchIconData = async () => {
     const logoPromise = get('logo');
     this.loading = { type: "cubes"};
     this.sortMode = storage.getMode();
-    const storedIcons =  storage.getIcons();
-    this.logoIconList = storedIcons || [];
+    const storedIcons =  storage.getIcons() || [];
+    storedIcons.sort((a: IIcon, b: IIcon) => {
+      const aDate = a.date ? a.date : 0;
+      const bDate = b.date ? b.date : 0;
+      return aDate < bDate ? -1 : 1;
+    });
+    this.bbbLoading(storedIcons);
 
     const timeoutPromise = new Promise(async (resolve, reject) => {
       const id = setTimeout(() => {
@@ -75,7 +98,6 @@ class CommonStore {
     })
 
     const logoData = await timeoutPromise;
-
     this.logoIconList = logoData as any || [];
     this.normalIconList = [];
     storage.setIcons(logoData);
@@ -123,7 +145,7 @@ class CommonStore {
 
   @action
   public iconScaleOut = () => {
-    this.iconListMax += 30;
+    this.iconListMax += 24;
   }
 }
 
