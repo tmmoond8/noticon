@@ -73,18 +73,20 @@ const reservedSet = new Set();
 
 const renderIconList = (boxSize: IBoxSize, iconList: any[], hitIconList: Set<number>, iconListMax: number) => {
   const { size, unit, column } = boxSize;
+  let index = -1;
   return (
-    <>
-      {iconList.filter(item => hitIconList.has(item.id)).map((item, index) => (
+    <ul>
+      {iconList.map((item) => (
+        hitIconList.has(item.id) && index < iconListMax && index++,
         <IconItem key={item.id} 
-          x={`${index < iconListMax ? (index % column) * size : -9999}${unit}`} 
-          y={`${index < iconListMax ? (Math.floor(index / column)) * size : 0 }${unit}`}
+          x={`${hitIconList.has(item.id) && index < iconListMax ? (index % column) * size : -9999}${unit}`} 
+          y={`${hitIconList.has(item.id) && index < iconListMax ? (Math.floor(index / column)) * size : 0 }${unit}`}
         >
           {index < iconListMax && reservedSet.add(item.id) && false}
           <IconBox visible={reservedSet.has(item.id)} imgUrl={!reservedSet.has(item.id) ? 'https://res.cloudinary.com/dgggcrkxq/image/upload/v1566997355/noticon/ozi8wvb2o2qdcijs2u29.png' : item.imgUrl} title={item.title}/>
         </IconItem>
       ))}
-    </>
+    </ul>
   );
 }
 
@@ -94,11 +96,7 @@ const Gallery = (props: IProps) => {
 
   return (
     <StyledGallery>
-      { device === 'ssr' ? null : (
-        <ul >
-          {renderIconList(boxSize, iconList, hitIconList, iconListMax)}
-        </ul>
-      )}
+      { device === 'ssr' ? false : renderIconList(boxSize, iconList, hitIconList, iconListMax)}
     </StyledGallery>
   )
 }
