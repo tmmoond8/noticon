@@ -29,7 +29,7 @@ const NHelmet = () => {
     <Head>
       <title>Noticon</title>
       {<>{Object.keys(ogTags).map(key => <meta name={key} content={ogTags[key]}/>)}</>}
-      {<>{Object.keys(twitterTags).map(key => <meta name={key} content={ogTags[key]}/>)}</>}
+      {<>{Object.keys(twitterTags).map(key => <meta name={key} content={twitterTags[key]}/>)}</>}
       <link rel="shortcut icon" href="https://res.cloudinary.com/dgggcrkxq/image/upload/v1566826573/noticon/favicon_j7lf1k.ico"/>
     </Head>
   )
