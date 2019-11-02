@@ -4,57 +4,25 @@ import styled, { withProps } from '../../styles/typed-components';
 interface IProps {
   name: string;
   value: string;
-  onChangeInput: any;
-  onBlurImgSrc?: any;
+  onChangeInput: (e) => void;
+  onBlurImgSrc?: (e) => void;
   maxLength?: number;
+  placeHolder: string;
 }
 
-const StyledTextInput = withProps<any, HTMLDivElement>(styled.div)`
+const StyledTextInput = withProps<any, HTMLDivElement>(styled.input)`
+  display: flex;
+  align-items: center;
+  width: 100%;
+  font-size: 14px;
+  line-height: 20px;
+  padding: 3px 6px;
   position: relative;
-  label {
-    position: absolute;
-    left: 0;
-    font-size: 1.4rem;
-    user-select: none;
-    transform: ${props => props.isEmpty ? 'translateY(1.5rem)' : 'translateY(0.5rem)'};
-    font-size: ${props => props.isEmpty ? '1.4rem' : '1rem'};
-    transition: all .3s;
-    color: gray;
-    ${props => props.theme.media.tablet`
-      font-size: ${props => props.isEmpty ? '1.2rem' : '.8rem'};
-    `}
-    ${props => props.theme.media.phone`
-      font-size: ${props => props.isEmpty ? '1rem' : '.7rem'};
-    `}
-  }
-
-  input {
-    ${props => props.theme.media.tablet`
-      font-size: 1.2rem;
-    `}
-    ${props => props.theme.media.phone`
-      font-size: 1rem;
-    `}
-    display: inline-block;
-    width: 100%;
-    font-size: 1.4rem;
-    padding: 2rem 0 1rem 0;
-    border-bottom: 1px solid lightgray;
-    &:focus {
-      border-bottom: 2px solid black;
-    }
-
-    &:focus + label {
-      transform: translateY(.5rem);
-      font-size: 1rem;
-      ${props => props.theme.media.tablet`
-        font-size: .8rem;
-      `}
-      ${props => props.theme.media.phone`
-        font-size: .7rem;
-      `}
-    }
-  }
+  border-radius: 3px;
+  box-shadow: rgba(15, 15, 15, 0.1) 0px 0px 0px 1px inset, rgba(15, 15, 15, 0.1) 0px 1px 1px inset;
+  background: rgba(242, 241, 238, 0.6);
+  cursor: text;
+  height: 28px;
 `;
 
 const TextInput = (props: IProps) => {
@@ -63,21 +31,20 @@ const TextInput = (props: IProps) => {
     value,
     onChangeInput,
     onBlurImgSrc=() => "",
-    maxLength
+    maxLength,
+    placeHolder,
   } = props;
   return (
-    <StyledTextInput isEmpty={props.value.length === 0}>
-      <input 
-        type="text" 
-        id={name} 
-        name={name} 
-        value={value} 
-        onChange={onChangeInput}
-        onBlur={onBlurImgSrc}
-        maxLength={maxLength}
-        />
-      <label htmlFor={props.name}>{props.name}</label>
-    </StyledTextInput>
+    <StyledTextInput 
+      type="text" 
+      id={name} 
+      name={name} 
+      value={value} 
+      onChange={onChangeInput}
+      onBlur={onBlurImgSrc}
+      maxLength={maxLength}
+      placeholder={placeHolder}
+    ></StyledTextInput>
   )
 }
 

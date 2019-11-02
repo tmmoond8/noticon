@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect, useRef } from 'react';
 import TextInput from './TextInput';
 import styled, { withProps } from '../../styles/typed-components';
 import Switch from '../Switch';
@@ -10,16 +10,16 @@ interface IProps {
   imgSrc: string;
   keyword1: string;
   keyword2: string;
-  onChangeInput: any;
-  onChangeFile: any;
-  onBlurImgSrc: any;
-  onClickSendBtn: any;
-  onClickCancelBtn: any;
+  onChangeInput: (e) => void;
+  onChangeFile: (e) => void;
+  onBlurImgSrc: (e) => void;
+  onClickSendBtn: (e) => void;
+  onClickCancelBtn: () => void;
 }
 
 const StyledIconEditForm = withProps<IProps, HTMLDivElement>(styled.div)`
   width: 100%;
-  max-width: 660px;
+  max-width: 520px;
   padding: 2rem;
   margin: auto;
   transition: all .3s ease-out;
@@ -37,12 +37,21 @@ const StyledIconEditForm = withProps<IProps, HTMLDivElement>(styled.div)`
     background-color: white;
     transform: translate(0);
   }
+
+  .footer {
+    text-align: center;
+    padding: 2rem;
+  }
 `;
 
 const FormBody = styled.form`
   display: flex;
+  align-items: center;
+
   & > div {
     position: relative;
+    width: 240px;
+    height: 240px;
     ${props => props.theme.media.tablet`
       width: 186px;
       height: 186px;
@@ -51,8 +60,6 @@ const FormBody = styled.form`
       width: 128px;
       height: 128px;
     `}
-    width: 240px;
-    height: 240px;
     
     & > div {
       margin: 2rem auto 0 auto;
@@ -60,9 +67,8 @@ const FormBody = styled.form`
 
     & > img {
       position: absolute;
-      width: inherit;
-      height: inherit;
-      padding: 1rem 3rem 2rem 3rem;
+      width: -webkit-fill-available;
+      margin: 2rem 3rem;
       object-fit: contain;
     }
 
@@ -74,70 +80,78 @@ const FormBody = styled.form`
 
   ul {
     display: flex;
+    max-height: 160px;
     flex-direction: column;
     flex: 1;
+    padding: 1.5rem 1.5rem 0 0;
 
     li {
       display: flex;
       flex: 1;
-      div {
-        flex: 1;
-        margin-right: 2rem;
+      * + * {
+        margin-left: 1rem;
       }
+    }
+    li + li {
+      margin-top: 1rem;
     }
   }
 `;
 
 const ImageUploadButton = styled.label`
-  display: flex;
-  justify-content: center;
-  align-items: center;
-  width: 6rem;
-  border: 1px solid #bbbbbb;
-  border-radius: 4px;
-  margin: auto 2rem auto 0;
-  font-size: 1.4rem;
-  background-color: white;
+  display: block;
+  width:  10rem;
+  border-radius: 3px;
+  text-align: center;
   padding: .5rem;
   cursor: pointer;
 
+  background-color: rgb(46, 170, 220);
+  color: white;
+
   &:hover, &:active {
-    background-color: black;
-    color: white;
+    background-color: rgb(6, 156, 205);
   }
-  
+
   input {
     width: 0;
   }
 `;
 
-const FormFooter = styled.div`
-  text-align: center;
-  padding: 2rem;
-  button {
-    font-size: 1.4rem;
-    background-color: white;
-    border-radius: 4px;
-    padding: .5rem;
-    outline: none;
-    cursor: pointer;
+const StyledButton = styled.button`
+  font-size: 1.2rem;
+  background-color: white;
+  border-radius: 3px;
+  padding: .5rem 1rem;
+  outline: none;
+  border: none;
+  cursor: pointer;
 
-    &:hover, &:active {
-      background-color: black;
-      color: white;
-    }
+  background-color: rgb(46, 170, 220);
+  color: white;
+
+  &:hover, &:active {
+    background-color: rgb(6, 156, 205);
   }
 
-  .disabled {
-    background-color: #fafafa;
+  &.disabled {
+    background-color: #eeeeee;
     color: #bbb;
     pointer-events: none;
   }
-
-  button + button {
+  & + button {
     margin-left: 1rem;
   }
 `;
+
+const CancelButton = styled(StyledButton)`
+  background-color: rgb(46, 170, 220);
+  color: white;
+
+  &:hover, &:active {
+    background-color: rgb(6, 156, 205);
+  }
+`
 
 const IconEditForm = (props: IProps) => {
   const { 
@@ -150,14 +164,20 @@ const IconEditForm = (props: IProps) => {
     onChangeFile, 
     onBlurImgSrc,
     onClickSendBtn,
-    onClickCancelBtn,
     isOpen,
+    onClickCancelBtn,
   } = props;
 
   const [isURLUpload, toggleUploadMode ] = useState(true);
-
   const isUploadable = title.length !== 0 && imgUrl.length !== 0 && !imgUrl.startsWith("data:image/svg+xml;base64");
-  
+  const urlRef: any = useRef(null);
+
+  useEffect(() => {
+    if (isOpen) {
+      urlRef.current.firstChild.focus();
+    }
+  }, [isOpen])
+
   return (
     <StyledIconEditForm className="icon-edit-form" isOpen={isOpen}>
       <div>
@@ -173,8 +193,15 @@ const IconEditForm = (props: IProps) => {
             <img src={imgUrl} alt=""/>
           </div>
           <ul>
-            <li key="file">
-              {isURLUpload ? (<TextInput onChangeInput={onChangeInput} onBlurImgSrc={onBlurImgSrc} name="imgSrc" value={imgSrc}/>)
+            <li key="file" ref={urlRef}>
+              {isURLUpload ? (
+                <TextInput 
+                  onChangeInput={onChangeInput} 
+                  onBlurImgSrc={onBlurImgSrc} 
+                  name="imgSrc" 
+                  value={imgSrc}
+                  placeHolder='paste in http://'
+                />)
               : (
                 <ImageUploadButton htmlFor="local_file">
                   pc file
@@ -183,18 +210,36 @@ const IconEditForm = (props: IProps) => {
               )}
             </li>
             <li key="title">
-              <TextInput onChangeInput={onChangeInput} name="title" value={title} maxLength={20}/>
+              <TextInput 
+                onChangeInput={onChangeInput} 
+                name="title" 
+                value={title} 
+                maxLength={20}
+                placeHolder='title'
+              />
             </li>
             <li key="keyword">
-              <TextInput onChangeInput={onChangeInput} name="keyword1" value={keyword1} maxLength={12}/>
-              <TextInput onChangeInput={onChangeInput} name="keyword2" value={keyword2} maxLength={12}/>
+              <TextInput 
+                onChangeInput={onChangeInput} 
+                name="keyword1" 
+                value={keyword1} 
+                maxLength={12}
+                placeHolder='tag'
+              />
+              <TextInput 
+                onChangeInput={onChangeInput} 
+                name="keyword2" 
+                value={keyword2} 
+                maxLength={12}
+                placeHolder='another tag'
+              />
             </li>
           </ul>
         </FormBody>
-        <FormFooter>
-          <button className={isUploadable ? '' : 'disabled'} onClick={onClickSendBtn}>send</button>
-          <button onClick={onClickCancelBtn}>cancel</button>
-        </FormFooter>
+        <div className="footer">
+          <StyledButton className={isUploadable ? '' : 'disabled'} onClick={onClickSendBtn}>Upload new icon</StyledButton>
+          <CancelButton onClick={onClickCancelBtn}>cancel</CancelButton>
+        </div>
       </div>
     </StyledIconEditForm>
   )

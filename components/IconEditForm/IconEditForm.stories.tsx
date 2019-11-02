@@ -12,8 +12,8 @@ const onBlurImgSrc = action('onBlurImgSrc');
 const onClickCancelBtn = action('onClickCancelBtn');
 
 storiesOf('IconEditForm', module).addDecorator(withKnobs)
-  .add('TextInput', () => <TextInput name="test" value="2323" onChangeInput={onChangeInput}/>)
-  .add('TextInput empty', () => <TextInput name="test" value="" onChangeInput={onChangeInput}/>)
+  .add('TextInput', () => <TextInput placeHolder="abc" name="test" value="2323" onChangeInput={onChangeInput}/>)
+  .add('TextInput empty', () => <TextInput placeHolder="abc" name="test" value="" onChangeInput={onChangeInput}/>)
   .add('IconEditForm', () => (
     <IconEditForm 
       title=""
