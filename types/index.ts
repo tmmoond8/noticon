@@ -3,6 +3,7 @@ export interface Noticon {
   title: string;
   imgUrl: string;
   keywords: string;
+  date?: number;
 }
 
 export type SortMode = "date" | "alphabet";

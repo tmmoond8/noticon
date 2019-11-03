@@ -7,6 +7,7 @@ interface IProps {
   imgUrl: string;
   title: string;
   visible: boolean;
+  keywords: string;
 }
 
 const pop = keyframes`
@@ -84,7 +85,7 @@ const isIOS = () => {
 }
 
 const IconBox = (props: IProps) => {
-  const { imgUrl, title, visible } = props;
+  const { imgUrl, title, visible, keywords } = props;
   const refCopyText: React.RefObject<any> = useRef(null);
   const [copyText, setCopyText] = useState('COPY');
 
@@ -112,7 +113,7 @@ const IconBox = (props: IProps) => {
           readOnly={true}
           className="invisible"
         />
-        <img src={imgUrl}/>
+        <img src={imgUrl} alt={`${title},${keywords.replace(/‡/g, '')}`}/>
         <p>{title}</p>
       </div>
       <div 

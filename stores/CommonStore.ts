@@ -4,27 +4,17 @@ import {
 } from '../lib/dataRequest';
 import { LoadingProps } from 'react-loading';
 import storage from '../lib/storage';
-import { SortMode } from '../types';
+import { SortMode, Noticon } from '../types';
 
 type IconType = 'all' | 'logo' | 'normal';
 
 const sortFn = {
-  "date": (a: IIcon, b: IIcon) => {
+  "date": (a: Noticon, b: Noticon) => {
     const aDate = a.date ? a.date : 0;
     const bDate = b.date ? b.date : 0;
     return aDate > bDate ? -1 : 1;
   },
-  "alphabet": (a: IIcon, b: IIcon) => a.title.toLowerCase() > b.title.toLowerCase() ? 1 : -1
-}
-
-interface IIcon {
-  id: string;
-  title: string;
-  imgUrl: string;
-  description: string;
-  keywords: string;
-  sortMode: SortMode;
-  date?: number;
+  "alphabet": (a: Noticon, b: Noticon) => a.title.toLowerCase() > b.title.toLowerCase() ? 1 : -1
 }
 
 const defaultProps = {
@@ -39,8 +29,8 @@ const defaultProps = {
 
 class CommonStore {
   @observable search: string;
-  @observable logoIconList: IIcon[];
-  @observable normalIconList: IIcon[];
+  @observable logoIconList: Noticon[];
+  @observable normalIconList: Noticon[];
   @observable filter: IconType;
   @observable loading: LoadingProps | null;
   @observable sortMode: SortMode;
@@ -123,7 +113,7 @@ class CommonStore {
   }
 
   @computed
-  public get iconList() {
+  public get iconList(): Noticon[] {
     return this.logoIconList.sort(sortFn[this.sortMode])
   }
 
@@ -136,7 +126,7 @@ class CommonStore {
   }
 
   @action
-  public unshiftIcon(icon: IIcon) {
+  public unshiftIcon(icon: Noticon) {
     this.logoIconList = [icon, ...this.logoIconList];
   }
 

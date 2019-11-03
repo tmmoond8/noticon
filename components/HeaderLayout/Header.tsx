@@ -19,10 +19,12 @@ const StyledHeader = styled.div`
   line-height: 2.7rem;
   padding: 1rem;
   
-  p {
+  a {
     position: relative;
     padding-left: 4rem;
     font-size: 1.5rem;
+    text-decoration: none;
+    color: black;
 
     &::before {
       content: "";
@@ -53,7 +55,7 @@ const Header = (props: IProps) => {
   }
   return (
     <StyledHeader>
-      <p>Noticon</p>
+      <a href="/">Noticon</a>
       <Switch 
         isTrue={sort === "date"} 
         trueText="latest" 
