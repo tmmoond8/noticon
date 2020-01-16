@@ -23,6 +23,23 @@ const ScreenWrapper = styled.div`
   }
 `;
 
+const DimmedLayer = styled.div`
+  position: absolute;
+  width: 100vw;
+  height: 100vh;
+  top: 0;
+  left: 0;
+  background-color: rgba(240, 240, 240, .9);
+  & > div {
+    position: absolute;
+    right: 0;
+    top: 0;
+    left: 0;
+    bottom: 4rem;
+    margin: auto;
+  }
+`;
+
 interface IProps {
   isOpenUploading: boolean;
   setOpenUploading: any;
@@ -35,8 +52,16 @@ const OverScreen = (props: IProps) => {
     <ScreenWrapper>
       <div>
         <FloatingButton isOpen={isOpenUploading} onClick={() => setOpenUploading(!isOpenUploading)}/>
-        <IconEditForm isOpen={isOpenUploading} onSetOpen={setOpenUploading}/>
-        {loading && <Loading type={loading.type} color={loading.color}/>}
+        { isOpenUploading && (
+          <DimmedLayer>
+            <IconEditForm isOpen={isOpenUploading} onSetOpen={setOpenUploading}/>
+          </DimmedLayer>
+        )}
+        { loading && (
+          <DimmedLayer>
+            <Loading type={loading.type} color={loading.color}/>
+          </DimmedLayer> 
+        )}
       </div>
     </ScreenWrapper>
   )

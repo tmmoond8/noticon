@@ -1,6 +1,6 @@
 import React, { useRef, useState } from 'react';
 import { toast } from 'react-toastify';
-import styled, { withProps } from '../../styles/typed-components';
+import styled from '../../styles/typed-components';
 import { keyframes } from 'styled-components';
 
 interface IProps {
@@ -16,7 +16,7 @@ const pop = keyframes`
   100% { transform: scale(1) }
 `;
 
-const StyledIconBox = withProps<any, HTMLDivElement>(styled.div)`
+const StyledIconBox = styled.div<{isLongText: boolean, visible: boolean}>`
   display: flex;
   position: relative;
   justify-content: center;
@@ -50,6 +50,7 @@ const StyledIconBox = withProps<any, HTMLDivElement>(styled.div)`
 
   &:hover > .copy {
     transform: translateX(0);
+    opacity: 0.8;
   }
 
   .invisible {
@@ -69,6 +70,8 @@ const StyledIconBox = withProps<any, HTMLDivElement>(styled.div)`
     color: white;
     font-size: 2rem;
     cursor: pointer;
+    opacity: 0.2;
+    transition: opacity .8s;
     -webkit-touch-callout: none;
     -webkit-user-select: none;
      -khtml-user-select: none;
