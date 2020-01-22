@@ -179,7 +179,7 @@ const IconEditForm = (props: IProps) => {
   }, [isOpen])
 
   return (
-    <StyledIconEditForm className="icon-edit-form" isOpen={isOpen}>
+    <StyledIconEditForm role="icon-edit-form" isOpen={isOpen}>
       <div>
         <FormBody>
           <div>

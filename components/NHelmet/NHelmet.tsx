@@ -32,8 +32,8 @@ const NHelmet = () => {
       <meta name="keywords" content='notion, icon'/>
       <meta charSet="UTF-8"/>
       <meta name="author" content="tmmoond8"></meta>
-      {<>{Object.keys(ogTags).map(key => <meta name={key} content={ogTags[key]}/>)}</>}
-      {<>{Object.keys(twitterTags).map(key => <meta name={key} content={twitterTags[key]}/>)}</>}
+      {<>{Object.keys(ogTags).map(key => <meta key={key} name={key} content={ogTags[key]}/>)}</>}
+      {<>{Object.keys(twitterTags).map(key => <meta key={key} name={key} content={twitterTags[key]}/>)}</>}
       <link rel="shortcut icon" href="https://res.cloudinary.com/dgggcrkxq/image/upload/v1566826573/noticon/favicon_j7lf1k.ico"/>
     </Head>
   )

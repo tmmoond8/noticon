@@ -92,7 +92,7 @@ const IconBox = (props: IProps) => {
   const refCopyText: React.RefObject<any> = useRef(null);
   const [copyText, setCopyText] = useState('COPY');
 
-  const handleCopy = (event) => {
+  const handleCopy = _ => {
     if (isIOS()) {
       const range = document.createRange();
       range.selectNodeContents(refCopyText.current);
@@ -126,7 +126,6 @@ const IconBox = (props: IProps) => {
       >{copyText}</div>
     </StyledIconBox>
   )
-
 }
 
 export default IconBox;

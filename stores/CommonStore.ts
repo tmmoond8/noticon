@@ -75,18 +75,13 @@ class CommonStore {
     this.sortMode = storage.getMode();
     const storedIcons =  storage.getIcons() || [];
     this.bbbLoading(storedIcons);
-
-    const timeoutPromise = new Promise(async (resolve, reject): Promise<any> => {
-      const id = setTimeout(() => {
-        clearTimeout(id);
-        resolve(this.logoIconList);
-      }, 5000);
-      const logoData = await logoPromise;
-      clearTimeout(id);
-      resolve(logoData);
-    })
-
-    const logoData: any = await timeoutPromise;
+    
+    let logoData;
+    try {
+      logoData = await logoPromise;
+    } catch (err) {
+      console.error(err);
+    }
 
     if (this.logoIconList.length === 0) {
       this.bbbLoading(logoData);

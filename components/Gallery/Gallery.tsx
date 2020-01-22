@@ -3,7 +3,19 @@ import IconBox from '../IconBox';
 import styled, { withProps } from '../../styles/typed-components';
 import { Noticon } from '../../types';
 
-const devices = {
+interface IDevice {
+  size: number;
+  unit: string;
+  column: number;
+}
+
+interface IDevices {
+  desktop: IDevice;
+  tablet: IDevice;
+  phone: IDevice;
+}
+
+const devices: IDevices = {
   desktop: {
     size: 165.33,
     unit: 'px',
@@ -39,7 +51,7 @@ interface IBoxSize {
   column: number;
 }
 
-const StyledGallery = withProps<any, HTMLDivElement>(styled.div)`
+const StyledGallery = styled.div<{devices: IDevices}>`
   ul {
     position: relative;
     height: 400px;
@@ -70,23 +82,20 @@ const IconItem = withProps<IIconItemProps, HTMLLIElement>(styled.li)`
   transform: translate(${props => props.x}, ${props => props.y}); 
 `
 
-const reservedSet = new Set();
+// const reservedSet = new Set();
 
 const renderIconList = (boxSize: IBoxSize, iconList: any[], hitIconList: Set<number>, iconListMax: number) => {
   const { size, unit, column } = boxSize;
-  let index = -1;
   return (
     <ul>
-      {iconList.map((item) => (
-        hitIconList.has(item.id) && index < iconListMax && index++,
-        <IconItem key={item.id} 
-          x={`${hitIconList.has(item.id) && index < iconListMax ? (index % column) * size : -9999}${unit}`} 
-          y={`${hitIconList.has(item.id) && index < iconListMax ? (Math.floor(index / column)) * size : 0 }${unit}`}
+      {iconList.filter((item, index) => hitIconList.has(item.id) && index < iconListMax).map((item, index) => (
+        <IconItem key={index} 
+          x={`${(index % column) * size}${unit}`} 
+          y={`${(Math.floor(index / column)) * size }${unit}`}
         >
-          {index < iconListMax && reservedSet.add(item.id) && false}
           <IconBox 
-            visible={reservedSet.has(item.id)} 
-            imgUrl={!reservedSet.has(item.id) ? 'https://res.cloudinary.com/dgggcrkxq/image/upload/v1566997355/noticon/ozi8wvb2o2qdcijs2u29.png' : item.imgUrl} 
+            visible={true} 
+            imgUrl={false ? 'https://res.cloudinary.com/dgggcrkxq/image/upload/v1566997355/noticon/ozi8wvb2o2qdcijs2u29.png' : item.imgUrl} 
             title={item.title}
             keywords={item.keywords}
           />
@@ -101,7 +110,7 @@ const Gallery = (props: IProps) => {
   const boxSize = devices[device];
 
   return (
-    <StyledGallery>
+    <StyledGallery devices={devices}>
       { device === 'ssr' ? false : renderIconList(boxSize, iconList, hitIconList, iconListMax)}
     </StyledGallery>
   )
