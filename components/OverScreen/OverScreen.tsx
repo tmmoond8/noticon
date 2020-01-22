@@ -33,7 +33,7 @@ const DimmedLayer = styled.div`
   & > div {
     position: absolute;
     right: 0;
-    top: 0;
+    top: 4rem;
     left: 0;
     bottom: 4rem;
     margin: auto;
