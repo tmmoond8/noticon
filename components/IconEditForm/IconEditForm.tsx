@@ -17,7 +17,17 @@ interface IProps {
   onClickCancelBtn: () => void;
 }
 
+// const showAnimation = keyframes`
+//   from: { transform: translateY(0) }
+//   to: { transform: translateY(50%) }
+// `;
+
 const StyledIconEditForm = withProps<IProps, HTMLDivElement>(styled.div)`
+  @keyframes showAnimation {
+    from: { transform: translateY(0); }
+    to: { transform: translateY(50%); }
+  }
+
   width: 100%;
   max-width: 520px;
   padding: 2rem;
@@ -35,7 +45,7 @@ const StyledIconEditForm = withProps<IProps, HTMLDivElement>(styled.div)`
     -moz-box-shadow: 0px 16px 52px -16px rgba(0,0,0,0.75);
     box-shadow: 0px 16px 52px -16px rgba(0,0,0,0.75);
     background-color: white;
-    transform: translate(0);
+    
   }
 
   .footer {
