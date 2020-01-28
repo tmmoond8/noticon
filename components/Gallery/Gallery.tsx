@@ -88,18 +88,20 @@ const renderIconList = (boxSize: IBoxSize, iconList: any[], hitIconList: Set<num
   const { size, unit, column } = boxSize;
   return (
     <ul>
-      {iconList.filter((item, index) => hitIconList.has(item.id) && index < iconListMax).map((item, index) => (
-        <IconItem key={index} 
-          x={`${(index % column) * size}${unit}`} 
-          y={`${(Math.floor(index / column)) * size }${unit}`}
-        >
-          <IconBox 
-            visible={true} 
-            imgUrl={false ? 'https://res.cloudinary.com/dgggcrkxq/image/upload/v1566997355/noticon/ozi8wvb2o2qdcijs2u29.png' : item.imgUrl} 
-            title={item.title}
-            keywords={item.keywords}
-          />
-        </IconItem>
+      {iconList
+        .filter((item, index) => iconList.length === hitIconList.size ? index < iconListMax : hitIconList.has(item.id))
+        .map((item, index) => (
+          <IconItem key={index} 
+            x={`${(index % column) * size}${unit}`} 
+            y={`${(Math.floor(index / column)) * size }${unit}`}
+          >
+            <IconBox 
+              visible={true} 
+              imgUrl={false ? 'https://res.cloudinary.com/dgggcrkxq/image/upload/v1566997355/noticon/ozi8wvb2o2qdcijs2u29.png' : item.imgUrl} 
+              title={item.title}
+              keywords={item.keywords}
+            />
+          </IconItem>
       ))}
     </ul>
   );
@@ -108,7 +110,6 @@ const renderIconList = (boxSize: IBoxSize, iconList: any[], hitIconList: Set<num
 const Gallery = (props: IProps) => {
   const { iconList=[], device, hitIconList, iconListMax } = props;
   const boxSize = devices[device];
-
   return (
     <StyledGallery devices={devices}>
       { device === 'ssr' ? false : renderIconList(boxSize, iconList, hitIconList, iconListMax)}
