@@ -48,10 +48,15 @@ class CommonStore {
   }
 
   private bbbLoading = (iconList: any[]) => {
+    const duplicationSet = new Set();
     if (iconList.length === 0) return;
     const _iconList: any[] = [];
     while(iconList.length > 0) {
-      _iconList.push(iconList.pop());
+      const icon = iconList.pop();
+      if (!duplicationSet.has(icon.id)) {
+        console.log('duplicated icon exists')
+        _iconList.push(icon);
+      }
     }
     const id = setInterval(() => {
       const chunk: any[] = [];
