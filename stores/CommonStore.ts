@@ -54,8 +54,8 @@ class CommonStore {
     while(iconList.length > 0) {
       const icon = iconList.pop();
       if (!duplicationSet.has(icon.id)) {
-        console.log('duplicated icon exists')
         _iconList.push(icon);
+        duplicationSet.add(icon.id);
       }
     }
     const id = setInterval(() => {
