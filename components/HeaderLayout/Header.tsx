@@ -37,8 +37,8 @@ const StyledHeader = styled.div`
       background-image: url("https://res.cloudinary.com/dgggcrkxq/image/upload/v1566951043/noticon/mwlnqwvswaln1qpz43b6.png");
     }
     &:nth-child(2) {
-      flex: 1;
       margin-left: 3rem;
+      margin-right: auto;
       padding-left: 2rem;
       &::before {
         height: 1.5rem;
