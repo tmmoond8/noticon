@@ -1,7 +1,6 @@
 import React from 'react';
 import { toast } from 'react-toastify';
 import { inject, observer } from 'mobx-react';
-import { upload } from '../../lib/imageUploader';
 import IconEditForm from './IconEditForm';
 import * as dataRequest from '../../lib/dataRequest';
 import { Noticon } from '../../types';
@@ -63,38 +62,49 @@ class IconEditFormContainer extends React.Component<IProps, IState> {
     event.preventDefault();
     const files = event.target.files;
     if (files.length < 1) return;
-    const file = event.target.files[0];
-    try {
-      const { id, imgUrl } = await upload(file);
+    let reader = new FileReader()
+    reader.readAsDataURL(files[0])
+    reader.onload = () => {
       this.setState({
-        imgUrl,
-        id
-      });
-    } catch (error) {
-      // error handle
-      this.setState({
-        imgUrl: '',
-      });
+        imgUrl: reader.result.toString(),
+      })
+    };
+    reader.onerror = function (error) {
+      console.log('Error: ', error);
     }
+    // const file = event.target.files[0];
+    // try {
+    //   const { id, imgUrl } = await upload(file);
+    //   this.setState({
+    //     imgUrl,
+    //     id
+    //   });
+    // } catch (error) {
+    //   // error handle
+    //   this.setState({
+    //     imgUrl: '',
+    //   });
+    // }
   }
 
   handleBlurImgSrc = async (event) => {
     event.preventDefault();
     const imgSrc = event.target.value;
     if (imgSrc.length < 1) return;
-    try {
-      this.setState({
-        imgUrl: 'data:image/svg+xml;base64,PHN2ZyB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciIHdpZHRoPSIyNCIgaGVpZ2h0PSIyNCIgdmlld0JveD0iMCAwIDI0IDI0Ij48cGF0aCBkPSJNMCAxMmMwIDYuNjI3IDUuMzczIDEyIDEyIDEyczEyLTUuMzczIDEyLTEyLTUuMzczLTEyLTEyLTEyLTEyIDUuMzczLTEyIDEyem0xOC0xaC00djdoLTR2LTdoLTRsNi02IDYgNnoiLz48L3N2Zz4='
-      })
-      const { id, imgUrl } = await upload(imgSrc);
-      this.setState({
-        imgUrl,
-        id
-      });
-    } catch (error) {
-      console.error(error);
-      toast.error('failed to upload the icon');
-    }
+    this.setState({
+      imgUrl: imgSrc,
+    });
+
+    // try {
+    //   this.setState({
+    //     imgUrl: 'data:image/svg+xml;base64,PHN2ZyB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciIHdpZHRoPSIyNCIgaGVpZ2h0PSIyNCIgdmlld0JveD0iMCAwIDI0IDI0Ij48cGF0aCBkPSJNMCAxMmMwIDYuNjI3IDUuMzczIDEyIDEyIDEyczEyLTUuMzczIDEyLTEyLTUuMzczLTEyLTEyLTEyLTEyIDUuMzczLTEyIDEyem0xOC0xaC00djdoLTR2LTdoLTRsNi02IDYgNnoiLz48L3N2Zz4='
+    //   })
+    //   const { id, imgUrl } = await upload(imgSrc);
+      
+    // } catch (error) {
+    //   console.error(error);
+    //   toast.error('failed to upload the icon');
+    // }
   }
 
   handleSendIconForm = async (event) => {
