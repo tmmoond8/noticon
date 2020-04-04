@@ -13,13 +13,11 @@ interface IProps {
 class HeaderLayoutContainer extends React.Component<IProps> {
   render() {
     const { children, commonStore } = this.props;
-    const { search, setSearch, sortMode, toggleSortMode, setLoading } = commonStore!;
+    const { search, setSearch, setLoading } = commonStore!;
     return (
       <HeaderLayout 
         search={search} 
         onSearchChange={setSearch}
-        sortMode={sortMode}
-        onToggleSortMode={toggleSortMode}
         onSetLoading={setLoading}
       >
         {children}

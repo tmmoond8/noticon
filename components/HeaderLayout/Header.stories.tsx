@@ -6,7 +6,6 @@ import SearchBar from  './SearchBar';
 import HeaderLayout from  './HeaderLayout';
 import { action } from '@storybook/addon-actions';
 const onSearchChange = action('onSearchChange');
-const onToggleSortMode = action('onToggleSortMode');
 const onSetLoading = action('onSetLoading');
 
 storiesOf('Header', module)
@@ -14,8 +13,6 @@ storiesOf('Header', module)
     <Header 
       search="dido" 
       onSearchChange={onSearchChange}
-      sortMode="date"
-      onToggleSortMode={onToggleSortMode as any}
       onSetLoading={onSetLoading}
     />))
   .add('SearchBar', () => <SearchBar search="dido" onSearchChange={onSearchChange}/>)
@@ -23,7 +20,5 @@ storiesOf('Header', module)
     <HeaderLayout 
       search="str" 
       onSearchChange={onSearchChange}
-      sortMode="date"
-      onToggleSortMode={onToggleSortMode as any}
       onSetLoading={onSetLoading as any}
     >dff</HeaderLayout>))

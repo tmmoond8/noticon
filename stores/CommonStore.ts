@@ -3,19 +3,10 @@ import {
   get
 } from '../lib/dataRequest';
 import { LoadingProps } from 'react-loading';
-import storage from '../lib/storage';
-import { SortMode, Noticon } from '../types';
+import { Noticon } from '../types';
 
 type IconType = 'all' | 'logo' | 'normal';
 
-const sortFn = {
-  "date": (a: Noticon, b: Noticon) => {
-    const aDate = a.date ? a.date : 0;
-    const bDate = b.date ? b.date : 0;
-    return aDate > bDate ? -1 : 1;
-  },
-  "alphabet": (a: Noticon, b: Noticon) => a.title.toLowerCase() > b.title.toLowerCase() ? 1 : -1
-}
 
 const defaultProps = {
   search: '',
@@ -23,7 +14,6 @@ const defaultProps = {
   normalIconList: [],
   filter: 'all',
   loading: null,
-  sortMode: "date",
   iconListMax: 73,
 }
 
@@ -33,7 +23,6 @@ class CommonStore {
   @observable normalIconList: Noticon[];
   @observable filter: IconType;
   @observable loading: LoadingProps | null;
-  @observable sortMode: SortMode;
   @observable iconListMax: number;
 
   constructor(props= defaultProps) {
@@ -42,7 +31,6 @@ class CommonStore {
     this.logoIconList = props.logoIconList;
     this.normalIconList = props.normalIconList;
     this.filter = props.filter as IconType;
-    this.sortMode = props.sortMode as SortMode;
     this.iconListMax = props.iconListMax;
     this.fetchIconData();
   }
@@ -77,9 +65,7 @@ class CommonStore {
   private fetchIconData = async () => {
     const logoPromise = get('logo');
     this.loading = { type: "cubes"};
-    this.sortMode = storage.getMode();
-    const storedIcons =  storage.getIcons() || [];
-    this.bbbLoading(storedIcons);
+    this.bbbLoading([]);
     
     let logoData;
     try {
@@ -93,7 +79,6 @@ class CommonStore {
     } else {
       this.logoIconList = logoData as any || [];
     }
-    storage.setIcons(logoData);
     this.loading = null;
   }
 
@@ -107,14 +92,13 @@ class CommonStore {
     this.search = search;
   }
 
-  @action
-  public toggleSortMode = () => {
-    this.sortMode = this.sortMode === "date" ? "alphabet" : "date";
-  }
-
   @computed
   public get iconList(): Noticon[] {
-    return this.logoIconList.sort(sortFn[this.sortMode])
+    return this.logoIconList.sort((a: Noticon, b: Noticon) => {
+      const aDate = a.date ? a.date : 0;
+      const bDate = b.date ? b.date : 0;
+      return aDate > bDate ? -1 : 1;
+    });
   }
 
   @computed
