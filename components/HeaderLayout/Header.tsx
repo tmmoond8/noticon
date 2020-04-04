@@ -11,7 +11,6 @@ interface IProps {
 
 const StyledHeader = styled.div`
   display: flex;
-  justify-content: space-between;
   line-height: 2.7rem;
   padding: 1rem;
   
@@ -38,6 +37,7 @@ const StyledHeader = styled.div`
       background-image: url("https://res.cloudinary.com/dgggcrkxq/image/upload/v1566951043/noticon/mwlnqwvswaln1qpz43b6.png");
     }
     &:nth-child(2) {
+      flex: 1;
       margin-left: 3rem;
       padding-left: 2rem;
       &::before {
