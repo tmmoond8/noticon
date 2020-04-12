@@ -1,6 +1,7 @@
 import React, { useState, useEffect, useRef } from 'react';
 import TextInput from './TextInput';
 import styled, { withProps } from '../../styles/typed-components';
+import ImageUploadCropper from './ImageUploadCropper';
 import Switch from '../Switch';
 
 interface IProps {
@@ -10,17 +11,16 @@ interface IProps {
   imgSrc: string;
   keyword1: string;
   keyword2: string;
+  cropImage: File | null;
+  isLoading: boolean;
   onChangeInput: (e) => void;
   onChangeFile: (e) => void;
   onBlurImgSrc: (e) => void;
   onClickSendBtn: (e) => void;
   onClickCancelBtn: () => void;
+  onChangeCropImage: (c) => void;
 }
 
-// const showAnimation = keyframes`
-//   from: { transform: translateY(0) }
-//   to: { transform: translateY(50%) }
-// `;
 
 const StyledIconEditForm = withProps<IProps, HTMLDivElement>(styled.div)`
   @keyframes showAnimation {
@@ -58,10 +58,11 @@ const FormBody = styled.form`
   display: flex;
   align-items: center;
 
-  & > div {
+  .body--left-side {
     position: relative;
     width: 240px;
     height: 240px;
+    text-align: center;
     ${props => props.theme.media.tablet`
       width: 186px;
       height: 186px;
@@ -170,12 +171,14 @@ const IconEditForm = (props: IProps) => {
     imgSrc,
     keyword1, 
     keyword2, 
+    isOpen,
+    isLoading,
     onChangeInput, 
     onChangeFile, 
     onBlurImgSrc,
     onClickSendBtn,
-    isOpen,
     onClickCancelBtn,
+    onChangeCropImage,
   } = props;
 
   const [isURLUpload, toggleUploadMode ] = useState(true);
@@ -192,7 +195,7 @@ const IconEditForm = (props: IProps) => {
     <StyledIconEditForm role="icon-edit-form" isOpen={isOpen}>
       <div>
         <FormBody>
-          <div>
+          <div className="body--left-side">
             <Switch 
               isTrue={isURLUpload} 
               trueText="URL" 
@@ -200,7 +203,7 @@ const IconEditForm = (props: IProps) => {
               onToggle={() => toggleUploadMode(!isURLUpload)}
               style={{ width: "8rem"}}
             />
-            <img src={imgUrl} alt=""/>
+            <ImageUploadCropper src={imgUrl} onChangeCropImage={onChangeCropImage}/>
           </div>
           <ul>
             <li key="file" ref={urlRef}>
@@ -247,7 +250,7 @@ const IconEditForm = (props: IProps) => {
           </ul>
         </FormBody>
         <div className="footer">
-          <StyledButton className={isUploadable ? '' : 'disabled'} onClick={onClickSendBtn}>Upload new icon</StyledButton>
+          <StyledButton className={isUploadable && !isLoading ? '' : 'disabled'} onClick={onClickSendBtn}>Upload new icon</StyledButton>
           <CancelButton onClick={onClickCancelBtn}>cancel</CancelButton>
         </div>
       </div>

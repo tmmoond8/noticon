@@ -4,6 +4,8 @@ import { inject, observer } from 'mobx-react';
 import IconEditForm from './IconEditForm';
 import * as dataRequest from '../../lib/dataRequest';
 import { Noticon } from '../../types';
+import { upload } from '../../lib/imageUploader';
+import axios from 'axios';
 
 interface IProps {
   isOpen?: boolean;
@@ -16,7 +18,9 @@ interface IState {
   imgSrc: string;
   keyword1: string;
   keyword2: string;
+  cropImage: File | null;
   id: string;
+  isLoading: boolean;
 }
 
 @inject('commonStore')
@@ -29,11 +33,13 @@ class IconEditFormContainer extends React.Component<IProps, IState> {
     imgSrc: '',
     keyword1: '',
     keyword2: '',
+    cropImage: null,
+    isLoading: false,
   }
 
   render() {
     const { isOpen, onSetOpen } = this.props;
-    const { title, imgUrl, imgSrc, keyword1, keyword2 } = this.state;
+    const { title, imgUrl, imgSrc, keyword1, keyword2, cropImage, isLoading } = this.state;
     return (
       <IconEditForm 
         title={title}
@@ -41,14 +47,23 @@ class IconEditFormContainer extends React.Component<IProps, IState> {
         imgSrc={imgSrc}
         keyword1={keyword1}
         keyword2={keyword2}
+        cropImage={cropImage}
         onChangeInput={this.handleChangeInput} 
         onChangeFile={this.handleChangeFile}
         onBlurImgSrc={this.handleBlurImgSrc}
         onClickSendBtn={this.handleSendIconForm}
         onClickCancelBtn={() => onSetOpen(false)}
+        onChangeCropImage={this.handleChangeCropImage}
         isOpen={isOpen}
+        isLoading={isLoading}
       />
     )
+  }
+
+  handleChangeCropImage = (crop: File) => {
+    this.setState({
+      cropImage: crop,
+    } as any);
   }
 
   handleChangeInput = (event) => {
@@ -62,60 +77,66 @@ class IconEditFormContainer extends React.Component<IProps, IState> {
     event.preventDefault();
     const files = event.target.files;
     if (files.length < 1) return;
-    let reader = new FileReader()
-    reader.readAsDataURL(files[0])
+    const reader = new FileReader();
+    reader.readAsDataURL(files[0]);
     reader.onload = () => {
       this.setState({
-        imgUrl: reader.result.toString(),
+        imgUrl: reader!.result!.toString(),
       })
     };
+    
     reader.onerror = function (error) {
       console.log('Error: ', error);
     }
-    // const file = event.target.files[0];
-    // try {
-    //   const { id, imgUrl } = await upload(file);
-    //   this.setState({
-    //     imgUrl,
-    //     id
-    //   });
-    // } catch (error) {
-    //   // error handle
-    //   this.setState({
-    //     imgUrl: '',
-    //   });
-    // }
   }
 
   handleBlurImgSrc = async (event) => {
     event.preventDefault();
     const imgSrc = event.target.value;
     if (imgSrc.length < 1) return;
-    this.setState({
-      imgUrl: imgSrc,
-    });
 
-    // try {
-    //   this.setState({
-    //     imgUrl: 'data:image/svg+xml;base64,PHN2ZyB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciIHdpZHRoPSIyNCIgaGVpZ2h0PSIyNCIgdmlld0JveD0iMCAwIDI0IDI0Ij48cGF0aCBkPSJNMCAxMmMwIDYuNjI3IDUuMzczIDEyIDEyIDEyczEyLTUuMzczIDEyLTEyLTUuMzczLTEyLTEyLTEyLTEyIDUuMzczLTEyIDEyem0xOC0xaC00djdoLTR2LTdoLTRsNi02IDYgNnoiLz48L3N2Zz4='
-    //   })
-    //   const { id, imgUrl } = await upload(imgSrc);
-      
-    // } catch (error) {
-    //   console.error(error);
-    //   toast.error('failed to upload the icon');
-    // }
+    const { status, data } = await axios.get(imgSrc, { responseType:"blob" });
+    
+    if (status === 200 && 'size' in data) {
+      const reader = new FileReader();
+      reader.readAsDataURL(data);
+      reader.onload = () => {
+        this.setState({
+          imgUrl: reader!.result!.toString(),
+        })
+      };
+    }
   }
 
   handleSendIconForm = async (event) => {
     const { onSetOpen, commonStore } = this.props;
+    const { cropImage } = this.state;
     const { setLoading } = commonStore;
+
+    let id, imgUrl;
+    setLoading({ type: "cylon"});
+    this.setState({
+      isLoading: true
+    });
+    try {
+      const uploadResult = await upload(cropImage);
+      id = uploadResult!.id;
+      imgUrl = uploadResult!.imgUrl
+    } catch (error) {
+      // error handle
+      setLoading(null)
+      this.setState({
+        isLoading: false
+      });
+      return;
+    }
     const noticon: Noticon = {
       ...this.state,
+      id,
+      imgUrl,
       keywords: `${this.state.keyword1}‡${this.state.keyword2}`
     }
     try {
-      setLoading({ type: "cylon"})
       const { data: { result, message } } = await dataRequest.append('logo', noticon);
       if (result !== 'success') {
         throw new Error(message);
@@ -127,6 +148,9 @@ class IconEditFormContainer extends React.Component<IProps, IState> {
       // toast.error('failed to upload the icon', error.message);
     }
     setLoading(null)
+    this.setState({
+      isLoading: false
+    });
     onSetOpen(false);
     this.setState({
       id: '',

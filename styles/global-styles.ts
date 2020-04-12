@@ -1,10 +1,12 @@
 import { createGlobalStyle } from "styled-components";
 import reset from "styled-reset";
 import { react_toastify } from './react-toastify';
+import reactCrop from './react-crop';
 
 const GlobalStyle = createGlobalStyle`
   ${reset}
   ${react_toastify}
+  ${reactCrop}
   body {
     margin: 0;
     padding: 0;
