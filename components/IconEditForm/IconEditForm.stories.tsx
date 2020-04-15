@@ -10,6 +10,7 @@ const onChangeFile = action('onChangeFile');
 const onClickSendBtn = action('onClickSendBtn');
 const onBlurImgSrc = action('onBlurImgSrc');
 const onClickCancelBtn = action('onClickCancelBtn');
+const onChangeCropImage = action('onChangeCropImage');
 
 storiesOf('IconEditForm', module).addDecorator(withKnobs)
   .add('TextInput', () => <TextInput placeHolder="abc" name="test" value="2323" onChangeInput={onChangeInput}/>)
@@ -27,5 +28,8 @@ storiesOf('IconEditForm', module).addDecorator(withKnobs)
       onClickSendBtn={onClickSendBtn}
       onClickCancelBtn={onClickCancelBtn}
       isOpen={boolean('Disabled', false)}
+      cropImage={null}
+      isLoading={true}
+      onChangeCropImage={onChangeCropImage}
     />
   ))
