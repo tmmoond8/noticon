@@ -35,43 +35,33 @@ export default function ImageUploadCropper(props: ImageUploadCropperPoprs): JSX.
 
   const createCropPreview = async (image, crop, fileName) => {
     const canvas = document.createElement('canvas');
-    const scaleX = image.naturalWidth / image.width;
-    const scaleY = image.naturalHeight / image.height;
-    canvas.width = 400;
-    canvas.height = 400;
+    const { naturalWidth, naturalHeight, width, height} = image
+    
+    canvas.width = 200;
+    canvas.height = 200;
     const ctx = canvas.getContext('2d');
+    const scale = isPortrait
+      ? naturalHeight / height
+      : naturalWidth / width
+    
 
-    console.log('crop.width', crop.width);
-    console.log('crop.height', crop.height);
-    console.log('scaleX', scaleX);
-    console.log('scaleY', scaleY);
-
-    // const scale = Math.max(scaleX, scaleY);
-    let option: {x: number; y: number; width: number; height: number } = {
-      x: crop.x * scaleX,
-      y: crop.y * scaleY,
-      width: crop.width * scaleX,
-      height: crop.height * scaleY,
-    };
-    if (isPortrait) {
-      option = {
-        x: crop.x * scaleX,
-        y: crop.y * scaleY,
-        width: crop.width * scaleX,
-        height: crop.height * scaleY,
-      }
-    }
+    const marginTop = naturalWidth < naturalHeight 
+      ? 0 
+      : (naturalWidth - naturalHeight) / 2;
+    const marginLeft = naturalWidth > naturalHeight
+      ? 0
+      : (naturalHeight - naturalWidth ) / 2;
 
     ctx!.drawImage(
       image,
-      option.x,
-      option.y,
-      option.width,
-      option.height,
+      -marginLeft + crop.x * scale,
+      -marginTop + crop.y * scale,
+      crop.width * scale,
+      crop.height * scale,
       0,
       0,
-      400,
-      400
+      200,
+      200
     );
  
     setIsEmptyCrop(false);
@@ -110,6 +100,6 @@ const StyledReactCrop = styled(ReactCrop)<{isPortrait: boolean}>`
   .ReactCrop__image {
     width: 140px;
     height: 140px;
-    object-fit: cover;
+    object-fit: ${p => p.isPortrait ? 'cover': 'contain'};
   }
 `;

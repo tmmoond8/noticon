@@ -36,7 +36,7 @@ class IconEditFormContainer extends React.Component<IProps, IState> {
     cropImage: null,
     isLoading: false,
   }
-
+  
   render() {
     const { isOpen, onSetOpen } = this.props;
     const { title, imgUrl, imgSrc, keyword1, keyword2, cropImage, isLoading } = this.state;
@@ -75,14 +75,16 @@ class IconEditFormContainer extends React.Component<IProps, IState> {
 
   handleChangeFile = async (event) => {
     event.preventDefault();
-    const files = event.target.files;
+    const fileElement = event.target;
+    const files = fileElement.files;
     if (files.length < 1) return;
     const reader = new FileReader();
     reader.readAsDataURL(files[0]);
     reader.onload = () => {
+      fileElement.value = '';
       this.setState({
         imgUrl: reader!.result!.toString(),
-      })
+      });
     };
     
     reader.onerror = function (error) {
@@ -148,6 +150,7 @@ class IconEditFormContainer extends React.Component<IProps, IState> {
       // toast.error('failed to upload the icon', error.message);
     }
     setLoading(null)
+    
     this.setState({
       isLoading: false
     });
