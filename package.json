@@ -13,12 +13,33 @@
     "url": "http://noticon.tammolo.com"
   },
   "private": true,
-  "dependencies": {},
-  "devDependencies": {},
+  "dependencies": {
+    "@emotion/core": "^10.0.28",
+    "@emotion/styled": "^10.0.27",
+    "dotenv": "^8.2.0",
+    "dotenv-webpack": "^2.0.0",
+    "next": "^9.5.1",
+    "react": "^16.13.1",
+    "react-dom": "^16.13.1"
+  },
+  "devDependencies": {
+    "@types/dotenv": "^8.2.0",
+    "@types/node": "^14.0.27",
+    "@types/react": "^16.9.44",
+    "eslint-config-airbnb-typescript": "^9.0.0",
+    "eslint-config-prettier": "^6.11.0",
+    "eslint-import-resolver-typescript": "^2.2.0",
+    "eslint-plugin-import": "^2.22.0",
+    "eslint-plugin-jsx-a11y": "^6.3.1",
+    "eslint-plugin-prettier": "^3.1.4",
+    "eslint-plugin-react": "^7.20.5",
+    "eslint-plugin-react-hooks": "^4.0.8",
+    "typescript": "^3.9.7"
+  },
   "scripts": {
-    "dev": "node server.js",
+    "dev": "next",
     "build": "next build",
-    "start": "NODE_ENV=production next start",
+    "start": "next start",
     "export": "next export",
     "deploy": "yarn build && yarn export"
   }
