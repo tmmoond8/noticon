@@ -1,5 +1,6 @@
 import { useStore, observer } from '../stores';
 import { Layout, IconButton, Content } from 'notion-ui';
+import Gallery from '../components/Gallery';
 
 export default observer(function Index() {
   const {
@@ -22,7 +23,7 @@ export default observer(function Index() {
         </ul>
       }
     >
-      <p>Hello Next.js {test}</p>
+      <Gallery />
     </Layout.App>
   );
 });

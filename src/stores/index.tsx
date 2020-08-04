@@ -11,9 +11,10 @@ export interface Stores {
 export class RootStore implements Stores {
   icon: IconStoreInterface;
   ui: UiStoreInterface;
+
   constructor(initialData?: Stores) {
-    this.icon = initialData ? initialData.icon : new IconStore();
-    this.ui = initialData ? initialData.ui : new UiStore();
+    this.icon = new IconStore(initialData?.icon);
+    this.ui = new UiStore(initialData?.ui);
   }
 }
 

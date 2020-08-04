@@ -4,22 +4,22 @@ const path = require('path');
 const Dotenv = require('dotenv-webpack');
 
 module.exports = {
-  webpack: config => {
-    config.plugins = config.plugins || []
-    
+  webpack: (config) => {
+    config.plugins = config.plugins || [];
+
     config.plugins = [
       ...config.plugins,
       new Dotenv({
         path: path.join(__dirname, '.env'),
-        systemvars: true
-      })
-    ]
+        systemvars: true,
+      }),
+    ];
 
-    return config
+    return config;
   },
-  exportPathMap: function() {
+  exportPathMap: function () {
     return {
-      '/':  {  page: '/' }
+      '/': { page: '/' },
     };
-  }
-}
+  },
+};
