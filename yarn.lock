@@ -4444,6 +4444,11 @@ normalize-url@^3.0.0:
   resolved "https://registry.yarnpkg.com/normalize-url/-/normalize-url-3.3.0.tgz#b2e1c4dc4f7c6d57743df733a4f5978d18650559"
   integrity sha512-U+JJi7duF1o+u2pynbp2zXDW2/PADgC30f0GsHZtRh+HOcXHnw137TrNlyxxRvWW5fjKd3bcLHPxofWuCjaeZg==
 
+notion-ui@^0.2.20:
+  version "0.2.20"
+  resolved "https://registry.yarnpkg.com/notion-ui/-/notion-ui-0.2.20.tgz#ec514baa279a845309b72841dd89cb047637a330"
+  integrity sha512-OlScPEgMMqiGEyTuyGpoXRaH4fUidu/XSRZTVQGB0WZ0Trm+O76glH9PfNiioz3MQonC84Yf5yegc8r0tXlqrg==
+
 nth-check@^1.0.2:
   version "1.0.2"
   resolved "https://registry.yarnpkg.com/nth-check/-/nth-check-1.0.2.tgz#b2bd295c37e3dd58a3bf0700376663ba4d9cf05c"
