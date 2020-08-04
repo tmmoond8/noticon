@@ -4,34 +4,9 @@ import styled from '@emotion/styled';
 import { Content } from 'notion-ui';
 import { mobile, desktop } from '../../styles/mediaQuery';
 import { useStore, observer } from '../../stores';
-import { Noticon } from '../../types';
+import IconBox from './IconBox';
 
 interface GalleryProps {}
-
-interface IconBoxProps extends Noticon {}
-
-function IconBox(props: IconBoxProps) {
-  const { title, imgUrl } = props;
-  return (
-    <IconWrapper>
-      <img src={imgUrl} />
-      <Content.Text as="P">{title}</Content.Text>
-    </IconWrapper>
-  );
-}
-
-const IconWrapper = styled.li`
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  justify-content: space-around;
-
-  & > img {
-    width: 65%;
-    height: 65%;
-    margin: 12px 0 0 0;
-  }
-`;
 
 export default observer(function Gallery(props: GalleryProps): JSX.Element {
   const {
