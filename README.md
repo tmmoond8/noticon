@@ -12,7 +12,6 @@ http://noticon.tammolo.com
 
 ## Project Stack
 
-Client
 Following items are core frontend technologies used in this project:
 
 - React
