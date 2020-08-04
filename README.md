@@ -17,7 +17,7 @@ Following items are core frontend technologies used in this project:
 
 - React
 - Next.js
-- Styled-Component
+- Emotion
 - TypeScript
 - MobX
 - Google Sheets API (for simple database)
