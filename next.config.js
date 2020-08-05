@@ -15,6 +15,17 @@ module.exports = {
       }),
     ];
 
+    config.module.rules = config.module.rules || [];
+    config.module.rules = [
+      ...config.module.rules,
+      {
+        test: /\.svg$/,
+        issuer: {
+          test: /\.(js|ts)x?$/,
+        },
+        use: ['@svgr/webpack'],
+      },
+    ];
     return config;
   },
   exportPathMap: function () {

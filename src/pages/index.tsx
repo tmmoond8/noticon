@@ -1,5 +1,6 @@
 import { useStore, observer } from '../stores';
 import { Layout, IconButton, Content } from 'notion-ui';
+import Icons from '../components/Icon';
 import Gallery from '../components/Gallery';
 
 export default observer(function Index() {
@@ -8,7 +9,14 @@ export default observer(function Index() {
   } = useStore();
   return (
     <Layout.App
-      leftMenus={<Content.Text as="P">Noticon</Content.Text>}
+      leftMenus={
+        <>
+          <Icons.Noticon />
+          <Content.Text as="P">Noticon</Content.Text>
+          <Icons.Github />
+          <Content.Text as="P">Github</Content.Text>
+        </>
+      }
       rightMenus={
         <>
           <IconButton icon="moreHorizon" size="Big" className="MoreHorizon" />
