@@ -1,6 +1,7 @@
 /** @jsx jsx */
 import { jsx, css } from '@emotion/core';
 import cx from 'classnames';
+import { colors } from 'notion-ui';
 import NoticonSVG from './noticon.svg';
 import GithubSVG from './github.svg';
 
@@ -13,7 +14,9 @@ const Noticon = (props: IconProps) => {
   return (
     <NoticonSVG
       css={css`
-        width: 24px;
+        width: 18px;
+        color: ${colors.grey};
+        fill: ${colors.grey};
         g {
           fill: currentColor;
         }
@@ -28,7 +31,9 @@ const Github = (props: IconProps) => {
   return (
     <GithubSVG
       css={css`
-        width: 24px;
+        width: 18px;
+        color: ${colors.grey};
+        fill: ${colors.grey};
         g {
           fill: currentColor;
         }

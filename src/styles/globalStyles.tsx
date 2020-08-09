@@ -7,7 +7,8 @@ const customReset = css`
   html,
   body,
   body > div {
-    height: 100%;
+    height: auto;
+    min-height: 100vh;
     background-color: ${colors.background};
   }
   a {
