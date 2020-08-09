@@ -2,6 +2,7 @@ import { useStore, observer } from '../stores';
 import { Layout, IconButton, Content } from 'notion-ui';
 import Icons from '../components/Icon';
 import Gallery from '../components/Gallery';
+import Aside from '../components/Aside';
 
 export default observer(function Index() {
   const {
@@ -24,12 +25,7 @@ export default observer(function Index() {
           <IconButton icon="notification" size="Big" className="Notification" />
         </>
       }
-      aside={
-        <ul>
-          <li>menu1</li>
-          <li>menu2</li>
-        </ul>
-      }
+      aside={<Aside />}
     >
       <Gallery />
     </Layout.App>
