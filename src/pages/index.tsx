@@ -1,8 +1,11 @@
+/** @jsx jsx */
+import { jsx } from '@emotion/core';
+import styled from '@emotion/styled';
 import { useStore, observer } from '../stores';
 import { Layout, IconButton, Content } from 'notion-ui';
-import Icons from '../components/Icon';
 import Gallery from '../components/Gallery';
 import Aside from '../components/Aside';
+import Header from '../components/Header';
 
 export default observer(function Index() {
   const {
@@ -10,14 +13,7 @@ export default observer(function Index() {
   } = useStore();
   return (
     <Layout.App
-      leftMenus={
-        <>
-          <Icons.Noticon />
-          <Content.Text as="P">Noticon</Content.Text>
-          <Icons.Github />
-          <Content.Text as="P">Github</Content.Text>
-        </>
-      }
+      leftMenus={Header.LeftMenus}
       rightMenus={
         <>
           <IconButton icon="moreHorizon" size="Big" className="MoreHorizon" />
@@ -31,3 +27,7 @@ export default observer(function Index() {
     </Layout.App>
   );
 });
+
+const Noticon = styled(Content.Text)`
+  color: red;
+`;

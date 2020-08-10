@@ -28,6 +28,7 @@ const Noticon = (props: IconProps) => {
 
 const Github = (props: IconProps) => {
   const { className } = props;
+
   return (
     <GithubSVG
       css={css`
