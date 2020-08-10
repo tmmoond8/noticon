@@ -8,9 +8,6 @@ import Aside from '../components/Aside';
 import Header from '../components/Header';
 
 export default observer(function Index() {
-  const {
-    icon: { test },
-  } = useStore();
   return (
     <Layout.App
       leftMenus={Header.LeftMenus}

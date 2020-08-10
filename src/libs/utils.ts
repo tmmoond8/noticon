@@ -17,3 +17,11 @@ export const copyText = (textarea: HTMLTextAreaElement) => {
   }
   document.execCommand('copy');
 };
+
+export const isServer = () => {
+  return !(process as any).browser;
+};
+
+export const isBrowser = () => {
+  return !isServer();
+};

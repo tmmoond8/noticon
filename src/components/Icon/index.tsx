@@ -1,9 +1,17 @@
+// const Noticon = './noticon.svg' as any;
+// import Github from './Github';
+
+// export default {
+//   Noticon,
+//   Github,
+// };
+
 /** @jsx jsx */
 import { jsx, css } from '@emotion/core';
 import cx from 'classnames';
 import { colors } from 'notion-ui';
-import NoticonSVG from './noticon.svg';
-import GithubSVG from './github.svg';
+const NoticonSVG = require('./noticon.svg') as SVG;
+const GithubSVG = require('./github.svg') as SVG;
 
 interface IconProps {
   className?: string;

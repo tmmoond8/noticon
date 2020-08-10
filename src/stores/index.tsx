@@ -2,6 +2,7 @@ import { useContext } from 'react';
 import { MobXProviderContext, observer as _observer } from 'mobx-react';
 import IconStore, { IconStoreInterface } from './icon';
 import UiStore, { UiStoreInterface } from './ui';
+import { isServer } from '../libs/utils';
 
 export interface Stores {
   icon: IconStoreInterface;
@@ -21,8 +22,7 @@ export class RootStore implements Stores {
 export const getStore = (() => {
   let rootStore: Stores;
   return (initialData?: Stores) => {
-    const isServer = !process.browser;
-    if (isServer) {
+    if (isServer()) {
       rootStore = new RootStore(initialData);
       return new RootStore(initialData);
     }

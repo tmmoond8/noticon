@@ -1,6 +1,7 @@
-import { observable, computed, action } from 'mobx';
+import { observable } from 'mobx';
 import { Noticon } from '../types';
 import * as API from '../apis';
+import { isBrowser } from '../libs/utils';
 
 export interface IconStoreInterface {
   icons: Noticon[];
@@ -11,7 +12,7 @@ export default class IconStore implements IconStoreInterface {
 
   constructor(initialData?: IconStoreInterface) {
     this.icons = initialData?.icons ?? [];
-    if (process.browser) {
+    if (isBrowser()) {
       this.fetchIcons();
     }
   }
