@@ -3,29 +3,11 @@ import { jsx } from '@emotion/core';
 import styled from '@emotion/styled';
 import { Content } from 'notion-ui';
 import { useState, useCallback, useRef, RefObject } from 'react';
+import { LazyLoadImage } from 'react-lazy-load-image-component';
 import { Noticon } from '../../types';
+import { copyText } from '../../libs/utils';
 
 interface IconBoxProps extends Noticon {}
-
-const isIOS = () => {
-  const isClient = typeof window === 'object';
-  if (!isClient) return false;
-  return navigator.userAgent.match(/ipad|iphone/i);
-};
-
-const copyText = (textarea: HTMLTextAreaElement) => {
-  if (isIOS()) {
-    const range = document.createRange();
-    range.selectNodeContents(textarea);
-    const selection = window.getSelection();
-    selection!.removeAllRanges();
-    selection!.addRange(range);
-    textarea.setSelectionRange(0, 999999);
-  } else {
-    textarea.select();
-  }
-  document.execCommand('copy');
-};
 
 export default function IconBox(props: IconBoxProps) {
   const { title, imgUrl } = props;
@@ -53,7 +35,8 @@ export default function IconBox(props: IconBoxProps) {
       onMouseLeave={handleMouseLeave}
       onClick={handleClick}
     >
-      <img src={imgUrl} />
+      <LazyLoadImage alt={title} src={imgUrl} />
+
       <Content.Text as="P">{title}</Content.Text>
       {isHover && <Message>{message}</Message>}
       <HiddenTextarea

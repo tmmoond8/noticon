@@ -1,7 +1,6 @@
 /** @jsx jsx */
 import { jsx, css } from '@emotion/core';
 import styled from '@emotion/styled';
-import { Content } from 'notion-ui';
 import { mobile, desktop } from '../../styles/mediaQuery';
 import { useStore, observer } from '../../stores';
 import IconBox from './IconBox';
