@@ -4,6 +4,7 @@ const path = require('path');
 const Dotenv = require('dotenv-webpack');
 
 module.exports = {
+  distDir: '_next',
   webpack: (config) => {
     config.plugins = config.plugins || [];
 
