@@ -2,21 +2,28 @@
 import { jsx } from '@emotion/core';
 import styled from '@emotion/styled';
 import { Content } from 'notion-ui';
-import { useState, useCallback, useRef, RefObject } from 'react';
+import { useState, useCallback } from 'react';
 import { LazyLoadImage } from 'react-lazy-load-image-component';
+import Storage from '../../libs/browserStorage';
 import { Noticon } from '../../types';
 import { copyText } from '../../libs/utils';
+import { useStore } from '../../stores';
 
 interface IconBoxProps extends Noticon {}
 
 export default function IconBox(props: IconBoxProps) {
-  const { title, imgUrl } = props;
+  const { title, imgUrl, id, keywords, date } = props;
+  const {
+    icon: { pushRecentUsedIcon },
+  } = useStore();
   const [message, setMessage] = useState('COPY');
   const [isHover, setIsHover] = useState(false);
-  const hiddenTextareaRef = useRef<HTMLTextAreaElement>();
 
   const handleClick = useCallback(() => {
-    copyText(hiddenTextareaRef.current as HTMLTextAreaElement);
+    const noticon: Noticon = props;
+    const recentUsedIcons = pushRecentUsedIcon(noticon);
+    Storage.recentUsedIcons.set(recentUsedIcons);
+    copyText(noticon.imgUrl);
     setMessage('COPIED');
   }, [setMessage]);
 
@@ -39,11 +46,6 @@ export default function IconBox(props: IconBoxProps) {
 
       <Content.Text as="P">{title}</Content.Text>
       {isHover && <Message>{message}</Message>}
-      <HiddenTextarea
-        ref={hiddenTextareaRef as RefObject<HTMLTextAreaElement>}
-        value={imgUrl}
-        readOnly={true}
-      />
     </IconWrapper>
   );
 }

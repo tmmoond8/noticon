@@ -10,12 +10,17 @@ import {
   Content,
   colors,
 } from 'notion-ui';
+import { useStore } from '../../stores';
+import { copyText } from '../../libs/utils';
 
 export default function Aside(): JSX.Element {
   const theme = loadTheme();
+  const {
+    icon: { recentUsedIcons },
+  } = useStore();
   const [isDark, setIsDark] = useState(theme === 'Dark');
-  const handleClick = useCallback((name: string) => {
-    console.log(name);
+  const handleClick = useCallback((imgUrl: string) => {
+    copyText(imgUrl);
   }, []);
   const handleToggleTheme = useCallback(() => {
     setIsDark(!isDark);
@@ -24,13 +29,15 @@ export default function Aside(): JSX.Element {
 
   return (
     <>
-      <AsideUI.Group title="Recent Used">
-        <AsideUI.Menu title="react" handleClick={() => handleClick('react')} />
-        <AsideUI.Menu
-          title="next.js"
-          handleClick={() => handleClick('react')}
-        />
-        <AsideUI.Menu title="node" handleClick={() => handleClick('react')} />
+      <AsideUI.Group title="Recent Used" max={5}>
+        {recentUsedIcons.map((recentUsedIcon) => (
+          <AsideUI.Menu
+            key={recentUsedIcon.id}
+            title={recentUsedIcon.title}
+            handleClick={() => handleClick(recentUsedIcon.imgUrl)}
+            iconUrl={recentUsedIcon.imgUrl}
+          />
+        ))}
       </AsideUI.Group>
 
       <ThemeMenu onClick={handleToggleTheme}>

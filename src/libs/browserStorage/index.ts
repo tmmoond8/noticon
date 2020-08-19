@@ -1,1 +1,5 @@
-export { default as recentUsed } from './recentUsed';
+import recentUsedIcons from './recentUsedIcons';
+
+export default {
+  recentUsedIcons,
+};

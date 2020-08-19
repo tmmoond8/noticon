@@ -5,20 +5,24 @@ import {
   BrowserStorageKeyEnum,
 } from './base';
 
-class RecentUsedMapper implements BrowserStorageMapper<Noticon[]> {
+class RecentUsedIconMapper implements BrowserStorageMapper<Noticon[]> {
   fromJson(json: any): Noticon[] {
     if (json === null) {
       return [];
     }
     const noticonArray: Noticon[] = JSON.parse(json);
     if (Array.isArray(noticonArray)) {
-      return noticonArray.map((noticon) => ({
-        id: noticon.id,
-        title: noticon.id,
-        imgUrl: noticon.imgUrl,
-        keywords: noticon.keywords,
-        date: noticon.date,
-      }));
+      return noticonArray
+        .map((noticon) => ({
+          id: noticon.id,
+          title: noticon.title,
+          imgUrl: noticon.imgUrl,
+          keywords: noticon.keywords,
+          date: noticon.date,
+        }))
+        .sort((a, b) => {
+          return b.date - a.date;
+        });
     }
     return [];
   }
@@ -30,6 +34,6 @@ class RecentUsedMapper implements BrowserStorageMapper<Noticon[]> {
 
 export default new BrowserStorage(
   BrowserStorageKeyEnum.RECENT_USED,
-  new RecentUsedMapper(),
-  localStorage,
+  new RecentUsedIconMapper(),
+  globalThis.localStorage,
 );
