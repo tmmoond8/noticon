@@ -39,7 +39,7 @@ export default function Aside(): JSX.Element {
           />
         ))}
       </AsideUI.Group>
-
+      <Content.Spacing size={20} />
       <ThemeMenu onClick={handleToggleTheme}>
         <Content.Text as="P">Dark mode</Content.Text>
         <Switch switchOn={isDark} />

@@ -4,6 +4,16 @@ import { colors } from 'notion-ui';
 
 interface LogoProps {}
 
+const style = css`
+  width: 18px;
+  margin: 0 0 0 8px;
+  color: ${colors.grey};
+  fill: ${colors.grey};
+  g {
+    fill: currentColor;
+  }
+`;
+
 export default function Logo(props: LogoProps): JSX.Element {
   return (
     <svg
@@ -15,14 +25,7 @@ export default function Logo(props: LogoProps): JSX.Element {
       y="0px"
       viewBox="0 0 512 512"
       xmlSpace="preserve"
-      css={css`
-        width: 18px;
-        color: ${colors.grey};
-        fill: ${colors.grey};
-        g {
-          fill: currentColor;
-        }
-      `}
+      css={style}
     >
       <g>
         <g>

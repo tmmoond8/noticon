@@ -8,7 +8,7 @@ const NoticonLogo = styled(Icons.Noticon)`
   margin: 0 4px 0 8px;
 `;
 const NoticonText = styled(Content.Text)`
-  margin: 4px 2px 0 0;
+  margin: 4px 2px 0 4px;
 `;
 
 const GithubLink = () => {

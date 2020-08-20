@@ -35,9 +35,12 @@ const Grid = styled.ol`
   `)}
 
   ${desktop(css`
+    max-width: 900px;
+    margin: 0 auto;
     grid-template-columns: repeat(6, 1fr);
     & > li {
       height: calc((100vw - 240px) / 6);
+      max-height: 150px;
     }
   `)}
 `;
