@@ -17,7 +17,7 @@ export interface Noticon {
   title: string;
   imgUrl: string;
   keywords: string;
-  date: number;
+  date: string;
 }
 
 declare global {
