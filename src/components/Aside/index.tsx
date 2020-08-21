@@ -10,10 +10,10 @@ import {
   Content,
   colors,
 } from 'notion-ui';
-import { useStore } from '../../stores';
+import { useStore, observer } from '../../stores';
 import { copyText } from '../../libs/utils';
 
-export default function Aside(): JSX.Element {
+export default observer(function Aside(): JSX.Element {
   const theme = loadTheme();
   const {
     icon: { recentUsedIcons },
@@ -46,7 +46,7 @@ export default function Aside(): JSX.Element {
       </ThemeMenu>
     </>
   );
-}
+});
 
 const ThemeMenu = styled.div`
   display: flex;
