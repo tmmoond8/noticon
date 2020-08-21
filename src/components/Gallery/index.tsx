@@ -4,19 +4,26 @@ import styled from '@emotion/styled';
 import { mobile, desktop } from '../../styles/mediaQuery';
 import { useStore, observer } from '../../stores';
 import IconBox from './IconBox';
+import { Loader } from 'notion-ui';
 
 interface GalleryProps {}
 
 export default observer(function Gallery(props: GalleryProps): JSX.Element {
   const {
-    icon: { icons },
+    icon: { icons, isLoaded },
   } = useStore();
   return (
-    <Grid>
-      {icons.map((icon) => (
-        <IconBox key={icon.id} {...icon} />
-      ))}
-    </Grid>
+    <>
+      {isLoaded ? (
+        <Grid>
+          {icons.map((icon) => (
+            <IconBox key={icon.id} {...icon} />
+          ))}
+        </Grid>
+      ) : (
+        <Loader.ParentFull />
+      )}
+    </>
   );
 });
 
