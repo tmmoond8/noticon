@@ -20,8 +20,8 @@ class RecentUsedIconMapper implements BrowserStorageMapper<Noticon[]> {
           keywords: noticon.keywords,
           date: noticon.date,
         }))
-        .sort((a, b) => {
-          return b.date - a.date;
+        .sort((a: Noticon, b: Noticon) => {
+          return new Date(b.date).getTime() - new Date(a.date).getTime();
         });
     }
     return [];

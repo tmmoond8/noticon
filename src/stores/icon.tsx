@@ -60,7 +60,7 @@ export default class IconStore implements IconStoreInterface {
     this.recentUsedIcons = [
       {
         ...newNoticon,
-        date: Date.now(),
+        date: Date.now().toString(),
       },
       ...this.recentUsedIcons.filter((noticon) => noticon.id !== newNoticon.id),
     ];
