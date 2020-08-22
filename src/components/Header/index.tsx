@@ -42,6 +42,7 @@ const SearchBar = observer(function () {
         type="text"
         value={search}
         onChange={handleChange}
+        placeholder="search ..."
       />
     </StyledSearchBar>
   );
@@ -51,11 +52,13 @@ const StyledSearchBar = styled.label`
   display: flex;
   color: ${colors.grey};
   input {
+    width: 100px;
     margin: 0 0 0 8px;
     background: none;
     border: none;
     outline: none;
     color: ${colors.grey};
+    font-size: 18px;
   }
 `;
 
