@@ -11,28 +11,10 @@ const NoticonText = styled(Content.Text)`
   margin: 4px 2px 0 4px;
 `;
 
-const GithubLink = () => {
-  return (
-    <a
-      href="https://github.com/tmmoond8/noticon.git"
-      target="_blank"
-      css={css`
-        display: flex;
-        align-items: center;
-        height: 100%;
-        padding: 0 8px;
-      `}
-    >
-      <Icons.Github />
-    </a>
-  );
-};
-
 const LeftMenus = (
   <>
     <NoticonLogo />
     <NoticonText as="P">Noticon</NoticonText>
-    <GithubLink />
   </>
 );
 
