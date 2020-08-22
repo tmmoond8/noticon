@@ -39,7 +39,7 @@ export default observer(function Aside(): JSX.Element {
 
   return (
     <AsideFlex>
-      <AsideUI.Group title="Recent Used" max={5}>
+      <AsideUI.Group title="Recent Used" max={10}>
         {recentUsedIcons.map((recentUsedIcon) => (
           <AsideUI.Menu
             key={recentUsedIcon.id}
@@ -59,7 +59,9 @@ export default observer(function Aside(): JSX.Element {
         />
         <Content.Spacing size={20} />
         <ThemeMenu onClick={handleToggleTheme}>
-          <Content.Text as="P">Dark mode</Content.Text>
+          <Content.Text as="P" color={colors.grey60}>
+            Dark mode
+          </Content.Text>
           <Switch switchOn={isDark} />
         </ThemeMenu>
         <GithubMenu
