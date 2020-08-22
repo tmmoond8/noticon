@@ -34,7 +34,7 @@ export default class IconStore implements IconStoreInterface {
       } = await API.get();
       const sortByDate = (a: Noticon, b: Noticon) => {
         for (let i = 0; i < a.date.length; i++) {
-          if (a.date.charCodeAt(i) < b.date.charCodeAt(i)) {
+          if (a.date.charCodeAt(i) > b.date.charCodeAt(i)) {
             return -1;
           }
         }
