@@ -10,13 +10,7 @@ export default function Index() {
   return (
     <Layout.App
       leftMenus={Header.LeftMenus}
-      rightMenus={
-        <>
-          <IconButton icon="moreHorizon" size="Big" className="MoreHorizon" />
-          <IconButton icon="share" size="Big" className="Share" />
-          <IconButton icon="notification" size="Big" className="Notification" />
-        </>
-      }
+      rightMenus={Header.RightMenus}
       aside={<Aside />}
     >
       <Gallery />

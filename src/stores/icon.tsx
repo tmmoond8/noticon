@@ -10,16 +10,19 @@ export interface IconStoreInterface {
   recentUsedIcons: Noticon[];
   pushRecentUsedIcon: (newNoticon: Noticon) => Noticon[];
   isLoaded: boolean;
+  search: string;
 }
 
 export default class IconStore implements IconStoreInterface {
   @observable originIcons: Noticon[];
   @observable recentUsedIcons: Noticon[];
   @observable isLoaded: boolean;
+  @observable search: string;
 
   constructor(initialData?: IconStoreInterface) {
     this.originIcons = initialData?.originIcons ?? [];
     this.recentUsedIcons = initialData?.recentUsedIcons ?? [];
+    this.search = '';
     this.isLoaded = false;
     if (isBrowser()) {
       this.fetchIcons();
@@ -41,6 +44,9 @@ export default class IconStore implements IconStoreInterface {
         return 1;
       };
       data.sort(sortByDate);
+      data.forEach((icon) => {
+        icon.title = icon.title.toString();
+      });
       this.originIcons = data;
 
       this.isLoaded = true;
@@ -63,6 +69,12 @@ export default class IconStore implements IconStoreInterface {
 
   @computed
   get icons() {
-    return this.originIcons;
+    if (this.search.length === 0) {
+      return this.originIcons;
+    }
+    return this.originIcons.filter(
+      (icon) =>
+        icon.title.includes(this.search) || icon.keywords.includes(this.search),
+    );
   }
 }
