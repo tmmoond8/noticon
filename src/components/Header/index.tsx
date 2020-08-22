@@ -49,6 +49,7 @@ const SearchBar = observer(function () {
 
 const StyledSearchBar = styled.label`
   display: flex;
+  color: ${colors.grey};
   input {
     margin: 0 0 0 8px;
     background: none;

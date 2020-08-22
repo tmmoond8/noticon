@@ -42,7 +42,11 @@ export default function IconBox(props: IconBoxProps) {
       onMouseLeave={handleMouseLeave}
       onClick={handleClick}
     >
-      <LazyLoadImage alt={title} src={imgUrl} />
+      <LazyLoadImage
+        alt={title}
+        src={imgUrl}
+        placeholderSrc="https://res.cloudinary.com/dgggcrkxq/image/upload/v1591259615/noticon/ikr2rajjnuzlw0rm1eqh.png"
+      />
 
       <Content.Text as="P">{title}</Content.Text>
       {isHover && <Message>{message}</Message>}
@@ -54,14 +58,21 @@ const IconWrapper = styled.li`
   display: flex;
   flex-direction: column;
   align-items: center;
-  justify-content: space-around;
+  justify-content: flex-start;
   position: relative;
+  background: none;
+  overflow: hidden;
   cursor: pointer;
 
-  & > img {
-    width: 60%;
-    height: 60%;
-    margin: 12px 0 0 0;
+  & > span {
+    width: 100%;
+    flex: 1;
+    text-align: center;
+    img {
+      margin: 32px 0 8px 0;
+      width: 50%;
+      height: auto;
+    }
   }
 `;
 

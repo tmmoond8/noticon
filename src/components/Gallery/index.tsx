@@ -32,7 +32,7 @@ const Grid = styled.ol`
   grid-template-columns: repeat(3, 1fr);
 
   & > li {
-    height: 33.33vw;
+    min-height: 106px;
   }
   ${mobile(css`
     grid-template-columns: repeat(4, 1fr);
