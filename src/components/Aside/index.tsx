@@ -14,6 +14,7 @@ import {
 } from 'notion-ui';
 import { useStore, observer } from '../../stores';
 import { copyText } from '../../libs/utils';
+import UploadIcon from '../UploadIcon';
 
 export default observer(function Aside(): JSX.Element {
   const theme = loadTheme();
@@ -33,7 +34,7 @@ export default observer(function Aside(): JSX.Element {
   const handleOpenUploadModal = useCallback(() => {
     modal.openModal({
       title: 'New Icon',
-      contents: <p>dsdsd</p>,
+      contents: <UploadIcon />,
     });
   }, [modal]);
 
