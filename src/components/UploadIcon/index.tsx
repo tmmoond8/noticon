@@ -4,6 +4,7 @@ import styled from '@emotion/styled';
 import React from 'react';
 import { TextFiled, Button, colors } from 'notion-ui';
 import { useStore, observer } from '../../stores';
+import TabSelect, { useTabSelect } from './TabSelect';
 
 interface UploadIconProps {}
 
@@ -33,9 +34,15 @@ export default observer(function UploadIcon(
     },
     [textFileds],
   );
+
+  const { tabs, selected, handleSelect } = useTabSelect([
+    'Image link',
+    'Local file',
+  ]);
+
   return (
     <Body>
-      <p>Tab</p>
+      <TabSelect tabs={tabs} selected={selected} handleSelect={handleSelect} />
       <Form>
         <img src="https://res.cloudinary.com/dgggcrkxq/image/upload/v1598028330/noticon/vxemnmgycuqt416dsayz.png" />
         <FiledGroup className="filed-group">
@@ -84,6 +91,7 @@ const Form = styled.form`
   align-items: center;
   background-color: ${colors.backgroundEmbed};
   box-shadow: ${colors.grey08} 0px -1px 0px, ${colors.grey08} 0px 1px 0px;
+  margin-top: 28px;
   padding: 14px;
   img {
     width: 160px;
@@ -111,6 +119,7 @@ const FiledGroup = styled.div`
 
 const UploadConfrimButton = styled(Button)`
   width: 100%;
+  height: 45px;
   margin-top: 28px;
   padding: 0 16px;
   text-align: left;
