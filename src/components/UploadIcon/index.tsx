@@ -2,9 +2,8 @@
 import { jsx } from '@emotion/core';
 import styled from '@emotion/styled';
 import React from 'react';
-import { TextFiled, Button, colors } from 'notion-ui';
+import { TextFiled, Button, Modal } from 'notion-ui';
 import { useStore, observer } from '../../stores';
-import TabSelect, { useTabSelect } from './TabSelect';
 
 interface UploadIconProps {}
 
@@ -35,64 +34,72 @@ export default observer(function UploadIcon(
     [textFileds],
   );
 
-  const { tabs, selected, handleSelect } = useTabSelect([
-    'Image link',
-    'Local file',
-  ]);
+  const { tabs, selected, handleSelect } = Modal.useTabSelect(['Url', 'File']);
 
   return (
-    <Body>
-      <TabSelect tabs={tabs} selected={selected} handleSelect={handleSelect} />
-      <Form>
-        <img src="https://res.cloudinary.com/dgggcrkxq/image/upload/v1598028330/noticon/vxemnmgycuqt416dsayz.png" />
-        <FiledGroup className="filed-group">
-          <StyledTextField
-            id={FIELDS.imgUrl}
-            value={textFileds[FIELDS.imgUrl]}
-            placeholder="paset in https://..."
-            onChange={handleInputChange}
-          />
-          <StyledTextField
-            id={FIELDS.title}
-            value={textFileds[FIELDS.title]}
-            placeholder="title"
-            onChange={handleInputChange}
-          />
-          <StyledTextField
-            id={FIELDS.tag1}
-            value={textFileds[FIELDS.tag1]}
-            placeholder="tag (option)"
-            onChange={handleInputChange}
-          />
-          <StyledTextField
-            id={FIELDS.tag2}
-            value={textFileds[FIELDS.tag2]}
-            placeholder="another tag (option)"
-            onChange={handleInputChange}
-          />
-        </FiledGroup>
-      </Form>
-      <UploadConfrimButton
-        buttonType="PrimaryText"
-        buttonSize="Big"
-        onClick={() => {
-          console.log('upload');
-        }}
-      >
-        Upload An Image
-      </UploadConfrimButton>
-    </Body>
+    <>
+      <Modal.TabSelect
+        tabs={tabs}
+        selected={selected}
+        handleSelect={handleSelect}
+      />
+      <Modal.Section>
+        <Form>
+          <img src="https://res.cloudinary.com/dgggcrkxq/image/upload/v1598028330/noticon/vxemnmgycuqt416dsayz.png" />
+          <FieldGroup className="field-group">
+            {selected === 'Url' && (
+              <StyledTextField
+                id={FIELDS.imgUrl}
+                value={textFileds[FIELDS.imgUrl]}
+                placeholder="paset in https://..."
+                onChange={handleInputChange}
+              />
+            )}
+            {selected === 'File' && (
+              <LocalFileButton buttonType="Primary" onClick={() => {}}>
+                File
+              </LocalFileButton>
+            )}
+            <StyledTextField
+              id={FIELDS.title}
+              value={textFileds[FIELDS.title]}
+              placeholder="title"
+              onChange={handleInputChange}
+            />
+            <StyledTextField
+              id={FIELDS.tag1}
+              value={textFileds[FIELDS.tag1]}
+              placeholder="tag (option)"
+              onChange={handleInputChange}
+            />
+            <StyledTextField
+              id={FIELDS.tag2}
+              value={textFileds[FIELDS.tag2]}
+              placeholder="another tag (option)"
+              onChange={handleInputChange}
+            />
+          </FieldGroup>
+        </Form>
+      </Modal.Section>
+      <Modal.Section>
+        <UploadConfrimButton
+          buttonType="PrimaryText"
+          buttonSize="Big"
+          onClick={() => {
+            console.log('upload');
+          }}
+        >
+          Upload An Image
+        </UploadConfrimButton>
+      </Modal.Section>
+    </>
   );
 });
 
-const Body = styled.div``;
 const Form = styled.form`
   display: flex;
   align-items: center;
-  background-color: ${colors.backgroundEmbed};
-  box-shadow: ${colors.grey08} 0px -1px 0px, ${colors.grey08} 0px 1px 0px;
-  margin-top: 28px;
-  padding: 14px;
+  padding: 16px 0;
   img {
     width: 160px;
     height: 160px;
@@ -111,19 +118,20 @@ const StyledTextField = styled(TextFiled)`
   }
 `;
 
-const FiledGroup = styled.div`
+const FieldGroup = styled.div`
   * + * {
     margin-top: 10px;
   }
 `;
 
+const LocalFileButton = styled(Button)`
+  width: 100%;
+`;
+
 const UploadConfrimButton = styled(Button)`
   width: 100%;
   height: 45px;
-  margin-top: 28px;
   padding: 0 16px;
   text-align: left;
-  background-color: ${colors.backgroundEmbed};
-  box-shadow: ${colors.grey08} 0px -1px 0px, ${colors.grey08} 0px 1px 0px;
   border-radius: 0;
 `;

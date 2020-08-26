@@ -10,7 +10,7 @@ import {
   Content,
   colors,
   Icon,
-  useModal,
+  Modal,
 } from 'notion-ui';
 import { useStore, observer } from '../../stores';
 import { copyText } from '../../libs/utils';
@@ -21,7 +21,7 @@ export default observer(function Aside(): JSX.Element {
   const {
     icon: { recentUsedIcons },
   } = useStore();
-  const modal = useModal();
+  const modal = Modal.useModal();
   const [isDark, setIsDark] = useState(theme === 'Dark');
   const handleClick = useCallback((imgUrl: string) => {
     copyText(imgUrl);
