@@ -2473,6 +2473,11 @@ clone-deep@^4.0.1:
     kind-of "^6.0.2"
     shallow-clone "^3.0.0"
 
+clsx@^1.0.4:
+  version "1.1.1"
+  resolved "https://registry.yarnpkg.com/clsx/-/clsx-1.1.1.tgz#98b3134f9abbdf23b2663491ace13c5c03a73188"
+  integrity sha512-6/bPho624p3S2pMyvP5kKBPXnI3ufHLObBFCfgx+LkeR5lg2XYy2hqZqUf45ypD8COn2bhgGJSUE+l5dhNBieA==
+
 coa@^2.0.2:
   version "2.0.2"
   resolved "https://registry.yarnpkg.com/coa/-/coa-2.0.2.tgz#43f6c21151b4ef2bf57187db0d73de229e3e7ec3"
@@ -2628,6 +2633,11 @@ core-js-pure@^3.0.0:
   version "3.6.5"
   resolved "https://registry.yarnpkg.com/core-js-pure/-/core-js-pure-3.6.5.tgz#c79e75f5e38dbc85a662d91eea52b8256d53b813"
   integrity sha512-lacdXOimsiD0QyNf9BC/mxivNJ/ybBGJXQFKzRekp1WTHoVUWsUHEn+2T8GJAzzIhyOuXA+gOxCVN3l+5PLPUA==
+
+core-js@^3.4.2:
+  version "3.6.5"
+  resolved "https://registry.yarnpkg.com/core-js/-/core-js-3.6.5.tgz#7395dc273af37fb2e50e9bd3d9fe841285231d1a"
+  integrity sha512-vZVEEwZoIsI+vPEuoF9Iqf5H7/M3eeQqWlQnYa8FSKKePuYTf5MWnxb5SDAzCa60b3JBRS5g9b+Dq7b1y/RCrA==
 
 core-util-is@~1.0.0:
   version "1.0.2"
@@ -4835,10 +4845,10 @@ normalize-url@^3.0.0:
   resolved "https://registry.yarnpkg.com/normalize-url/-/normalize-url-3.3.0.tgz#b2e1c4dc4f7c6d57743df733a4f5978d18650559"
   integrity sha512-U+JJi7duF1o+u2pynbp2zXDW2/PADgC30f0GsHZtRh+HOcXHnw137TrNlyxxRvWW5fjKd3bcLHPxofWuCjaeZg==
 
-notion-ui@^0.2.57:
-  version "0.2.57"
-  resolved "https://registry.yarnpkg.com/notion-ui/-/notion-ui-0.2.57.tgz#ece411c12ab049d2c8b9c4d4244e9a49d7a16820"
-  integrity sha512-S6qOfruir7hRPDoh+9NDgZZh8kehm8dwoMGgfKN734jlLMDeHis1wdSgIc9UGKj8hjl6jZooll+OqkUC8gzrXA==
+notion-ui@^0.2.59:
+  version "0.2.59"
+  resolved "https://registry.yarnpkg.com/notion-ui/-/notion-ui-0.2.59.tgz#123170f0769cf99e01d45075c759d85a97c4d2df"
+  integrity sha512-2B8lYCk7+5ALXkSzqmXynyezWtDrK+jobuU4bw5B2NpahBcZ8T1ms0x7Chm0DqHz10RE3vplXGDx3pxZbGR8KA==
 
 nth-check@^1.0.2:
   version "1.0.2"
@@ -5652,6 +5662,22 @@ react-dom@^16.13.1:
     object-assign "^4.1.1"
     prop-types "^15.6.2"
     scheduler "^0.19.1"
+
+react-easy-crop@^3.1.1:
+  version "3.1.1"
+  resolved "https://registry.yarnpkg.com/react-easy-crop/-/react-easy-crop-3.1.1.tgz#e5f5d8d42540be7ab1ddb8c79927b9f75ee6ec43"
+  integrity sha512-q5NYzFyzMNbTg/hYLc74lWl/uuQPbWAvge0MUywkLdAuc2A6KxKWplcMBHGQg3dVGqMqnpu7TMDgiZboJOFkbA==
+  dependencies:
+    tslib "1.11.2"
+
+react-image-crop@^8.6.5:
+  version "8.6.5"
+  resolved "https://registry.yarnpkg.com/react-image-crop/-/react-image-crop-8.6.5.tgz#8b67f3571ab3cf85096d9452b1dc1a05c9659a9e"
+  integrity sha512-IbcB8rPWZRClLfJjsB9de4sa7EwoLGnGSQH8BP+pay5uKkvulY6y3L4BGKhcckOt0NnTdUNAkeKICl9yH3wXuA==
+  dependencies:
+    clsx "^1.0.4"
+    core-js "^3.4.2"
+    prop-types "^15.7.2"
 
 react-is@16.13.1, react-is@^16.8.1:
   version "16.13.1"
@@ -6526,6 +6552,11 @@ tsconfig-paths@^3.9.0:
     json5 "^1.0.1"
     minimist "^1.2.0"
     strip-bom "^3.0.0"
+
+tslib@1.11.2:
+  version "1.11.2"
+  resolved "https://registry.yarnpkg.com/tslib/-/tslib-1.11.2.tgz#9c79d83272c9a7aaf166f73915c9667ecdde3cc9"
+  integrity sha512-tTSkux6IGPnUGUd1XAZHcpu85MOkIl5zX49pO+jfsie3eP0B6pyhOlLXm3cAC6T7s+euSDDUUV+Acop5WmtkVg==
 
 tslib@^1.8.1, tslib@^1.9.0:
   version "1.13.0"
