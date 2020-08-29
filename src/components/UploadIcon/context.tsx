@@ -4,26 +4,18 @@ import { STEPS } from './constant';
 const UploadIconContext = React.createContext<{
   step: keyof typeof STEPS;
   setStep: (step: keyof typeof STEPS) => void;
-  hiddenImgEl: HTMLImageElement | null;
-  setHiddenImgEl: (imgElement: HTMLImageElement) => void;
-  cloudinaryTempUrl: string | null;
+  cloudinaryTempUrl: string;
   setCloudinaryTempUrl: (url: string) => void;
-  imgSrc: string;
-  setImgSrc: (imgSrc: string) => void;
-  croppedImg: any;
-  setCroppedImg: (cropped: any) => void;
+  loading: boolean;
+  setLoading: (bool: boolean) => void;
 }>({
   step: STEPS.chooseSource,
   setStep: (step: keyof typeof STEPS) => {},
-  hiddenImgEl: null,
-  setHiddenImgEl: (imgElement: HTMLImageElement) => {},
-  cloudinaryTempUrl: null,
+  cloudinaryTempUrl:
+    'https://res.cloudinary.com/dgggcrkxq/image/upload/v1598684433/temp/nawb5y7jgkgzeoeyxijl.png',
   setCloudinaryTempUrl: (url: string) => {},
-  imgSrc:
-    'https://pelicana.co.kr/resources/images/menu/original_menu01_200529.png',
-  setImgSrc: (imgSrc: string) => {},
-  croppedImg: null,
-  setCroppedImg: (cropped: any) => {},
+  loading: false,
+  setLoading: (bool: boolean) => {},
 });
 
 UploadIconContext.displayName = 'UploadIconContext';

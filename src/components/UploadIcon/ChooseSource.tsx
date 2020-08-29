@@ -11,18 +11,14 @@ export default function ChooseSource(): JSX.Element {
   const { tabs, selected, handleSelect } = Modal.useTabSelect(
     Object.values(TABS),
   );
-  const {
-    imgSrc,
-    setImgSrc,
-    setStep,
-    setHiddenImgEl,
-    setCloudinaryTempUrl,
-  } = useUploadIconContext();
+  const { setStep, setCloudinaryTempUrl, setLoading } = useUploadIconContext();
   const [preloadImgSrc, setPreloadImgSrc] = React.useState('');
+  const [imgSrc, setImgSrc] = React.useState<string>(
+    'https://pelicana.co.kr/resources/images/menu/original_menu01_200529.png',
+  );
   const fileRef = React.useRef<HTMLInputElement>(null);
   const imgRef = React.useRef<HTMLImageElement>(null);
   const [file, setFile] = React.useState<File | null>(null);
-  const [loading, setLoading] = React.useState(false);
 
   const handleChangeImgSrc = React.useCallback(
     (e) => {
@@ -50,9 +46,6 @@ export default function ChooseSource(): JSX.Element {
   };
 
   const handleImgLoad = async () => {
-    if (imgRef.current !== null) {
-      setHiddenImgEl(imgRef.current);
-    }
     const tempImgSrc = selected === TABS.Url ? imgSrc : file;
     if (tempImgSrc !== null) {
       setLoading(true);
@@ -67,9 +60,7 @@ export default function ChooseSource(): JSX.Element {
     setStep(STEPS.cropImage);
   };
 
-  return loading ? (
-    <ModalLoader />
-  ) : (
+  return (
     <>
       <Modal.TabSelect
         tabs={tabs}
@@ -153,9 +144,4 @@ const ImageSrcTextField = styled(TextFiled)`
     box-shadow: ${colors.grey08} 0px 1px 0px, ${colors.grey08} 0px -1px 0px;
     font-size: 16px;
   }
-`;
-
-const ModalLoader = styled(Loader.ParentFull)`
-  left: 0;
-  top: 0;
 `;
