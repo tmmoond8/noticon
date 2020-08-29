@@ -3,39 +3,30 @@ import { STEPS } from './constant';
 
 const UploadIconContext = React.createContext<{
   step: keyof typeof STEPS;
-  imgSrc: string;
   setStep: (step: keyof typeof STEPS) => void;
+  hiddenImgEl: HTMLImageElement | null;
+  setHiddenImgEl: (imgElement: HTMLImageElement) => void;
+  cloudinaryTempUrl: string | null;
+  setCloudinaryTempUrl: (url: string) => void;
+  imgSrc: string;
   setImgSrc: (imgSrc: string) => void;
+  croppedImg: any;
+  setCroppedImg: (cropped: any) => void;
 }>({
   step: STEPS.chooseSource,
-  imgSrc: '',
   setStep: (step: keyof typeof STEPS) => {},
+  hiddenImgEl: null,
+  setHiddenImgEl: (imgElement: HTMLImageElement) => {},
+  cloudinaryTempUrl: null,
+  setCloudinaryTempUrl: (url: string) => {},
+  imgSrc:
+    'https://pelicana.co.kr/resources/images/menu/original_menu01_200529.png',
   setImgSrc: (imgSrc: string) => {},
+  croppedImg: null,
+  setCroppedImg: (cropped: any) => {},
 });
 
 UploadIconContext.displayName = 'UploadIconContext';
-
-export const UploadIconProvder = (props: {
-  children: React.ReactNode;
-}): JSX.Element => {
-  const { children } = props;
-  const context = React.useContext(UploadIconContext);
-  const [imgSrc, setImgSrc] = React.useState(context.imgSrc);
-  const [step, setStep] = React.useState(context.step);
-
-  return (
-    <UploadIconContext.Provider
-      value={{
-        step,
-        imgSrc,
-        setImgSrc,
-        setStep,
-      }}
-    >
-      {children}
-    </UploadIconContext.Provider>
-  );
-};
 
 export const useUploadIconContext = () => {
   return React.useContext(UploadIconContext);
