@@ -34,7 +34,7 @@ export default observer(function Aside(): JSX.Element {
   const handleOpenUploadModal = useCallback(() => {
     modal.openModal({
       title: 'New Icon',
-      contents: <UploadIcon />,
+      contents: <UploadIcon closeModal={modal.close} />,
     });
   }, [modal]);
 

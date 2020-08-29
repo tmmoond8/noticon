@@ -3,7 +3,7 @@ import { jsx } from '@emotion/core';
 import styled from '@emotion/styled';
 import React from 'react';
 import { Modal, Button, TextFiled, colors, Loader } from 'notion-ui';
-import { TABS, FIELDS, STEPS } from './constant';
+import { TABS, METAS, STEPS } from './constant';
 import { useUploadIconContext } from './context';
 import { upload } from '../../apis';
 
@@ -70,7 +70,7 @@ export default function ChooseSource(): JSX.Element {
       {selected === TABS.Url && (
         <>
           <ImageSrcTextField
-            id={FIELDS.imgUrl}
+            id="ChooseSourceImage"
             value={imgSrc}
             placeholder="paset in https://..."
             onChange={handleChangeImgSrc}
@@ -103,7 +103,7 @@ export default function ChooseSource(): JSX.Element {
           </StyledButton>
           <input
             ref={fileRef}
-            id={FIELDS.imgFile}
+            id="ChooseSourceFile"
             type="file"
             hidden
             onChange={handleChangeFile}

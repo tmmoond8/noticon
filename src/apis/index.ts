@@ -8,7 +8,12 @@ export const get = async (): Promise<AxiosResponse<{ data: Noticon[] }>> => {
   );
 };
 
-export const append = async (noticon: Noticon) =>
+export const append = async (noticon: {
+  id: string;
+  imgUrl: string;
+  title: 'title';
+  keywords: string;
+}) =>
   await axios.get(
     `${process.env.REACT_APP_GOOGLE_SHEET_URL}?sheetName=${process.env.REACT_APP_SHEET_NAME}`,
     { params: noticon },

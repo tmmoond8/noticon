@@ -67,33 +67,35 @@ export default function ImageCropper(props: ImageCropperProps): JSX.Element {
   ) => {
     console.log(croppedArea, croppedAreaPixels);
 
-    if (hiddenImgRef.current !== null && isReady) {
+    if (hiddenImgRef.current !== null) {
       const imageBlob = await cropImage(
         hiddenImgRef.current,
         croppedAreaPixels,
-        'abc',
+        'temp',
       );
       setCroppedImg(imageBlob);
     }
   };
 
-  const handleImgLoad = (e) => {
+  const handleImgLoad = () => {
     setIsReady(true);
   };
 
   return (
     <Container className="ImageCropperContainer">
-      <Wrapper className="ImageCropperWrapper">
-        <Cropper
-          image={src}
-          crop={crop}
-          zoom={zoom}
-          aspect={1}
-          onCropChange={setCrop}
-          onCropComplete={handleCropCompplete}
-          onZoomChange={setZoom}
-          showGrid={false}
-        />
+      <Wrapper className="ImageCropperWrapper" isReady>
+        {isReady && (
+          <Cropper
+            image={src}
+            crop={crop}
+            zoom={zoom}
+            aspect={1}
+            onCropChange={setCrop}
+            onCropComplete={handleCropCompplete}
+            onZoomChange={setZoom}
+            showGrid={false}
+          />
+        )}
       </Wrapper>
       <img
         ref={hiddenImgRef}
@@ -110,13 +112,14 @@ const Container = styled.div`
   background-color: ${colors.dimmed};
 `;
 
-const Wrapper = styled.div`
-  margin: auto;
+const Wrapper = styled.div<{ isReady: boolean }>`
+  visibility: ${(p) => (p.isReady ? 'visiblity' : 'hidden')};
   position: relative;
   width: 320px;
   height: 320px;
   max-height: 100vw;
   max-width: 100vw;
+  margin: auto;
   color: rgba(0, 0, 0, 0.5);
   box-shadow: 0 0 0 1000px;
 `;

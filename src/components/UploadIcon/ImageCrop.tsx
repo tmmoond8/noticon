@@ -9,37 +9,46 @@ import { upload } from '../../apis';
 import { STEPS } from './constant';
 
 export default function ImageCrop(): JSX.Element {
-  const { cloudinaryTempUrl, setStep, setLoading } = useUploadIconContext();
-  const [croppedImg, setCroppedImg] = React.useState<File | null>(null);
-  const [croppedImgUrl, setCroppedImgUrl] = React.useState<string | null>(null);
+  const {
+    cloudinaryTempUrl,
+    setStep,
+    croppedImgUrl,
+    setCroppedImg,
+    croppedImg,
+    setCroppedImgUrl,
+    setLoading,
+  } = useUploadIconContext();
 
   const handleNext = React.useCallback(async () => {
     if (croppedImg !== null) {
       setLoading(true);
-      try {
-        const result = await upload(croppedImg, { temp: true });
-        console.log(result);
-        // todo croppedImg
-      } catch (error) {
-        console.error(error);
-      }
-      setLoading(false);
-      setStep(STEPS.metaData);
-    }
-  }, [croppedImg]);
-
-  React.useEffect(() => {
-    if (croppedImg !== null) {
       const reader = new FileReader();
       reader.readAsDataURL(croppedImg as Blob);
       reader.onload = () => {
         setCroppedImgUrl(reader!.result!.toString());
+        setLoading(false);
       };
       reader.onerror = function (error) {
         console.log('Error: ', error);
+        setLoading(false);
       };
+      setStep(STEPS.editMetaData);
     }
   }, [croppedImg]);
+
+  // for debug
+  // React.useEffect(() => {
+  //   if (croppedImg !== null) {
+  //     const reader = new FileReader();
+  //     reader.readAsDataURL(croppedImg as Blob);
+  //     reader.onload = () => {
+  //       setCroppedImgUrl(reader!.result!.toString());
+  //     };
+  //     reader.onerror = function (error) {
+  //       console.log('Error: ', error);
+  //     };
+  //   }
+  // }, [croppedImg]);
 
   return (
     <>
@@ -53,7 +62,7 @@ export default function ImageCrop(): JSX.Element {
           buttonSize="Big"
           onClick={handleNext}
         >
-          Load an image
+          Crop the image
         </StyledButton>
       </StyledModalSection>
       {croppedImgUrl && <img src={croppedImgUrl} />}
