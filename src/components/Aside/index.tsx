@@ -19,7 +19,7 @@ import UploadIcon from '../UploadIcon';
 export default observer(function Aside(): JSX.Element {
   const theme = loadTheme();
   const {
-    icon: { recentUsedIcons },
+    icon: { recentUsedIcons, unshightOriginIcon },
   } = useStore();
   const modal = Modal.useModal();
   const [isDark, setIsDark] = useState(theme === 'Dark');
@@ -34,7 +34,12 @@ export default observer(function Aside(): JSX.Element {
   const handleOpenUploadModal = useCallback(() => {
     modal.openModal({
       title: 'New Icon',
-      contents: <UploadIcon closeModal={modal.close} />,
+      contents: (
+        <UploadIcon
+          closeModal={modal.close}
+          unshightIcon={unshightOriginIcon}
+        />
+      ),
     });
   }, [modal]);
 

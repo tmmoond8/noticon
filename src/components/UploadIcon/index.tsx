@@ -8,13 +8,15 @@ import { STEPS } from './constant';
 import ChooseSource from './ChooseSource';
 import ImageCrop from './ImageCrop';
 import EditMetaData from './EditMetaData';
+import { Noticon } from '../../types';
 
 interface UploadIconProps {
   closeModal: () => void;
+  unshightIcon: (icon: Noticon) => void;
 }
 
 export default function UploadIcon(props: UploadIconProps): JSX.Element {
-  const { closeModal } = props;
+  const { closeModal, unshightIcon } = props;
   const context = useUploadIconContext();
   const [step, setStep] = React.useState(context.step);
   const [cloudinaryTempUrl, setCloudinaryTempUrl] = React.useState(
@@ -40,6 +42,7 @@ export default function UploadIcon(props: UploadIconProps): JSX.Element {
         loading,
         setLoading,
         closeModal,
+        unshightIcon,
       }}
     >
       {loading ? (

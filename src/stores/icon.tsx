@@ -11,6 +11,7 @@ export interface IconStoreInterface {
   pushRecentUsedIcon: (newNoticon: Noticon) => Noticon[];
   isLoaded: boolean;
   search: string;
+  unshightOriginIcon: (icon: Noticon) => void;
 }
 
 export default class IconStore implements IconStoreInterface {
@@ -77,4 +78,9 @@ export default class IconStore implements IconStoreInterface {
         icon.title.includes(this.search) || icon.keywords.includes(this.search),
     );
   }
+
+  @action
+  unshightOriginIcon = (newNoticon: Noticon) => {
+    this.originIcons = [newNoticon, ...this.originIcons];
+  };
 }

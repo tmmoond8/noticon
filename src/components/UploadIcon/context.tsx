@@ -1,5 +1,6 @@
 import React from 'react';
 import { STEPS } from './constant';
+import { Noticon } from '../../types';
 
 const UploadIconContext = React.createContext<{
   step: keyof typeof STEPS;
@@ -13,6 +14,7 @@ const UploadIconContext = React.createContext<{
   loading: boolean;
   setLoading: (bool: boolean) => void;
   closeModal: () => void;
+  unshightIcon: (icon: Noticon) => void;
 }>({
   step: STEPS.chooseSource,
   setStep: (step: keyof typeof STEPS) => {},
@@ -25,6 +27,7 @@ const UploadIconContext = React.createContext<{
   loading: false,
   setLoading: (bool: boolean) => {},
   closeModal: () => {},
+  unshightIcon: (icon: Noticon) => {},
 });
 
 UploadIconContext.displayName = 'UploadIconContext';

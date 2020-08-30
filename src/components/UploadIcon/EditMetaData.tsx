@@ -14,6 +14,7 @@ export default function EditMetaData(): JSX.Element {
     croppedImgUrl,
     setStep,
     closeModal,
+    unshightIcon,
   } = useUploadIconContext();
   const [metas, setMetas] = React.useState(
     Object.keys(METAS).reduce((accum, key) => {
@@ -31,6 +32,8 @@ export default function EditMetaData(): JSX.Element {
     [metas],
   );
 
+  const disabled = React.useMemo(() => metas.title.length < 1, [metas.title]);
+
   const handleUploadImage = async () => {
     if (croppedImg !== null) {
       setLoading(true);
@@ -44,7 +47,10 @@ export default function EditMetaData(): JSX.Element {
         };
         const { status } = await append(newIcon);
         if (status === 200) {
-          // 아이콘 추가
+          unshightIcon({
+            ...newIcon,
+            date: new Date().toString(),
+          });
         }
       } catch (error) {
         console.error(error);
@@ -84,6 +90,7 @@ export default function EditMetaData(): JSX.Element {
         buttonType="PrimaryText"
         buttonSize="Big"
         onClick={handleUploadImage}
+        disabled={disabled}
       >
         Upload An Image
       </UploadConfrimButton>
