@@ -28,6 +28,7 @@ export default function UploadIcon(props: UploadIconProps): JSX.Element {
     context.croppedImgUrl,
   );
   const [imageFormat, setImageFormat] = React.useState(context.imageFormat);
+  const [gifAlign, setGifAlign] = React.useState(context.gifAlign);
 
   return (
     <UploadIconContext.Provider
@@ -40,6 +41,8 @@ export default function UploadIcon(props: UploadIconProps): JSX.Element {
         setCroppedImg,
         croppedImgUrl,
         setCroppedImgUrl,
+        gifAlign,
+        setGifAlign,
         loading,
         setLoading,
         closeModal,

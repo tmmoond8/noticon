@@ -1,5 +1,5 @@
 import React from 'react';
-import { STEPS, ImageForamt } from './constant';
+import { STEPS, ImageForamt, GifAlign, GIF_ALIGN } from './constant';
 import { Noticon } from '../../types';
 
 const UploadIconContext = React.createContext<{
@@ -13,6 +13,8 @@ const UploadIconContext = React.createContext<{
   setCroppedImgUrl: (url: string) => void;
   imageFormat: ImageForamt | null;
   setImageFormat: (imageForamt: ImageForamt) => void;
+  gifAlign: GifAlign | null;
+  setGifAlign: (align: GifAlign) => void;
   loading: boolean;
   setLoading: (bool: boolean) => void;
   closeModal: () => void;
@@ -26,8 +28,10 @@ const UploadIconContext = React.createContext<{
   setCroppedImg: (file: File) => {},
   croppedImgUrl: '',
   setCroppedImgUrl: (url: string) => {},
-  imageFormat: null,
+  imageFormat: 'image/gif',
   setImageFormat: (imageForamt: ImageForamt) => {},
+  gifAlign: null,
+  setGifAlign: (align: GifAlign) => {},
   loading: false,
   setLoading: (bool: boolean) => {},
   closeModal: () => {},

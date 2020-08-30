@@ -23,3 +23,13 @@ export const ACCEPT_FORMATS = {
 };
 
 export type ImageForamt = typeof ACCEPT_FORMATS[keyof typeof ACCEPT_FORMATS];
+
+export const GIF_ALIGN = {
+  LEFT: 'LEFT' as 'LEFT',
+  RIGHT: 'RIGHT' as 'RIGHT',
+  TOP: 'TOP' as 'TOP',
+  BOTTOM: 'BOTTOM' as 'BOTTOM',
+  CENTER: 'CENTER' as 'CENTER',
+};
+
+export type GifAlign = typeof GIF_ALIGN[keyof typeof GIF_ALIGN];

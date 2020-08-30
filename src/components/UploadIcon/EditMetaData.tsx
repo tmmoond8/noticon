@@ -3,7 +3,7 @@ import { jsx } from '@emotion/core';
 import styled from '@emotion/styled';
 import React from 'react';
 import { TextFiled, Button, colors } from 'notion-ui';
-import { METAS, STEPS } from './constant';
+import { METAS, STEPS, ACCEPT_FORMATS, GifAlign } from './constant';
 import { useUploadIconContext } from './context';
 import { upload, append } from '../../apis';
 
@@ -12,9 +12,12 @@ export default function EditMetaData(): JSX.Element {
     setLoading,
     croppedImg,
     croppedImgUrl,
+    cloudinaryTempUrl,
     setStep,
     closeModal,
     unshightIcon,
+    imageFormat,
+    gifAlign,
   } = useUploadIconContext();
 
   const [metas, setMetas] = React.useState(
@@ -66,7 +69,12 @@ export default function EditMetaData(): JSX.Element {
   return (
     <>
       <Form>
-        <img src={croppedImgUrl} />
+        {imageFormat === ACCEPT_FORMATS.GIF ? (
+          <GifImg src={cloudinaryTempUrl} gifAlign={gifAlign as GifAlign} />
+        ) : (
+          <img src={croppedImgUrl} />
+        )}
+
         <FiledGroup className="filed-group">
           <StyledTextField
             id={METAS.title}
@@ -138,4 +146,9 @@ const UploadConfrimButton = styled(Button)`
   background-color: ${colors.backgroundEmbed};
   box-shadow: ${colors.grey08} 0px -1px 0px, ${colors.grey08} 0px 1px 0px;
   border-radius: 0;
+`;
+
+const GifImg = styled.img<{ gifAlign: GifAlign }>`
+  object-fit: cover;
+  object-position: ${(p) => p.gifAlign.toLocaleLowerCase()};
 `;

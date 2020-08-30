@@ -17,9 +17,10 @@ export default function ImageCrop(): JSX.Element {
     setCroppedImgUrl,
     setLoading,
     imageFormat,
+    setGifAlign,
   } = useUploadIconContext();
 
-  const handleNext = React.useCallback(async () => {
+  const handleCropImage = React.useCallback(async () => {
     if (croppedImg !== null) {
       setLoading(true);
       const reader = new FileReader();
@@ -35,6 +36,10 @@ export default function ImageCrop(): JSX.Element {
       setStep(STEPS.EDIT_METADATA);
     }
   }, [croppedImg]);
+
+  const handleCropGIF = React.useCallback(() => {
+    setStep(STEPS.EDIT_METADATA);
+  }, [setStep]);
 
   // for debug
   // React.useEffect(() => {
@@ -53,23 +58,40 @@ export default function ImageCrop(): JSX.Element {
   return (
     <>
       {imageFormat === ACCEPT_FORMATS.GIF ? (
-        <></>
+        <>
+          <Cropper.GIFCropper
+            src={cloudinaryTempUrl}
+            setGifAlign={setGifAlign}
+          />
+          <StyledModalSection>
+            <StyledButton
+              buttonType="PrimaryText"
+              buttonSize="Big"
+              onClick={handleCropGIF}
+            >
+              Crop the image
+            </StyledButton>
+          </StyledModalSection>
+        </>
       ) : (
-        <Cropper.ImageCropper
-          src={cloudinaryTempUrl}
-          setCroppedImg={setCroppedImg}
-        />
+        <>
+          <Cropper.ImageCropper
+            src={cloudinaryTempUrl}
+            setCroppedImg={setCroppedImg}
+          />
+
+          <StyledModalSection>
+            <StyledButton
+              buttonType="PrimaryText"
+              buttonSize="Big"
+              onClick={handleCropImage}
+            >
+              Crop the image
+            </StyledButton>
+          </StyledModalSection>
+        </>
       )}
 
-      <StyledModalSection>
-        <StyledButton
-          buttonType="PrimaryText"
-          buttonSize="Big"
-          onClick={handleNext}
-        >
-          Crop the image
-        </StyledButton>
-      </StyledModalSection>
       {croppedImgUrl && <img src={croppedImgUrl} />}
     </>
   );
