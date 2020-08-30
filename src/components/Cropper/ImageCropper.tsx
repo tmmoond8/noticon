@@ -31,13 +31,7 @@ const cropImage = async (
   const { x, y, height, width } = crop;
   canvas.width = width;
   canvas.height = height;
-  console.dir(image);
   const ctx = canvas.getContext('2d');
-  console.log('draw');
-  console.log('x', x);
-  console.log('y', y);
-  console.log('width', width);
-  console.log('height', height);
   ctx!.drawImage(image, x, y, width, height, 0, 0, width, height);
 
   return new Promise((resolve, reject) => {
@@ -65,8 +59,6 @@ export default function ImageCropper(props: ImageCropperProps): JSX.Element {
     croppedArea: CroppedArea,
     croppedAreaPixels: CroppedArea,
   ) => {
-    console.log(croppedArea, croppedAreaPixels);
-
     if (hiddenImgRef.current !== null) {
       const imageBlob = await cropImage(
         hiddenImgRef.current,
