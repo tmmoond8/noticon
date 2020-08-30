@@ -4845,10 +4845,10 @@ normalize-url@^3.0.0:
   resolved "https://registry.yarnpkg.com/normalize-url/-/normalize-url-3.3.0.tgz#b2e1c4dc4f7c6d57743df733a4f5978d18650559"
   integrity sha512-U+JJi7duF1o+u2pynbp2zXDW2/PADgC30f0GsHZtRh+HOcXHnw137TrNlyxxRvWW5fjKd3bcLHPxofWuCjaeZg==
 
-notion-ui@^0.2.59:
-  version "0.2.59"
-  resolved "https://registry.yarnpkg.com/notion-ui/-/notion-ui-0.2.59.tgz#123170f0769cf99e01d45075c759d85a97c4d2df"
-  integrity sha512-2B8lYCk7+5ALXkSzqmXynyezWtDrK+jobuU4bw5B2NpahBcZ8T1ms0x7Chm0DqHz10RE3vplXGDx3pxZbGR8KA==
+notion-ui@^0.2.60:
+  version "0.2.60"
+  resolved "https://registry.yarnpkg.com/notion-ui/-/notion-ui-0.2.60.tgz#d85f6d9c9cefd35cdf13f00dd173b3f1d3bf8af6"
+  integrity sha512-WXrPvaHfsjKEugOvzlwTgt1b3eXVb7YYH2xkF+zc5kzWz/vbGb3q02xXGcGPBot2OMC4UuMbg6/d2B/GX6r0zw==
 
 nth-check@^1.0.2:
   version "1.0.2"
