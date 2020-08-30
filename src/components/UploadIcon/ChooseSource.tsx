@@ -2,8 +2,9 @@
 import { jsx } from '@emotion/core';
 import styled from '@emotion/styled';
 import React from 'react';
-import { Modal, Button, TextFiled, colors, Loader } from 'notion-ui';
-import { TABS, METAS, STEPS } from './constant';
+import axios from 'axios';
+import { Modal, Button, TextFiled, colors, Content } from 'notion-ui';
+import { TABS, STEPS, ACCEPT_FORMATS, ImageForamt } from './constant';
 import { useUploadIconContext } from './context';
 import { upload } from '../../apis';
 
@@ -11,13 +12,17 @@ export default function ChooseSource(): JSX.Element {
   const { tabs, selected, handleSelect } = Modal.useTabSelect(
     Object.values(TABS),
   );
-  const { setStep, setCloudinaryTempUrl, setLoading } = useUploadIconContext();
+  const {
+    setStep,
+    setCloudinaryTempUrl,
+    setLoading,
+    setImageFormat,
+  } = useUploadIconContext();
   const [preloadImgSrc, setPreloadImgSrc] = React.useState('');
   const [imgSrc, setImgSrc] = React.useState<string>(
-    'https://pelicana.co.kr/resources/images/menu/original_menu01_200529.png',
+    'https://blog-assets.hootsuite.com/wp-content/uploads/2018/04/Nyan-Cat-GIF-source.gif',
   );
   const fileRef = React.useRef<HTMLInputElement>(null);
-  const imgRef = React.useRef<HTMLImageElement>(null);
   const [file, setFile] = React.useState<File | null>(null);
 
   const handleChangeImgSrc = React.useCallback(
@@ -31,7 +36,9 @@ export default function ChooseSource(): JSX.Element {
     event.preventDefault();
     const fileElement = event.target as HTMLInputElement;
     const files = fileElement.files;
+
     if (files && files.length > 0) {
+      setImageFormat(files[0].type as ImageForamt);
       setFile(files[0]);
       const reader = new FileReader();
       reader.readAsDataURL(files[0]);
@@ -50,7 +57,15 @@ export default function ChooseSource(): JSX.Element {
     if (tempImgSrc !== null) {
       setLoading(true);
       try {
-        const { imgUrl } = await upload(tempImgSrc, { temp: true });
+        const uploadPromise = upload(tempImgSrc, { temp: true });
+        if (selected === TABS.Url) {
+          const getImagePromise = axios.get(preloadImgSrc, {
+            responseType: 'blob',
+          });
+          const { data } = await getImagePromise;
+          setImageFormat(data.type);
+        }
+        const { imgUrl } = await uploadPromise;
         setCloudinaryTempUrl(imgUrl);
       } catch (error) {
         console.error(error);
@@ -89,34 +104,39 @@ export default function ChooseSource(): JSX.Element {
         </>
       )}
       {selected === TABS.File && (
-        <Modal.Section>
-          <StyledButton
-            buttonType="PrimaryText"
-            buttonSize="Big"
-            onClick={() => {
-              if (fileRef.current) {
-                fileRef.current.click();
-              }
-            }}
-          >
-            Load an image
-          </StyledButton>
-          <input
-            ref={fileRef}
-            id="ChooseSourceFile"
-            type="file"
-            hidden
-            onChange={handleChangeFile}
-            onError={(e) => {
-              (e.target as HTMLInputElement).value = '';
-              console.log('Error: ', e);
-            }}
-          />
-        </Modal.Section>
+        <>
+          <Modal.Section>
+            <StyledButton
+              buttonType="PrimaryText"
+              buttonSize="Big"
+              onClick={() => {
+                if (fileRef.current) {
+                  fileRef.current.click();
+                }
+              }}
+            >
+              Load an image
+              <Content.Text color={colors.grey60}>
+                ( JPG, PNG, GIF, BMP )
+              </Content.Text>
+            </StyledButton>
+            <input
+              ref={fileRef}
+              id="ChooseSourceFile"
+              type="file"
+              hidden
+              accept={Object.values(ACCEPT_FORMATS).join(', ')}
+              onChange={handleChangeFile}
+              onError={(e) => {
+                (e.target as HTMLInputElement).value = '';
+                console.log('Error: ', e);
+              }}
+            />
+          </Modal.Section>
+        </>
       )}
       <img
         src={preloadImgSrc}
-        ref={imgRef}
         hidden
         onLoad={handleImgLoad}
         onError={() => console.log('image load error')}
@@ -126,6 +146,8 @@ export default function ChooseSource(): JSX.Element {
 }
 
 const StyledButton = styled(Button)`
+  display: flex;
+  justify-content: space-between;
   width: 100%;
   height: 45px;
   padding: 0;
@@ -140,6 +162,7 @@ const ImageSrcTextField = styled(TextFiled)`
   margin: 28px 0 0 0;
   & > div {
     height: 100%;
+    padding: 10px 16px;
     background-color: ${colors.modalContentWrapper};
     box-shadow: ${colors.grey08} 0px 1px 0px, ${colors.grey08} 0px -1px 0px;
     font-size: 16px;

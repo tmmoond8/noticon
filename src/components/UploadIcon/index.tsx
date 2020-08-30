@@ -27,6 +27,7 @@ export default function UploadIcon(props: UploadIconProps): JSX.Element {
   const [croppedImgUrl, setCroppedImgUrl] = React.useState(
     context.croppedImgUrl,
   );
+  const [imageFormat, setImageFormat] = React.useState(context.imageFormat);
 
   return (
     <UploadIconContext.Provider
@@ -43,6 +44,8 @@ export default function UploadIcon(props: UploadIconProps): JSX.Element {
         setLoading,
         closeModal,
         unshightIcon,
+        imageFormat,
+        setImageFormat,
       }}
     >
       {loading ? (

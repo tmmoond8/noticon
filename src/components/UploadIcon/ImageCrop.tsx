@@ -5,8 +5,7 @@ import React from 'react';
 import Cropper from '../Cropper';
 import { Modal, Button } from 'notion-ui';
 import { useUploadIconContext } from './context';
-import { upload } from '../../apis';
-import { STEPS } from './constant';
+import { STEPS, ACCEPT_FORMATS } from './constant';
 
 export default function ImageCrop(): JSX.Element {
   const {
@@ -17,6 +16,7 @@ export default function ImageCrop(): JSX.Element {
     croppedImg,
     setCroppedImgUrl,
     setLoading,
+    imageFormat,
   } = useUploadIconContext();
 
   const handleNext = React.useCallback(async () => {
@@ -52,10 +52,15 @@ export default function ImageCrop(): JSX.Element {
 
   return (
     <>
-      <Cropper.ImageCropper
-        src={cloudinaryTempUrl}
-        setCroppedImg={setCroppedImg}
-      />
+      {imageFormat === ACCEPT_FORMATS.GIF ? (
+        <></>
+      ) : (
+        <Cropper.ImageCropper
+          src={cloudinaryTempUrl}
+          setCroppedImg={setCroppedImg}
+        />
+      )}
+
       <StyledModalSection>
         <StyledButton
           buttonType="PrimaryText"

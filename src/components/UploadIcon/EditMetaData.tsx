@@ -16,12 +16,14 @@ export default function EditMetaData(): JSX.Element {
     closeModal,
     unshightIcon,
   } = useUploadIconContext();
+
   const [metas, setMetas] = React.useState(
     Object.keys(METAS).reduce((accum, key) => {
       (accum as any)[key] = '';
       return accum;
     }, Object.assign({}, METAS)),
   );
+
   const handleInputChange = React.useCallback(
     (e) => {
       setMetas({

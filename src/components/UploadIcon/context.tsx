@@ -1,5 +1,5 @@
 import React from 'react';
-import { STEPS } from './constant';
+import { STEPS, ImageForamt } from './constant';
 import { Noticon } from '../../types';
 
 const UploadIconContext = React.createContext<{
@@ -11,6 +11,8 @@ const UploadIconContext = React.createContext<{
   setCroppedImg: (file: File) => void;
   croppedImgUrl: string;
   setCroppedImgUrl: (url: string) => void;
+  imageFormat: ImageForamt | null;
+  setImageFormat: (imageForamt: ImageForamt) => void;
   loading: boolean;
   setLoading: (bool: boolean) => void;
   closeModal: () => void;
@@ -24,6 +26,8 @@ const UploadIconContext = React.createContext<{
   setCroppedImg: (file: File) => {},
   croppedImgUrl: '',
   setCroppedImgUrl: (url: string) => {},
+  imageFormat: null,
+  setImageFormat: (imageForamt: ImageForamt) => {},
   loading: false,
   setLoading: (bool: boolean) => {},
   closeModal: () => {},
