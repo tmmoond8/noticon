@@ -32,7 +32,7 @@ export default function ImageCrop(): JSX.Element {
         console.log('Error: ', error);
         setLoading(false);
       };
-      setStep(STEPS.editMetaData);
+      setStep(STEPS.EDIT_METADATA);
     }
   }, [croppedImg]);
 

@@ -1,6 +1,6 @@
 export const TABS = {
-  Url: 'Url' as 'Url',
-  File: 'File' as 'File',
+  URL: 'URL' as 'URL',
+  FILE: 'FILE' as 'FILE',
 };
 export const METAS = {
   title: 'title' as 'title',
@@ -8,10 +8,10 @@ export const METAS = {
   tag2: 'tag2' as 'tag2',
 };
 export const STEPS = {
-  chooseSource: 'chooseSource' as 'chooseSource',
-  cropImage: 'cropImage' as 'cropImage',
-  editMetaData: 'editMetaData' as 'editMetaData',
-  completeUpload: 'completeUpload' as 'completeUpload',
+  CHOOSE_SOURCE: 'CHOOSE_SOURCE' as 'CHOOSE_SOURCE',
+  CROP_IMAGE: 'CROP_IMAGE' as 'CROP_IMAGE',
+  EDIT_METADATA: 'EDIT_METADATA' as 'EDIT_METADATA',
+  COMPLETE_UPLOAD: 'COMPLETE_UPLOAD' as 'COMPLETE_UPLOAD',
 };
 
 export const ACCEPT_FORMATS = {

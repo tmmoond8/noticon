@@ -52,9 +52,9 @@ export default function UploadIcon(props: UploadIconProps): JSX.Element {
         <ModalLoader />
       ) : (
         <>
-          {step === STEPS.chooseSource && <ChooseSource />}
-          {step === STEPS.cropImage && <ImageCrop />}
-          {step === STEPS.editMetaData && <EditMetaData />}
+          {step === STEPS.CHOOSE_SOURCE && <ChooseSource />}
+          {step === STEPS.CROP_IMAGE && <ImageCrop />}
+          {step === STEPS.EDIT_METADATA && <EditMetaData />}
         </>
       )}
     </UploadIconContext.Provider>

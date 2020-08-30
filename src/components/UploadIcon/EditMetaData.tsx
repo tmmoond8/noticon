@@ -58,7 +58,7 @@ export default function EditMetaData(): JSX.Element {
         console.error(error);
       }
       setLoading(false);
-      setStep(STEPS.completeUpload);
+      setStep(STEPS.COMPLETE_UPLOAD);
       closeModal();
     }
   };
@@ -105,14 +105,14 @@ const Form = styled.form`
   align-items: center;
   background-color: ${colors.backgroundEmbed};
   box-shadow: ${colors.grey08} 0px -1px 0px, ${colors.grey08} 0px 1px 0px;
-  padding: 14px;
+  padding: 28px;
   img {
     width: 160px;
     height: 160px;
   }
   .filed-group {
     flex: 1;
-    margin-left: 16px;
+    margin-left: 22px;
     .TextFiled input {
       font-size: 16px;
     }

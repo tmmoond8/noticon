@@ -18,7 +18,7 @@ const UploadIconContext = React.createContext<{
   closeModal: () => void;
   unshightIcon: (icon: Noticon) => void;
 }>({
-  step: STEPS.chooseSource,
+  step: STEPS.CHOOSE_SOURCE,
   setStep: (step: keyof typeof STEPS) => {},
   cloudinaryTempUrl: '',
   setCloudinaryTempUrl: (url: string) => {},

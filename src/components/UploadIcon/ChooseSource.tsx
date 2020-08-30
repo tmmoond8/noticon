@@ -53,12 +53,12 @@ export default function ChooseSource(): JSX.Element {
   };
 
   const handleImgLoad = async () => {
-    const tempImgSrc = selected === TABS.Url ? imgSrc : file;
+    const tempImgSrc = selected === TABS.URL ? imgSrc : file;
     if (tempImgSrc !== null) {
       setLoading(true);
       try {
         const uploadPromise = upload(tempImgSrc, { temp: true });
-        if (selected === TABS.Url) {
+        if (selected === TABS.URL) {
           const getImagePromise = axios.get(preloadImgSrc, {
             responseType: 'blob',
           });
@@ -72,7 +72,7 @@ export default function ChooseSource(): JSX.Element {
       }
       setLoading(false);
     }
-    setStep(STEPS.cropImage);
+    setStep(STEPS.CROP_IMAGE);
   };
 
   return (
@@ -82,7 +82,7 @@ export default function ChooseSource(): JSX.Element {
         selected={selected}
         handleSelect={handleSelect}
       />
-      {selected === TABS.Url && (
+      {selected === TABS.URL && (
         <>
           <ImageSrcTextField
             id="ChooseSourceImage"
@@ -103,7 +103,7 @@ export default function ChooseSource(): JSX.Element {
           </Modal.Section>
         </>
       )}
-      {selected === TABS.File && (
+      {selected === TABS.FILE && (
         <>
           <Modal.Section>
             <StyledButton
