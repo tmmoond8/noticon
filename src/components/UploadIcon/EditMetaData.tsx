@@ -2,7 +2,7 @@
 import { jsx } from '@emotion/core';
 import styled from '@emotion/styled';
 import React from 'react';
-import { TextFiled, Button, colors } from 'notion-ui';
+import { TextField, Button, colors } from 'notion-ui';
 import { METAS, STEPS, ACCEPT_FORMATS, GifAlign } from './constant';
 import { useUploadIconContext } from './context';
 import { upload, append } from '../../apis';
@@ -121,14 +121,14 @@ const Form = styled.form`
   .filed-group {
     flex: 1;
     margin-left: 22px;
-    .TextFiled input {
+    .TextField input {
       font-size: 16px;
     }
   }
 `;
 
-const StyledTextField = styled(TextFiled)`
-  .filed-group .TextFiled input {
+const StyledTextField = styled(TextField)`
+  .filed-group .TextField input {
   }
 `;
 

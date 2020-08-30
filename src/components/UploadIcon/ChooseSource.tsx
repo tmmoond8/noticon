@@ -3,7 +3,7 @@ import { jsx } from '@emotion/core';
 import styled from '@emotion/styled';
 import React from 'react';
 import axios from 'axios';
-import { Modal, Button, TextFiled, colors, Content } from 'notion-ui';
+import { Modal, Button, TextField, colors, Content } from 'notion-ui';
 import { TABS, STEPS, ACCEPT_FORMATS, ImageForamt } from './constant';
 import { useUploadIconContext } from './context';
 import { upload } from '../../apis';
@@ -156,7 +156,7 @@ const StyledButton = styled(Button)`
   border-radius: 0;
 `;
 
-const ImageSrcTextField = styled(TextFiled)`
+const ImageSrcTextField = styled(TextField)`
   width: 100%;
   height: 45px;
   margin: 28px 0 0 0;
