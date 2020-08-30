@@ -1,6 +1,5 @@
 import axios, { AxiosResponse } from 'axios';
 import { Noticon } from '../types';
-import { uploadError } from './errorMessages';
 
 export const get = async (): Promise<AxiosResponse<{ data: Noticon[] }>> => {
   return await axios.get(
@@ -47,6 +46,6 @@ export const upload = async (
       imgUrl: data.secure_url,
     };
   } catch (error) {
-    throw new Error(uploadError);
+    throw new Error('UPLOAD ERROR');
   }
 };
