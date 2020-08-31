@@ -15,9 +15,7 @@ export default React.memo(function ImageFromUrl(
   props: ImageFromUrlProps,
 ): JSX.Element {
   const { setPreloadImgSrc, imageFormat, setImageFormat } = props;
-  const [imgSrc, setImgSrc] = React.useState<string>(
-    'https://blog-assets.hootsuite.com/wp-content/uploads/2018/04/Nyan-Cat-GIF-source.gif',
-  );
+  const [imgSrc, setImgSrc] = React.useState<string>('');
 
   const handleChangeImgSrc = React.useCallback(
     (e) => {

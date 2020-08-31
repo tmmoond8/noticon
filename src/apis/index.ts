@@ -18,22 +18,16 @@ export const append = async (noticon: {
     { params: noticon },
   );
 
-interface UploadOption {
-  temp?: boolean;
-}
-
 export const upload = async (
   file: File | string,
-  preset?: UploadOption,
+  preset?: string,
 ): Promise<{ id: string; imgUrl: string }> => {
   let form = new FormData();
   form.append('file', file);
   form.append('api_key', process.env.REACT_APP_CLOUDINARY_API_KEY || '');
   form.append(
     'upload_preset',
-    preset?.temp
-      ? 'temp_preset'
-      : process.env.REACT_APP_CLOUDINARY_UPLOAD_PRESET || '',
+    preset || process.env.REACT_APP_CLOUDINARY_UPLOAD_PRESET || '',
   );
 
   try {
@@ -48,4 +42,10 @@ export const upload = async (
   } catch (error) {
     throw new Error('UPLOAD ERROR');
   }
+};
+
+export const uploadTemp = async (
+  file: File | string,
+): Promise<{ id: string; imgUrl: string }> => {
+  return await upload(file, 'temp_preset');
 };

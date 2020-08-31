@@ -1,6 +1,5 @@
 /** @jsx jsx */
 import { jsx } from '@emotion/core';
-import styled from '@emotion/styled';
 import React from 'react';
 import axios from 'axios';
 import { Modal } from 'notion-ui';
@@ -8,7 +7,7 @@ import FromUrl from './FromUrl';
 import FromFile from './FromFile';
 import { TABS, STEPS, ACCEPT_FORMATS } from '../constant';
 import { useUploadIconContext } from '../context';
-import { upload } from '../../../apis';
+import { uploadTemp } from '../../../apis';
 
 export default function ChooseSource(): JSX.Element {
   const { tabs, selected, handleSelect } = Modal.useTabSelect(
@@ -27,7 +26,7 @@ export default function ChooseSource(): JSX.Element {
     if (preloadImgSrc !== null) {
       setLoading(true);
       try {
-        const { imgUrl } = await upload(preloadImgSrc, { temp: true });
+        const { imgUrl } = await uploadTemp(preloadImgSrc);
         setCloudinaryTempUrl(imgUrl);
         if (selected === TABS.URL) {
           const { data } = await axios.get(imgUrl, {

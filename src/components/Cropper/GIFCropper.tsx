@@ -21,61 +21,53 @@ interface CroppedArea {
 export default function ImageCropper(props: ImageCropperProps): JSX.Element {
   const { src, setGifAlign } = props;
   const [crop, setCrop] = React.useState({ x: 0, y: 0 });
-  const hiddenImgRef = React.useRef<HTMLImageElement>(null);
   const [isReady, setIsReady] = React.useState(false);
+  const [imageSize, setImageSize] = React.useState({
+    height: 0,
+    naturalHeight: 0,
+    width: 0,
+    naturalWidth: 0,
+  });
 
   const handleCropCompplete = async (
     croppedArea: CroppedArea,
     croppedAreaPixels: CroppedArea,
   ) => {
     const { x, y } = croppedAreaPixels;
-    console.log(croppedArea, croppedAreaPixels);
 
-    if (hiddenImgRef.current !== null) {
-      const {
-        naturalHeight: height,
-        naturalWidth: width,
-      } = hiddenImgRef.current;
-      const range = Math.abs(height - width) / 2;
+    const { height, width, naturalHeight, naturalWidth } = imageSize;
+    const range = Math.abs(naturalHeight - naturalWidth) / 2;
+    const heightRatio = height / naturalHeight;
+    const widthRatio = width / naturalWidth;
 
-      console.log('x', x);
-      console.log('y', y);
-      console.log('range', range);
-
-      if (height > width && y < range * 0.5) {
-        setCrop({
-          ...crop,
-          y: range / 2,
-        });
-        setGifAlign(GIF_ALIGN.TOP);
-      } else if (height > width && y > range * 1.5) {
-        setCrop({
-          ...crop,
-          y: -range / 2,
-        });
-        setGifAlign(GIF_ALIGN.BOTTOM);
-      } else if (width > height && x < range * 0.5) {
-        setCrop({
-          ...crop,
-          x: range,
-        });
-        setGifAlign(GIF_ALIGN.LEFT);
-      } else if (width > height && x > range * 1.5) {
-        setCrop({
-          ...crop,
-          x: -range,
-        });
-        setGifAlign(GIF_ALIGN.RIGHT);
-      } else {
-        setCrop({ x: 0, y: 0 });
-        setGifAlign(GIF_ALIGN.CENTER);
-      }
+    if (naturalHeight > naturalWidth && y < range * 0.5) {
+      setCrop({
+        ...crop,
+        y: range * heightRatio,
+      });
+      setGifAlign(GIF_ALIGN.TOP);
+    } else if (naturalHeight > naturalWidth && y > range * 1.5) {
+      setCrop({
+        ...crop,
+        y: -range * heightRatio,
+      });
+      setGifAlign(GIF_ALIGN.BOTTOM);
+    } else if (naturalWidth > naturalHeight && x < range * 0.5) {
+      setCrop({
+        ...crop,
+        x: range * widthRatio,
+      });
+      setGifAlign(GIF_ALIGN.LEFT);
+    } else if (naturalWidth > naturalHeight && x > range * 1.5) {
+      setCrop({
+        ...crop,
+        x: -range * widthRatio,
+      });
+      setGifAlign(GIF_ALIGN.RIGHT);
+    } else {
+      setCrop({ x: 0, y: 0 });
+      setGifAlign(GIF_ALIGN.CENTER);
     }
-  };
-
-  const setCropWithLog = (crop: { x: number; y: number }) => {
-    console.log(crop);
-    setCrop(crop);
   };
 
   const handleImgLoad = () => {
@@ -87,23 +79,20 @@ export default function ImageCropper(props: ImageCropperProps): JSX.Element {
       <Wrapper className="ImageCropperWrapper" isReady>
         {isReady && (
           <Cropper
+            onMediaLoaded={(imageSize) => {
+              setImageSize(imageSize);
+            }}
             image={src}
             crop={crop}
             zoom={1}
             aspect={1}
-            onCropChange={setCropWithLog}
+            onCropChange={setCrop}
             onCropComplete={handleCropCompplete}
             showGrid={false}
           />
         )}
       </Wrapper>
-      <img
-        ref={hiddenImgRef}
-        hidden
-        src={src}
-        onLoad={handleImgLoad}
-        crossOrigin="anonymous"
-      />
+      <img hidden src={src} onLoad={handleImgLoad} crossOrigin="anonymous" />
     </Container>
   );
 }

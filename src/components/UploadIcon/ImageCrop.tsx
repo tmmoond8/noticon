@@ -41,20 +41,6 @@ export default function ImageCrop(): JSX.Element {
     setStep(STEPS.EDIT_METADATA);
   }, [setStep]);
 
-  // for debug
-  // React.useEffect(() => {
-  //   if (croppedImg !== null) {
-  //     const reader = new FileReader();
-  //     reader.readAsDataURL(croppedImg as Blob);
-  //     reader.onload = () => {
-  //       setCroppedImgUrl(reader!.result!.toString());
-  //     };
-  //     reader.onerror = function (error) {
-  //       console.log('Error: ', error);
-  //     };
-  //   }
-  // }, [croppedImg]);
-
   return (
     <>
       {imageFormat === ACCEPT_FORMATS.GIF ? (

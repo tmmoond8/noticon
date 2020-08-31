@@ -40,30 +40,34 @@ export default function EditMetaData(): JSX.Element {
   const disabled = React.useMemo(() => metas.title.length < 1, [metas.title]);
 
   const handleUploadImage = async () => {
-    if (croppedImg !== null) {
-      setLoading(true);
-      try {
-        const { id, imgUrl } = await upload(croppedImg);
-        const newIcon = {
-          id,
-          imgUrl,
-          title: metas.title,
-          keywords: [metas.tag1, metas.tag2].join('‡'),
-        };
-        const { status } = await append(newIcon);
-        if (status === 200) {
-          unshightIcon({
-            ...newIcon,
-            date: new Date().toString(),
-          });
-        }
-      } catch (error) {
-        console.error(error);
+    let requestUpload =
+      imageFormat === ACCEPT_FORMATS.GIF
+        ? () =>
+            upload(cloudinaryTempUrl, `${gifAlign?.toLocaleLowerCase()}_preset`)
+        : () => upload(croppedImg || '');
+
+    setLoading(true);
+    try {
+      const { id, imgUrl } = await requestUpload();
+      const newIcon = {
+        id,
+        imgUrl,
+        title: metas.title,
+        keywords: [metas.tag1, metas.tag2].join('‡'),
+      };
+      const { status } = await append(newIcon);
+      if (status === 200) {
+        unshightIcon({
+          ...newIcon,
+          date: new Date().toString(),
+        });
       }
-      setLoading(false);
-      setStep(STEPS.COMPLETE_UPLOAD);
-      closeModal();
+    } catch (error) {
+      console.error(error);
     }
+    setLoading(false);
+    setStep(STEPS.COMPLETE_UPLOAD);
+    closeModal();
   };
 
   return (
