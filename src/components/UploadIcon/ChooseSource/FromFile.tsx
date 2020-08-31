@@ -6,14 +6,15 @@ import { Modal, Button, Content, colors } from 'notion-ui';
 import { ACCEPT_FORMATS, ImageForamt } from '../constant';
 
 interface FromFileProps {
-  setImageFormat: (imageFormat: ImageForamt) => void;
+  setImageFormat: (imageFormat: string | null) => void;
   setPreloadImgSrc: (src: string) => void;
 }
 
-export default function FromFile(props: FromFileProps): JSX.Element {
+export default React.memo(function FromFile(props: FromFileProps): JSX.Element {
   const { setImageFormat, setPreloadImgSrc } = props;
   const fileRef = React.useRef<HTMLInputElement>(null);
-  const [file, setFile] = React.useState<File | null>(null);
+  const [_, setFile] = React.useState<File | null>(null);
+  const [errorMessage, setErrorMessage] = React.useState<string | null>(null);
 
   const handleChangeFile = (event: React.ChangeEvent) => {
     event.preventDefault();
@@ -21,7 +22,16 @@ export default function FromFile(props: FromFileProps): JSX.Element {
     const files = fileElement.files;
 
     if (files && files.length > 0) {
-      setImageFormat(files[0].type as ImageForamt);
+      setErrorMessage(null);
+      if (
+        !Object.values(ACCEPT_FORMATS).includes(files[0].type as ImageForamt)
+      ) {
+        console.log('not support error');
+        fileElement.value = '';
+        setErrorMessage('Not Supported format');
+        return;
+      }
+      setImageFormat(files[0].type);
       setFile(files[0]);
       const reader = new FileReader();
       reader.readAsDataURL(files[0]);
@@ -64,9 +74,10 @@ export default function FromFile(props: FromFileProps): JSX.Element {
           }}
         />
       </Modal.Section>
+      {errorMessage && <ErrorMessage>{errorMessage}</ErrorMessage>}
     </>
   );
-}
+});
 
 const StyledButton = styled(Button)`
   display: flex;
@@ -77,4 +88,10 @@ const StyledButton = styled(Button)`
   font-size: 16px;
   text-align: left;
   border-radius: 0;
+`;
+
+const ErrorMessage = styled(Content.Text)`
+  font-size: 16px;
+  color: ${colors.red};
+  padding: 16px;
 `;

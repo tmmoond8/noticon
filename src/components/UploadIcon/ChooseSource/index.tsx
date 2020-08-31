@@ -6,7 +6,7 @@ import axios from 'axios';
 import { Modal } from 'notion-ui';
 import FromUrl from './FromUrl';
 import FromFile from './FromFile';
-import { TABS, STEPS } from '../constant';
+import { TABS, STEPS, ACCEPT_FORMATS } from '../constant';
 import { useUploadIconContext } from '../context';
 import { upload } from '../../../apis';
 
@@ -19,6 +19,7 @@ export default function ChooseSource(): JSX.Element {
     setCloudinaryTempUrl,
     setLoading,
     setImageFormat,
+    imageFormat,
   } = useUploadIconContext();
   const [preloadImgSrc, setPreloadImgSrc] = React.useState('');
 
@@ -32,14 +33,17 @@ export default function ChooseSource(): JSX.Element {
           const { data } = await axios.get(imgUrl, {
             responseType: 'blob',
           });
-          console.log(data.type);
           setImageFormat(data.type);
+          if (!Object.values(ACCEPT_FORMATS).includes(data.type)) {
+            setLoading(false);
+            return;
+          }
         }
       } catch (error) {
         console.error(error);
       }
-      setLoading(false);
     }
+    setLoading(false);
     setStep(STEPS.CROP_IMAGE);
   };
 
@@ -50,7 +54,13 @@ export default function ChooseSource(): JSX.Element {
         selected={selected}
         handleSelect={handleSelect}
       />
-      {selected === TABS.URL && <FromUrl setPreloadImgSrc={setPreloadImgSrc} />}
+      {selected === TABS.URL && (
+        <FromUrl
+          setPreloadImgSrc={setPreloadImgSrc}
+          imageFormat={imageFormat}
+          setImageFormat={setImageFormat}
+        />
+      )}
       {selected === TABS.FILE && (
         <FromFile
           setPreloadImgSrc={setPreloadImgSrc}

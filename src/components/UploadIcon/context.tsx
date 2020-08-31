@@ -11,8 +11,8 @@ const UploadIconContext = React.createContext<{
   setCroppedImg: (file: File) => void;
   croppedImgUrl: string;
   setCroppedImgUrl: (url: string) => void;
-  imageFormat: ImageForamt | null;
-  setImageFormat: (imageForamt: ImageForamt) => void;
+  imageFormat: string | null;
+  setImageFormat: (imageForamt: string | null) => void;
   gifAlign: GifAlign | null;
   setGifAlign: (align: GifAlign) => void;
   loading: boolean;
@@ -28,8 +28,8 @@ const UploadIconContext = React.createContext<{
   setCroppedImg: (file: File) => {},
   croppedImgUrl: '',
   setCroppedImgUrl: (url: string) => {},
-  imageFormat: 'image/gif',
-  setImageFormat: (imageForamt: ImageForamt) => {},
+  imageFormat: null,
+  setImageFormat: (imageForamt: string | null) => {},
   gifAlign: null,
   setGifAlign: (align: GifAlign) => {},
   loading: false,
