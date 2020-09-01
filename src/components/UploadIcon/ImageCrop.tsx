@@ -9,7 +9,7 @@ import { STEPS, ACCEPT_FORMATS } from './constant';
 
 export default function ImageCrop(): JSX.Element {
   const {
-    cloudinaryTempUrl,
+    preloadImgSrc,
     setStep,
     croppedImgUrl,
     setCroppedImg,
@@ -45,10 +45,7 @@ export default function ImageCrop(): JSX.Element {
     <>
       {imageFormat === ACCEPT_FORMATS.GIF ? (
         <>
-          <Cropper.GIFCropper
-            src={cloudinaryTempUrl}
-            setGifAlign={setGifAlign}
-          />
+          <Cropper.GIFCropper src={preloadImgSrc} setGifAlign={setGifAlign} />
           <StyledModalSection>
             <StyledButton
               buttonType="PrimaryText"
@@ -62,7 +59,7 @@ export default function ImageCrop(): JSX.Element {
       ) : (
         <>
           <Cropper.ImageCropper
-            src={cloudinaryTempUrl}
+            src={preloadImgSrc}
             setCroppedImg={setCroppedImg}
           />
 

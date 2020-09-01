@@ -27,7 +27,7 @@ const cropImage = async (
   crop: CroppedArea,
   fileName: string,
 ): Promise<ImageBlob> => {
-  const canvas = document.createElement('canvas');
+  const canvas: HTMLCanvasElement = document.createElement('canvas');
   const { x, y, height, width } = crop;
   canvas.width = width;
   canvas.height = height;

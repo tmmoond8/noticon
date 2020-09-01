@@ -41,9 +41,9 @@ $ cd noticon && yarn
 2. Rename .env.sample to .env
 
 ```bash
-REACT_APP_CLOUDINARY_UPLOAD_PRESET=test_preset
-REACT_APP_CLOUDINARY_UPLOAD_URL=https://api.cloudinary.com/v1_1/dgggcrkxq/image/upload
-REACT_APP_CLOUDINARY_API_KEY=193243387542668
+REACT_APP_CLOUDINARY_UPLOAD_PRESET=noticon
+REACT_APP_CLOUDINARY_UPLOAD_URL=https://api.cloudinary.com/v1_1/dhfi7dxpu/image/upload
+REACT_APP_CLOUDINARY_API_KEY=694687112145367
 REACT_APP_GOOGLE_SHEET_URL=https://script.google.com/macros/s/AKfycbw6zKYeWddESrtPTNZP-fjGUF_uWpMyeIVR7zkT16_IlNkMqYo/exec
 REACT_APP_SHEET_NAME=sample
 ```

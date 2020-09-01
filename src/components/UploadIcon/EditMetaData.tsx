@@ -12,7 +12,7 @@ export default function EditMetaData(): JSX.Element {
     setLoading,
     croppedImg,
     croppedImgUrl,
-    cloudinaryTempUrl,
+    preloadImgSrc,
     setStep,
     closeModal,
     unshightIcon,
@@ -42,8 +42,7 @@ export default function EditMetaData(): JSX.Element {
   const handleUploadImage = async () => {
     let requestUpload =
       imageFormat === ACCEPT_FORMATS.GIF
-        ? () =>
-            upload(cloudinaryTempUrl, `${gifAlign?.toLocaleLowerCase()}_preset`)
+        ? () => upload(preloadImgSrc, `${gifAlign?.toLocaleLowerCase()}_preset`)
         : () => upload(croppedImg || '');
 
     setLoading(true);
@@ -74,7 +73,7 @@ export default function EditMetaData(): JSX.Element {
     <>
       <Form>
         {imageFormat === ACCEPT_FORMATS.GIF ? (
-          <GifImg src={cloudinaryTempUrl} gifAlign={gifAlign as GifAlign} />
+          <GifImg src={preloadImgSrc} gifAlign={gifAlign as GifAlign} />
         ) : (
           <img src={croppedImgUrl} />
         )}

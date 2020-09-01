@@ -4,18 +4,21 @@ import styled from '@emotion/styled';
 import React from 'react';
 import { Modal, Button, TextField, Content, colors } from 'notion-ui';
 import { ACCEPT_FORMATS } from '../constant';
+import browser from 'browser-detect';
+import { uploadTemp } from '../../../apis';
+import { useUploadIconContext } from '../context';
 
-interface ImageFromUrlProps {
-  setPreloadImgSrc: (src: string) => void;
-  imageFormat: string | null;
-  setImageFormat: (src: string | null) => void;
-}
+export default React.memo(function ImageFromUrl(): JSX.Element {
+  const {
+    setLoading,
+    setImageFormat,
+    imageFormat,
+    setPreloadImgSrc,
+  } = useUploadIconContext();
 
-export default React.memo(function ImageFromUrl(
-  props: ImageFromUrlProps,
-): JSX.Element {
-  const { setPreloadImgSrc, imageFormat, setImageFormat } = props;
   const [imgSrc, setImgSrc] = React.useState<string>('');
+  const [t, s] = React.useState('');
+  const [errorMessage, setErrorMessage] = React.useState<string | null>(null);
 
   const handleChangeImgSrc = React.useCallback(
     (e) => {
@@ -25,16 +28,25 @@ export default React.memo(function ImageFromUrl(
     [setImgSrc],
   );
 
-  const errorMessage = React.useMemo(() => {
+  React.useEffect(() => {
     if (
       imageFormat !== null &&
       !Object.values(imageFormat).includes(imageFormat)
     ) {
       setImgSrc('');
-      return 'Not supported format';
+      setErrorMessage('Not supported format');
     }
-    return null;
-  }, [imageFormat, imgSrc]);
+    setErrorMessage(null);
+  }, [imageFormat]);
+
+  const handleSafetify = async () => {
+    const { mobile, os } = browser();
+    if (mobile && os?.includes('OS X')) {
+      // todo local file
+    } else {
+      setPreloadImgSrc(imgSrc);
+    }
+  };
 
   return (
     <>
@@ -48,14 +60,13 @@ export default React.memo(function ImageFromUrl(
         <StyledButton
           buttonType="PrimaryText"
           buttonSize="Big"
-          onClick={() => {
-            setPreloadImgSrc(imgSrc);
-          }}
+          onClick={handleSafetify}
         >
           Load an image
         </StyledButton>
       </Modal.Section>
       {errorMessage && <ErrorMessage>{errorMessage}</ErrorMessage>}
+      {t}
     </>
   );
 });

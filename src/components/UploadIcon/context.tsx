@@ -5,8 +5,8 @@ import { Noticon } from '../../types';
 const UploadIconContext = React.createContext<{
   step: keyof typeof STEPS;
   setStep: (step: keyof typeof STEPS) => void;
-  cloudinaryTempUrl: string;
-  setCloudinaryTempUrl: (url: string) => void;
+  preloadImgSrc: string;
+  setPreloadImgSrc: (url: string) => void;
   croppedImg: File | null;
   setCroppedImg: (file: File) => void;
   croppedImgUrl: string;
@@ -22,8 +22,8 @@ const UploadIconContext = React.createContext<{
 }>({
   step: STEPS.CHOOSE_SOURCE,
   setStep: (step: keyof typeof STEPS) => {},
-  cloudinaryTempUrl: '',
-  setCloudinaryTempUrl: (url: string) => {},
+  preloadImgSrc: '',
+  setPreloadImgSrc: (url: string) => {},
   croppedImg: null,
   setCroppedImg: (file: File) => {},
   croppedImgUrl: '',

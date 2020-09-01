@@ -15,32 +15,17 @@ export default function ChooseSource(): JSX.Element {
   );
   const {
     setStep,
-    setCloudinaryTempUrl,
+    preloadImgSrc,
+    setPreloadImgSrc,
     setLoading,
     setImageFormat,
     imageFormat,
   } = useUploadIconContext();
-  const [preloadImgSrc, setPreloadImgSrc] = React.useState('');
 
   const handleImgLoad = async () => {
     if (preloadImgSrc !== null) {
       setLoading(true);
-      try {
-        const { imgUrl } = await uploadTemp(preloadImgSrc);
-        setCloudinaryTempUrl(imgUrl);
-        if (selected === TABS.URL) {
-          const { data } = await axios.get(imgUrl, {
-            responseType: 'blob',
-          });
-          setImageFormat(data.type);
-          if (!Object.values(ACCEPT_FORMATS).includes(data.type)) {
-            setLoading(false);
-            return;
-          }
-        }
-      } catch (error) {
-        console.error(error);
-      }
+      setPreloadImgSrc(preloadImgSrc);
     }
     setLoading(false);
     setStep(STEPS.CROP_IMAGE);
@@ -53,13 +38,7 @@ export default function ChooseSource(): JSX.Element {
         selected={selected}
         handleSelect={handleSelect}
       />
-      {selected === TABS.URL && (
-        <FromUrl
-          setPreloadImgSrc={setPreloadImgSrc}
-          imageFormat={imageFormat}
-          setImageFormat={setImageFormat}
-        />
-      )}
+      {selected === TABS.URL && <FromUrl />}
       {selected === TABS.FILE && (
         <FromFile
           setPreloadImgSrc={setPreloadImgSrc}
@@ -69,6 +48,7 @@ export default function ChooseSource(): JSX.Element {
       <img
         src={preloadImgSrc}
         hidden
+        crossOrigin="anonymous"
         onLoad={handleImgLoad}
         onError={() => console.log('image load error')}
       />
