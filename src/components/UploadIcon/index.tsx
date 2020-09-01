@@ -19,7 +19,7 @@ export default function UploadIcon(props: UploadIconProps): JSX.Element {
   const { closeModal, unshightIcon } = props;
   const context = useUploadIconContext();
   const [step, setStep] = React.useState(context.step);
-  const [preloadImgSrc, setPreloadImgSrc] = React.useState(
+  const [preloadImgSrc, setPreloadImgSrc] = React.useState<string>(
     context.preloadImgSrc,
   );
   const [loading, setLoading] = React.useState(context.loading);

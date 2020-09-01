@@ -45,7 +45,7 @@ export default observer(function Aside(): JSX.Element {
 
   return (
     <AsideFlex>
-      <AsideUI.Group title="Recent Used" max={10}>
+      <AsideUI.Group title="Recent Used" max={5}>
         {recentUsedIcons.map((recentUsedIcon) => (
           <AsideUI.Menu
             key={recentUsedIcon.id}

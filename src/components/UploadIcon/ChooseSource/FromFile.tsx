@@ -3,18 +3,21 @@ import { jsx } from '@emotion/core';
 import styled from '@emotion/styled';
 import React from 'react';
 import { Modal, Button, Content, colors } from 'notion-ui';
-import { ACCEPT_FORMATS, ImageForamt } from '../constant';
+import { ACCEPT_FORMATS, STEPS, ImageForamt } from '../constant';
+import { useUploadIconContext } from '../context';
 
-interface FromFileProps {
-  setImageFormat: (imageFormat: string | null) => void;
-  setPreloadImgSrc: (src: string) => void;
-}
+export default React.memo(function FromFile(): JSX.Element {
+  const {
+    setStep,
+    preloadImgSrc,
+    setImageFormat,
+    setPreloadImgSrc,
+  } = useUploadIconContext();
 
-export default React.memo(function FromFile(props: FromFileProps): JSX.Element {
-  const { setImageFormat, setPreloadImgSrc } = props;
   const fileRef = React.useRef<HTMLInputElement>(null);
   const [_, setFile] = React.useState<File | null>(null);
   const [errorMessage, setErrorMessage] = React.useState<string | null>(null);
+  const preImageRef = React.useRef(null);
 
   const handleChangeFile = (event: React.ChangeEvent) => {
     event.preventDefault();
@@ -44,6 +47,7 @@ export default React.memo(function FromFile(props: FromFileProps): JSX.Element {
       };
     }
   };
+
   return (
     <>
       <Modal.Section>
@@ -75,6 +79,14 @@ export default React.memo(function FromFile(props: FromFileProps): JSX.Element {
         />
       </Modal.Section>
       {errorMessage && <ErrorMessage>{errorMessage}</ErrorMessage>}
+      <img
+        src={preloadImgSrc}
+        hidden
+        ref={preImageRef}
+        crossOrigin="anonymous"
+        onLoad={() => setStep(STEPS.CROP_IMAGE)}
+        onError={() => console.log('image load error')}
+      />
     </>
   );
 });

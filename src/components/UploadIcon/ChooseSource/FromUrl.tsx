@@ -3,21 +3,22 @@ import { jsx } from '@emotion/core';
 import styled from '@emotion/styled';
 import React from 'react';
 import { Modal, Button, TextField, Content, colors } from 'notion-ui';
-import { ACCEPT_FORMATS } from '../constant';
 import browser from 'browser-detect';
-import { uploadTemp } from '../../../apis';
+import { STEPS, ACCEPT_FORMATS } from '../constant';
 import { useUploadIconContext } from '../context';
+import { imgSrc2Blob, getImageFormat } from '../../../libs/image';
 
 export default React.memo(function ImageFromUrl(): JSX.Element {
   const {
     setLoading,
-    setImageFormat,
     imageFormat,
+    setImageFormat,
+    setStep,
+    preloadImgSrc,
     setPreloadImgSrc,
   } = useUploadIconContext();
 
   const [imgSrc, setImgSrc] = React.useState<string>('');
-  const [t, s] = React.useState('');
   const [errorMessage, setErrorMessage] = React.useState<string | null>(null);
 
   const handleChangeImgSrc = React.useCallback(
@@ -27,6 +28,35 @@ export default React.memo(function ImageFromUrl(): JSX.Element {
     },
     [setImgSrc],
   );
+
+  const handleImgLoaded = React.useCallback(async () => {
+    const { mobile, os } = browser();
+    setLoading(true);
+    const preImgFormat = imageFormat ?? (await getImageFormat(imgSrc));
+    setImageFormat(preImgFormat);
+    if (
+      mobile &&
+      os?.includes('OS X') &&
+      preloadImgSrc === imgSrc &&
+      preImgFormat !== ACCEPT_FORMATS.GIF
+    ) {
+      const imgBlob = await imgSrc2Blob(imgSrc, preImgFormat as string);
+      const reader = new FileReader();
+      reader.readAsDataURL(imgBlob);
+      reader.onload = () => {
+        setPreloadImgSrc(reader!.result!.toString());
+        setLoading(false);
+        setStep(STEPS.CROP_IMAGE);
+      };
+      reader.onerror = function (error) {
+        setImgSrc('');
+        console.log('Error: ', error);
+      };
+    } else {
+      setLoading(false);
+      setStep(STEPS.CROP_IMAGE);
+    }
+  }, [preloadImgSrc, imgSrc, setLoading]);
 
   React.useEffect(() => {
     if (
@@ -38,15 +68,6 @@ export default React.memo(function ImageFromUrl(): JSX.Element {
     }
     setErrorMessage(null);
   }, [imageFormat]);
-
-  const handleSafetify = async () => {
-    const { mobile, os } = browser();
-    if (mobile && os?.includes('OS X')) {
-      // todo local file
-    } else {
-      setPreloadImgSrc(imgSrc);
-    }
-  };
 
   return (
     <>
@@ -60,13 +81,19 @@ export default React.memo(function ImageFromUrl(): JSX.Element {
         <StyledButton
           buttonType="PrimaryText"
           buttonSize="Big"
-          onClick={handleSafetify}
+          onClick={() => setPreloadImgSrc(imgSrc)}
         >
           Load an image
         </StyledButton>
       </Modal.Section>
       {errorMessage && <ErrorMessage>{errorMessage}</ErrorMessage>}
-      {t}
+      <img
+        src={preloadImgSrc}
+        hidden
+        crossOrigin="anonymous"
+        onLoad={handleImgLoaded}
+        onError={() => console.log('image load error')}
+      />
     </>
   );
 });

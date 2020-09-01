@@ -21,7 +21,7 @@ export const append = async (noticon: {
 export const upload = async (
   file: File | string,
   preset?: string,
-): Promise<{ id: string; imgUrl: string }> => {
+): Promise<{ id: string; imgUrl: string; format: string }> => {
   let form = new FormData();
   form.append('file', file);
   form.append('api_key', process.env.REACT_APP_CLOUDINARY_API_KEY || '');
@@ -38,6 +38,7 @@ export const upload = async (
     return {
       id: data.public_id,
       imgUrl: data.secure_url,
+      format: data.foramt,
     };
   } catch (error) {
     throw new Error('UPLOAD ERROR');
@@ -46,6 +47,6 @@ export const upload = async (
 
 export const uploadTemp = async (
   file: File | string,
-): Promise<{ id: string; imgUrl: string }> => {
+): Promise<{ id: string; imgUrl: string; format: string }> => {
   return await upload(file, 'temp_preset');
 };
