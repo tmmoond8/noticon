@@ -37,17 +37,11 @@ export default React.memo(function ImageFromUrl(): JSX.Element {
     const { format, imgUrl } = await uploadTemp(imgSrc);
     const preImgFormat = `image/${format}`;
     setImageFormat(preImgFormat);
-    if (mobile && os?.includes('OS X') && preImgFormat !== ACCEPT_FORMATS.GIF) {
-      const dataURL = await imgSrc2DataURL(imgUrl, preImgFormat as string);
+    const dataURL = await imgSrc2DataURL(imgUrl, preImgFormat as string);
 
-      setPreloadImgSrc(dataURL);
-      setLoading(false);
-      setStep(STEPS.CROP_IMAGE);
-    } else {
-      setPreloadImgSrc(imgUrl);
-      setLoading(false);
-      setStep(STEPS.CROP_IMAGE);
-    }
+    setPreloadImgSrc(dataURL);
+    setLoading(false);
+    setStep(STEPS.CROP_IMAGE);
   }, [preloadImgSrc, setStep, imgSrc, setLoading]);
 
   React.useEffect(() => {
