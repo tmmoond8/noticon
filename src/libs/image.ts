@@ -18,8 +18,6 @@ export const getImageFormatByName = async (
     return extension;
   }
   return null;
-  // const { format } = await uploadTemp(imgSrc);
-  // return `image/${'format'}` as ImageForamt;
 };
 
 export const readImageBlob = (
@@ -45,16 +43,4 @@ export const cropImage = (
   const ctx = canvas.getContext('2d');
   ctx!.drawImage(image, x, y, width, height, 0, 0, width, height);
   return canvas.toDataURL();
-  // return new Promise((resolve, reject) => {
-  //   canvas &&
-  //     canvas.toDataURL((blob: ImageBlob | null) => {
-  //       if (!blob) {
-  //         reject(new Error('Canvas is empty'));
-  //         return;
-  //       }
-  //       blob['name'] = fileName;
-  //       blob['lastModifiedDate'] = new Date();
-  //       resolve(blob);
-  //     }, 'image/png');
-  // });
 };

@@ -11,6 +11,8 @@ import {
   getImageFormatByName,
   readImageBlob,
 } from '../../../libs/image';
+import { uploadTemp } from '../../../apis';
+import { ImageForamt } from '../../../types';
 
 export default React.memo(function ImageFromUrl(): JSX.Element {
   const {
@@ -34,25 +36,19 @@ export default React.memo(function ImageFromUrl(): JSX.Element {
   );
 
   const handleImgLoaded = React.useCallback(async () => {
-    const { mobile, os } = browser();
     setLoading(true);
-    let preImgFormat = imageFormat || (await getImageFormatByName(imgSrc));
-    if (preImgFormat === null) {
-    }
+    const { mobile, os } = browser();
+    const { format, imgUrl } = await uploadTemp(imgSrc);
+    const preImgFormat = `image/${format}`;
     setImageFormat(preImgFormat);
-    if (
-      mobile &&
-      os?.includes('OS X') &&
-      preloadImgSrc === imgSrc &&
-      preImgFormat !== ACCEPT_FORMATS.GIF
-    ) {
-      const imgBlob = await imgSrc2Blob(imgSrc, preImgFormat as string);
+    if (mobile && os?.includes('OS X') && preImgFormat !== ACCEPT_FORMATS.GIF) {
+      const imgBlob = await imgSrc2Blob(imgUrl, preImgFormat as string);
       readImageBlob(
         imgBlob,
         (data) => {
           setPreloadImgSrc(data);
           setLoading(false);
-          setStep(STEPS.CROP_IMAGE);
+          // setStep(STEPS.CROP_IMAGE);
         },
         function (error) {
           setImgSrc('');
@@ -60,15 +56,16 @@ export default React.memo(function ImageFromUrl(): JSX.Element {
         },
       );
     } else {
+      setPreloadImgSrc(imgUrl);
       setLoading(false);
       setStep(STEPS.CROP_IMAGE);
     }
-  }, [preloadImgSrc, imgSrc, setLoading]);
+  }, [preloadImgSrc, setStep, imgSrc, setLoading]);
 
   React.useEffect(() => {
     if (
       imageFormat !== null &&
-      !Object.values(imageFormat).includes(imageFormat)
+      !Object.values(ACCEPT_FORMATS).includes(imageFormat as ImageForamt)
     ) {
       setImgSrc('');
       setErrorMessage('Not supported format');
@@ -88,13 +85,16 @@ export default React.memo(function ImageFromUrl(): JSX.Element {
         <StyledButton
           buttonType="PrimaryText"
           buttonSize="Big"
-          onClick={() => setPreloadImgSrc(imgSrc)}
+          onClick={() => {
+            setPreloadImgSrc(imgSrc);
+          }}
         >
           Load an image
         </StyledButton>
       </Modal.Section>
       {errorMessage && <ErrorMessage>{errorMessage}</ErrorMessage>}
       <img
+        hidden
         src={preloadImgSrc}
         onLoad={handleImgLoaded}
         onError={() => console.log('image load error')}

@@ -6,7 +6,7 @@ import Cropper from '../Cropper';
 import { Modal, Button } from 'notion-ui';
 import { useUploadIconContext } from './context';
 import { STEPS, ACCEPT_FORMATS } from './constant';
-import { readImageBlob, cropImage } from '../../libs/image';
+import { cropImage } from '../../libs/image';
 import { CropPosition } from '../../types';
 
 export default function ImageCrop(): JSX.Element {
@@ -26,6 +26,7 @@ export default function ImageCrop(): JSX.Element {
     height: 0,
     width: 0,
   });
+  const [isReady, setIsReady] = React.useState(false);
 
   const handleCropImage = React.useCallback(async () => {
     if (hiddenImgRef && hiddenImgRef.current !== null) {
@@ -46,42 +47,47 @@ export default function ImageCrop(): JSX.Element {
   }, [setStep]);
 
   const handleImgLoad = () => {
-    console.log('image loaded');
+    setIsReady(true);
   };
 
   return (
     <>
-      {imageFormat === ACCEPT_FORMATS.GIF ? (
-        <>
-          <Cropper.GIFCropper src={preloadImgSrc} setGifAlign={setGifAlign} />
-          <StyledModalSection>
-            <StyledButton
-              buttonType="PrimaryText"
-              buttonSize="Big"
-              onClick={handleCropGIF}
-            >
-              Crop the image
-            </StyledButton>
-          </StyledModalSection>
-        </>
-      ) : (
-        <>
-          <Cropper.ImageCropper
-            src={preloadImgSrc}
-            setCropPosition={setCropPosition}
-          />
+      {imageFormat === ACCEPT_FORMATS.GIF
+        ? isReady && (
+            <>
+              <Cropper.GIFCropper
+                src={preloadImgSrc}
+                setGifAlign={setGifAlign}
+              />
+              <StyledModalSection>
+                <StyledButton
+                  buttonType="PrimaryText"
+                  buttonSize="Big"
+                  onClick={handleCropGIF}
+                >
+                  Crop the image
+                </StyledButton>
+              </StyledModalSection>
+            </>
+          )
+        : isReady && (
+            <>
+              <Cropper.ImageCropper
+                src={preloadImgSrc}
+                setCropPosition={setCropPosition}
+              />
 
-          <StyledModalSection>
-            <StyledButton
-              buttonType="PrimaryText"
-              buttonSize="Big"
-              onClick={handleCropImage}
-            >
-              Crop the image
-            </StyledButton>
-          </StyledModalSection>
-        </>
-      )}
+              <StyledModalSection>
+                <StyledButton
+                  buttonType="PrimaryText"
+                  buttonSize="Big"
+                  onClick={handleCropImage}
+                >
+                  Crop the image
+                </StyledButton>
+              </StyledModalSection>
+            </>
+          )}
 
       <img
         ref={hiddenImgRef}

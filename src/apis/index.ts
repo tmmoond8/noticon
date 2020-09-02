@@ -38,7 +38,7 @@ export const upload = async (
     return {
       id: data.public_id,
       imgUrl: data.secure_url,
-      format: data.foramt,
+      format: data.format,
     };
   } catch (error) {
     throw new Error('UPLOAD ERROR');
