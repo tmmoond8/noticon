@@ -3,8 +3,10 @@ import { jsx } from '@emotion/core';
 import styled from '@emotion/styled';
 import React from 'react';
 import { Modal, Button, Content, colors } from 'notion-ui';
-import { ACCEPT_FORMATS, STEPS, ImageForamt } from '../constant';
+import { ACCEPT_FORMATS, STEPS } from '../constant';
 import { useUploadIconContext } from '../context';
+import { readImageBlob } from '../../../libs/image';
+import { ImageForamt } from '../../../types';
 
 export default React.memo(function FromFile(): JSX.Element {
   const {
@@ -15,7 +17,6 @@ export default React.memo(function FromFile(): JSX.Element {
   } = useUploadIconContext();
 
   const fileRef = React.useRef<HTMLInputElement>(null);
-  const [_, setFile] = React.useState<File | null>(null);
   const [errorMessage, setErrorMessage] = React.useState<string | null>(null);
   const preImageRef = React.useRef(null);
 
@@ -35,16 +36,16 @@ export default React.memo(function FromFile(): JSX.Element {
         return;
       }
       setImageFormat(files[0].type);
-      setFile(files[0]);
-      const reader = new FileReader();
-      reader.readAsDataURL(files[0]);
-      reader.onload = () => {
-        setPreloadImgSrc(reader!.result!.toString());
-      };
-      reader.onerror = function (error) {
-        fileElement.value = '';
-        console.log('Error: ', error);
-      };
+      readImageBlob(
+        files[0],
+        (data) => {
+          setPreloadImgSrc(data);
+        },
+        function (error) {
+          fileElement.value = '';
+          console.log('Error: ', error);
+        },
+      );
     }
   };
 

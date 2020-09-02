@@ -6,40 +6,48 @@ import Cropper from '../Cropper';
 import { Modal, Button } from 'notion-ui';
 import { useUploadIconContext } from './context';
 import { STEPS, ACCEPT_FORMATS } from './constant';
+import { readImageBlob, cropImage } from '../../libs/image';
+import { CropPosition } from '../../types';
 
 export default function ImageCrop(): JSX.Element {
   const {
     preloadImgSrc,
     setStep,
-    croppedImgUrl,
-    setCroppedImg,
     croppedImg,
     setCroppedImgUrl,
     setLoading,
     imageFormat,
     setGifAlign,
   } = useUploadIconContext();
+  const hiddenImgRef = React.useRef<HTMLImageElement>(null);
+  const [cropPosition, setCropPosition] = React.useState<CropPosition>({
+    x: 0,
+    y: 0,
+    height: 0,
+    width: 0,
+  });
 
   const handleCropImage = React.useCallback(async () => {
-    if (croppedImg !== null) {
+    if (hiddenImgRef && hiddenImgRef.current !== null) {
       setLoading(true);
-      const reader = new FileReader();
-      reader.readAsDataURL(croppedImg as Blob);
-      reader.onload = () => {
-        setCroppedImgUrl(reader!.result!.toString());
-        setLoading(false);
-      };
-      reader.onerror = function (error) {
-        console.log('Error: ', error);
-        setLoading(false);
-      };
+      const imgDataURL = await cropImage(
+        hiddenImgRef.current,
+        cropPosition,
+        'temp',
+      );
+      setLoading(false);
+      setCroppedImgUrl(imgDataURL);
       setStep(STEPS.EDIT_METADATA);
     }
-  }, [croppedImg]);
+  }, [hiddenImgRef, croppedImg, cropPosition]);
 
   const handleCropGIF = React.useCallback(() => {
     setStep(STEPS.EDIT_METADATA);
   }, [setStep]);
+
+  const handleImgLoad = () => {
+    console.log('image loaded');
+  };
 
   return (
     <>
@@ -60,7 +68,7 @@ export default function ImageCrop(): JSX.Element {
         <>
           <Cropper.ImageCropper
             src={preloadImgSrc}
-            setCroppedImg={setCroppedImg}
+            setCropPosition={setCropPosition}
           />
 
           <StyledModalSection>
@@ -75,7 +83,13 @@ export default function ImageCrop(): JSX.Element {
         </>
       )}
 
-      {croppedImgUrl && <img src={croppedImgUrl} />}
+      <img
+        ref={hiddenImgRef}
+        hidden
+        src={preloadImgSrc}
+        onLoad={handleImgLoad}
+        crossOrigin="anonymous"
+      />
     </>
   );
 }

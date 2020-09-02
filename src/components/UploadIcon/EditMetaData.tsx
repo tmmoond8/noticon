@@ -3,14 +3,14 @@ import { jsx } from '@emotion/core';
 import styled from '@emotion/styled';
 import React from 'react';
 import { TextField, Button, colors } from 'notion-ui';
-import { METAS, STEPS, ACCEPT_FORMATS, GifAlign } from './constant';
+import { METAS, STEPS, ACCEPT_FORMATS } from './constant';
 import { useUploadIconContext } from './context';
 import { upload, append } from '../../apis';
+import { GifAlign } from '../../types';
 
 export default function EditMetaData(): JSX.Element {
   const {
     setLoading,
-    croppedImg,
     croppedImgUrl,
     preloadImgSrc,
     setStep,
@@ -43,7 +43,7 @@ export default function EditMetaData(): JSX.Element {
     let requestUpload =
       imageFormat === ACCEPT_FORMATS.GIF
         ? () => upload(preloadImgSrc, `${gifAlign?.toLocaleLowerCase()}_preset`)
-        : () => upload(croppedImg || '');
+        : () => upload(croppedImgUrl || '');
 
     setLoading(true);
     try {

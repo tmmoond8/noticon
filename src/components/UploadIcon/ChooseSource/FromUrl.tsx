@@ -6,7 +6,11 @@ import { Modal, Button, TextField, Content, colors } from 'notion-ui';
 import browser from 'browser-detect';
 import { STEPS, ACCEPT_FORMATS } from '../constant';
 import { useUploadIconContext } from '../context';
-import { imgSrc2Blob, getImageFormat } from '../../../libs/image';
+import {
+  imgSrc2Blob,
+  getImageFormatByName,
+  readImageBlob,
+} from '../../../libs/image';
 
 export default React.memo(function ImageFromUrl(): JSX.Element {
   const {
@@ -32,7 +36,9 @@ export default React.memo(function ImageFromUrl(): JSX.Element {
   const handleImgLoaded = React.useCallback(async () => {
     const { mobile, os } = browser();
     setLoading(true);
-    const preImgFormat = imageFormat ?? (await getImageFormat(imgSrc));
+    let preImgFormat = imageFormat || (await getImageFormatByName(imgSrc));
+    if (preImgFormat === null) {
+    }
     setImageFormat(preImgFormat);
     if (
       mobile &&
@@ -41,17 +47,18 @@ export default React.memo(function ImageFromUrl(): JSX.Element {
       preImgFormat !== ACCEPT_FORMATS.GIF
     ) {
       const imgBlob = await imgSrc2Blob(imgSrc, preImgFormat as string);
-      const reader = new FileReader();
-      reader.readAsDataURL(imgBlob);
-      reader.onload = () => {
-        setPreloadImgSrc(reader!.result!.toString());
-        setLoading(false);
-        setStep(STEPS.CROP_IMAGE);
-      };
-      reader.onerror = function (error) {
-        setImgSrc('');
-        console.log('Error: ', error);
-      };
+      readImageBlob(
+        imgBlob,
+        (data) => {
+          setPreloadImgSrc(data);
+          setLoading(false);
+          setStep(STEPS.CROP_IMAGE);
+        },
+        function (error) {
+          setImgSrc('');
+          console.log('Error: ', error);
+        },
+      );
     } else {
       setLoading(false);
       setStep(STEPS.CROP_IMAGE);
@@ -89,8 +96,6 @@ export default React.memo(function ImageFromUrl(): JSX.Element {
       {errorMessage && <ErrorMessage>{errorMessage}</ErrorMessage>}
       <img
         src={preloadImgSrc}
-        hidden
-        crossOrigin="anonymous"
         onLoad={handleImgLoaded}
         onError={() => console.log('image load error')}
       />

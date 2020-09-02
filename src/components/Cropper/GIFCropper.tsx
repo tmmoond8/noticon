@@ -4,18 +4,12 @@ import styled from '@emotion/styled';
 import React from 'react';
 import Cropper from 'react-easy-crop';
 import { colors } from 'notion-ui';
-import { GIF_ALIGN, GifAlign } from '../UploadIcon/constant';
+import { GIF_ALIGN } from '../UploadIcon/constant';
+import { GifAlign, CropPosition } from '../../types';
 
 interface ImageCropperProps {
   src: string;
   setGifAlign: (align: GifAlign) => void;
-}
-
-interface CroppedArea {
-  x: number;
-  y: number;
-  width: number;
-  height: number;
 }
 
 export default function ImageCropper(props: ImageCropperProps): JSX.Element {
@@ -30,8 +24,8 @@ export default function ImageCropper(props: ImageCropperProps): JSX.Element {
   });
 
   const handleCropCompplete = async (
-    croppedArea: CroppedArea,
-    croppedAreaPixels: CroppedArea,
+    croppedArea: CropPosition,
+    croppedAreaPixels: CropPosition,
   ) => {
     const { x, y } = croppedAreaPixels;
 
