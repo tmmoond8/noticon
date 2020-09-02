@@ -22,6 +22,7 @@ export default React.memo(function ImageFromUrl(): JSX.Element {
   } = useUploadIconContext();
 
   const [imgSrc, setImgSrc] = React.useState<string>('');
+  const [guideVisiblity, setGuideVisiblity] = React.useState(false);
 
   const handleChangeImgSrc = React.useCallback(
     (e) => {
@@ -89,17 +90,17 @@ export default React.memo(function ImageFromUrl(): JSX.Element {
           buttonSize="Big"
           onClick={() => {
             setPreloadImgSrc(imgSrc);
+            setTimeout(() => {
+              setErrorMessage(
+                'Check your URL. Or the URL access denied. Try to download the file from the url and upload it',
+              );
+            }, 500);
           }}
         >
           Load an image
         </StyledButton>
       </Modal.Section>
-      <img
-        hidden
-        src={preloadImgSrc}
-        onLoad={handleImgLoaded}
-        onError={() => console.log('image load error')}
-      />
+      <img hidden src={preloadImgSrc} onLoad={handleImgLoaded} />
     </>
   );
 });
@@ -126,4 +127,8 @@ const ImageSrcTextField = styled(TextField)`
     box-shadow: ${colors.grey08} 0px 1px 0px, ${colors.grey08} 0px -1px 0px;
     font-size: 16px;
   }
+`;
+
+const UploadGuide = styled(Content.Text)`
+  padding: 16px;
 `;

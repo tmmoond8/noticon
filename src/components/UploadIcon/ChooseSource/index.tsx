@@ -35,7 +35,8 @@ export default function ChooseSource(): JSX.Element {
 }
 
 const ErrorMessage = styled(Content.Text)`
+  padding: 16px;
   font-size: 16px;
   color: ${colors.red};
-  padding: 16px;
+  line-height: 22px;
 `;
