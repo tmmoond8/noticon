@@ -1,7 +1,7 @@
 /** @jsx jsx */
 import { jsx } from '@emotion/core';
 import styled from '@emotion/styled';
-import { Content } from 'notion-ui';
+import { Content, colors } from 'notion-ui';
 import { useState, useCallback } from 'react';
 import { LazyLoadImage } from 'react-lazy-load-image-component';
 import Storage from '../../libs/browserStorage';
@@ -83,8 +83,10 @@ const Message = styled.li`
   position: absolute;
   width: 100%;
   height: 100%;
+  color: white;
   background-color: rgba(100, 100, 100, 0.7);
-  font-size: 32px;
+  font-size: 18px;
+  font-weight: 400;
 `;
 
 const HiddenTextarea = styled.textarea`

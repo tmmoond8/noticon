@@ -1,5 +1,5 @@
 /** @jsx jsx */
-import { jsx } from '@emotion/core';
+import { jsx, css } from '@emotion/core';
 import styled from '@emotion/styled';
 import { useCallback, useState } from 'react';
 import {
@@ -15,6 +15,8 @@ import {
 import { useStore, observer } from '../../stores';
 import { copyText } from '../../libs/utils';
 import UploadIcon from '../UploadIcon';
+import Icons from '../Icon';
+import { desktop } from '../../styles/mediaQuery';
 
 export default observer(function Aside(): JSX.Element {
   const theme = loadTheme();
@@ -75,7 +77,7 @@ export default observer(function Aside(): JSX.Element {
           handleClick={() =>
             window.open('https://github.com/tmmoond8/noticon.git', '_blank')
           }
-          iconUrl="https://res.cloudinary.com/dgggcrkxq/image/upload/v1566899596/noticon/slhw4nu8hybreryigopq.png"
+          icon={<Icons.Github />}
         />
       </BottomMenus>
     </AsideFlex>
@@ -106,6 +108,12 @@ const AsideFlex = styled.div`
 
 const GithubMenu = styled(AsideUI.Menu)`
   flex-basis: 45px;
+  svg {
+    width: 18px;
+    ${desktop(css`
+      width: 18px;
+    `)}
+  }
 `;
 
 const UploadMenu = styled(AsideUI.Menu)`
