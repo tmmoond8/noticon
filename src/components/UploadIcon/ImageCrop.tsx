@@ -114,3 +114,5 @@ const StyledButton = styled(Button)`
 const StyledModalSection = styled(Modal.Section)`
   margin-top: 0;
 `;
+
+const ModalBody = styled.div``;

@@ -44,6 +44,7 @@ export default function ImageCropper(props: ImageCropperProps): JSX.Element {
 
 const Container = styled.div`
   background-color: ${colors.dimmed};
+  overflow: hidden;
 `;
 
 const Wrapper = styled.div<{ isReady: boolean }>`
