@@ -31,16 +31,17 @@ export const readImageBlob = (
   reader.onerror = onError;
 };
 
-export const cropImage = (
-  image: CanvasImageSource,
-  crop: CropPosition,
-  fileName: string,
-) => {
+export const cropImage = (image: CanvasImageSource, crop: CropPosition) => {
   const canvas: HTMLCanvasElement = document.createElement('canvas');
   const { x, y, height, width } = crop;
   canvas.width = width;
   canvas.height = height;
   const ctx = canvas.getContext('2d');
+  console.log('image', image);
+  console.log('x', x);
+  console.log('y', y);
+  console.log('width', width);
+  console.log('height', height);
   ctx!.drawImage(image, x, y, width, height, 0, 0, width, height);
   return canvas.toDataURL();
 };

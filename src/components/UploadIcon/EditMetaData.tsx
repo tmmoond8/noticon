@@ -2,7 +2,7 @@
 import { jsx } from '@emotion/core';
 import styled from '@emotion/styled';
 import React from 'react';
-import { TextField, Button, colors } from 'notion-ui';
+import { TextField, Button, Modal } from 'notion-ui';
 import { METAS, STEPS, ACCEPT_FORMATS } from './constant';
 import { useUploadIconContext } from './context';
 import { upload, append } from '../../apis';
@@ -99,24 +99,25 @@ export default function EditMetaData(): JSX.Element {
           />
         </FiledGroup>
       </Form>
-      <UploadConfrimButton
-        buttonType="PrimaryText"
-        buttonSize="Big"
-        onClick={handleUploadImage}
-        disabled={disabled}
-      >
-        Upload An Image
-      </UploadConfrimButton>
+      <Modal.Section>
+        <UploadConfrimButton
+          buttonType="PrimaryText"
+          buttonSize="Big"
+          onClick={handleUploadImage}
+          disabled={disabled}
+        >
+          Upload An Image
+        </UploadConfrimButton>
+      </Modal.Section>
     </>
   );
 }
 
-const Form = styled.form`
+const Form = styled(Modal.Section)`
   display: flex;
-  align-items: center;
-  background-color: ${colors.backgroundEmbed};
-  box-shadow: ${colors.grey08} 0px -1px 0px, ${colors.grey08} 0px 1px 0px;
+  margin-top: 0;
   padding: 28px;
+  align-items: center;
   img {
     width: 160px;
     height: 160px;
@@ -143,11 +144,8 @@ const FiledGroup = styled.div`
 
 const UploadConfrimButton = styled(Button)`
   width: 100%;
-  margin-top: 28px;
   padding: 0 16px;
   text-align: left;
-  background-color: ${colors.backgroundEmbed};
-  box-shadow: ${colors.grey08} 0px -1px 0px, ${colors.grey08} 0px 1px 0px;
   border-radius: 0;
 `;
 

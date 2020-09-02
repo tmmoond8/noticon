@@ -21,15 +21,17 @@ const UploadIconContext = React.createContext<{
   closeModal: () => void;
   unshightIcon: (icon: Noticon) => void;
 }>({
-  step: STEPS.CHOOSE_SOURCE,
+  step: STEPS.EDIT_METADATA,
   setStep: (step: keyof typeof STEPS) => {},
-  preloadImgSrc: '',
+  preloadImgSrc:
+    'https://res.cloudinary.com/dhfi7dxpu/image/upload/v1599056178/noticon/lpnyvzxn3isceox89fct.png',
   setPreloadImgSrc: (url: string) => {},
   croppedImg: null,
   setCroppedImg: (file: File) => {},
-  croppedImgUrl: '',
+  croppedImgUrl:
+    'https://res.cloudinary.com/dhfi7dxpu/image/upload/v1599056178/noticon/lpnyvzxn3isceox89fct.png',
   setCroppedImgUrl: (url: string) => {},
-  imageFormat: null,
+  imageFormat: 'image/png',
   setImageFormat: (imageForamt: string | null) => {},
   gifAlign: null,
   setGifAlign: (align: GifAlign) => {},

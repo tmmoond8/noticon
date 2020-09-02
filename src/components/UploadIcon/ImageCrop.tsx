@@ -31,11 +31,7 @@ export default function ImageCrop(): JSX.Element {
   const handleCropImage = React.useCallback(async () => {
     if (hiddenImgRef && hiddenImgRef.current !== null) {
       setLoading(true);
-      const imgDataURL = await cropImage(
-        hiddenImgRef.current,
-        cropPosition,
-        'temp',
-      );
+      const imgDataURL = await cropImage(hiddenImgRef.current, cropPosition);
       setLoading(false);
       setCroppedImgUrl(imgDataURL);
       setStep(STEPS.EDIT_METADATA);
