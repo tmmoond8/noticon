@@ -6,11 +6,7 @@ import { Modal, Button, TextField, Content, colors } from 'notion-ui';
 import browser from 'browser-detect';
 import { STEPS, ACCEPT_FORMATS } from '../constant';
 import { useUploadIconContext } from '../context';
-import {
-  imgSrc2Blob,
-  getImageFormatByName,
-  readImageBlob,
-} from '../../../libs/image';
+import { imgSrc2DataURL } from '../../../libs/image';
 import { uploadTemp } from '../../../apis';
 import { ImageForamt } from '../../../types';
 
@@ -42,19 +38,11 @@ export default React.memo(function ImageFromUrl(): JSX.Element {
     const preImgFormat = `image/${format}`;
     setImageFormat(preImgFormat);
     if (mobile && os?.includes('OS X') && preImgFormat !== ACCEPT_FORMATS.GIF) {
-      const imgBlob = await imgSrc2Blob(imgUrl, preImgFormat as string);
-      readImageBlob(
-        imgBlob,
-        (data) => {
-          setPreloadImgSrc(data);
-          setLoading(false);
-          // setStep(STEPS.CROP_IMAGE);
-        },
-        function (error) {
-          setImgSrc('');
-          console.log('Error: ', error);
-        },
-      );
+      const dataURL = await imgSrc2DataURL(imgUrl, preImgFormat as string);
+
+      setPreloadImgSrc(dataURL);
+      setLoading(false);
+      setStep(STEPS.CROP_IMAGE);
     } else {
       setPreloadImgSrc(imgUrl);
       setLoading(false);

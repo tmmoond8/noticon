@@ -1,12 +1,12 @@
-import { imgSrcToBlob } from 'blob-util';
+import { imgSrcToDataURL } from 'blob-util';
 import { ACCEPT_FORMATS } from '../components/UploadIcon/constant';
 import { ImageForamt, CropPosition, ImageBlob } from '../types';
 
-export const imgSrc2Blob = (
+export const imgSrc2DataURL = (
   imgSrc: string,
   imageFormat: string,
-): Promise<Blob> => {
-  return imgSrcToBlob(imgSrc, imageFormat, 'Anonymous', 100);
+): Promise<string> => {
+  return imgSrcToDataURL(imgSrc, imageFormat, 'Anonymous', 100);
 };
 
 export const getImageFormatByName = async (

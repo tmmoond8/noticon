@@ -46,9 +46,11 @@ export default function ImageCrop(): JSX.Element {
     setStep(STEPS.EDIT_METADATA);
   }, [setStep]);
 
-  const handleImgLoad = () => {
-    setIsReady(true);
-  };
+  React.useEffect(() => {
+    if (hiddenImgRef.current) {
+      setIsReady(true);
+    }
+  }, [hiddenImgRef]);
 
   return (
     <>
@@ -93,7 +95,6 @@ export default function ImageCrop(): JSX.Element {
         ref={hiddenImgRef}
         hidden
         src={preloadImgSrc}
-        onLoad={handleImgLoad}
         crossOrigin="anonymous"
       />
     </>
