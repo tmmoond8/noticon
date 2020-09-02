@@ -18,30 +18,51 @@ export default React.memo(function ImageFromUrl(): JSX.Element {
     setStep,
     preloadImgSrc,
     setPreloadImgSrc,
+    setErrorMessage,
   } = useUploadIconContext();
 
   const [imgSrc, setImgSrc] = React.useState<string>('');
-  const [errorMessage, setErrorMessage] = React.useState<string | null>(null);
 
   const handleChangeImgSrc = React.useCallback(
     (e) => {
       setImgSrc(e.target.value);
       setImageFormat(null);
+      setErrorMessage(null);
     },
     [setImgSrc],
   );
 
   const handleImgLoaded = React.useCallback(async () => {
     setLoading(true);
-    const { mobile, os } = browser();
-    const { format, imgUrl } = await uploadTemp(imgSrc);
+    let format, imgUrl;
+    try {
+      const tempImage = await uploadTemp(imgSrc);
+      format = tempImage.format;
+      imgUrl = tempImage.imgUrl;
+    } catch (error) {
+      setImgSrc('');
+      setPreloadImgSrc('');
+      setImageFormat(null);
+      setLoading(false);
+      setErrorMessage('Access denied : unusable file');
+      return;
+    }
+
     const preImgFormat = `image/${format}`;
     setImageFormat(preImgFormat);
-    const dataURL = await imgSrc2DataURL(imgUrl, preImgFormat as string);
 
-    setPreloadImgSrc(dataURL);
-    setLoading(false);
-    setStep(STEPS.CROP_IMAGE);
+    const { mobile, os } = browser();
+
+    if (mobile && os?.includes('OS X') && preImgFormat !== ACCEPT_FORMATS.GIF) {
+      const dataURL = await imgSrc2DataURL(imgUrl, preImgFormat as string);
+
+      setPreloadImgSrc(dataURL);
+      setLoading(false);
+      setStep(STEPS.CROP_IMAGE);
+    } else {
+      setLoading(false);
+      setStep(STEPS.CROP_IMAGE);
+    }
   }, [preloadImgSrc, setStep, imgSrc, setLoading]);
 
   React.useEffect(() => {
@@ -52,7 +73,6 @@ export default React.memo(function ImageFromUrl(): JSX.Element {
       setImgSrc('');
       setErrorMessage('Not supported format');
     }
-    setErrorMessage(null);
   }, [imageFormat]);
 
   return (
@@ -74,7 +94,6 @@ export default React.memo(function ImageFromUrl(): JSX.Element {
           Load an image
         </StyledButton>
       </Modal.Section>
-      {errorMessage && <ErrorMessage>{errorMessage}</ErrorMessage>}
       <img
         hidden
         src={preloadImgSrc}
@@ -107,10 +126,4 @@ const ImageSrcTextField = styled(TextField)`
     box-shadow: ${colors.grey08} 0px 1px 0px, ${colors.grey08} 0px -1px 0px;
     font-size: 16px;
   }
-`;
-
-const ErrorMessage = styled(Content.Text)`
-  font-size: 16px;
-  color: ${colors.red};
-  padding: 16px;
 `;

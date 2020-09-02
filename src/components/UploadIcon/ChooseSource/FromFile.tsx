@@ -14,10 +14,11 @@ export default React.memo(function FromFile(): JSX.Element {
     preloadImgSrc,
     setImageFormat,
     setPreloadImgSrc,
+    setErrorMessage,
   } = useUploadIconContext();
 
   const fileRef = React.useRef<HTMLInputElement>(null);
-  const [errorMessage, setErrorMessage] = React.useState<string | null>(null);
+
   const preImageRef = React.useRef(null);
 
   const handleChangeFile = (event: React.ChangeEvent) => {
@@ -79,7 +80,6 @@ export default React.memo(function FromFile(): JSX.Element {
           }}
         />
       </Modal.Section>
-      {errorMessage && <ErrorMessage>{errorMessage}</ErrorMessage>}
       <img
         src={preloadImgSrc}
         hidden
@@ -101,10 +101,4 @@ const StyledButton = styled(Button)`
   font-size: 16px;
   text-align: left;
   border-radius: 0;
-`;
-
-const ErrorMessage = styled(Content.Text)`
-  font-size: 16px;
-  color: ${colors.red};
-  padding: 16px;
 `;

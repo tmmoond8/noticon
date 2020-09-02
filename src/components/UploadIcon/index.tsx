@@ -29,6 +29,7 @@ export default function UploadIcon(props: UploadIconProps): JSX.Element {
   );
   const [imageFormat, setImageFormat] = React.useState(context.imageFormat);
   const [gifAlign, setGifAlign] = React.useState(context.gifAlign);
+  const [errorMessage, setErrorMessage] = React.useState<string | null>(null);
 
   return (
     <UploadIconContext.Provider
@@ -49,6 +50,8 @@ export default function UploadIcon(props: UploadIconProps): JSX.Element {
         unshightIcon,
         imageFormat,
         setImageFormat,
+        errorMessage,
+        setErrorMessage,
       }}
     >
       {loading ? (

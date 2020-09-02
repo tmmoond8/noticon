@@ -1,13 +1,15 @@
 /** @jsx jsx */
 import { jsx } from '@emotion/core';
+import styled from '@emotion/styled';
 import { Modal } from 'notion-ui';
 import FromUrl from './FromUrl';
 import FromFile from './FromFile';
 import { TABS } from '../constant';
 import { useUploadIconContext } from '../context';
+import { Content, colors } from 'notion-ui';
 
 export default function ChooseSource(): JSX.Element {
-  const { setImageFormat } = useUploadIconContext();
+  const { setImageFormat, errorMessage } = useUploadIconContext();
 
   const { tabs, selected, handleSelect } = Modal.useTabSelect(
     Object.values(TABS),
@@ -27,6 +29,13 @@ export default function ChooseSource(): JSX.Element {
       />
       {selected === TABS.URL && <FromUrl />}
       {selected === TABS.FILE && <FromFile />}
+      {errorMessage && <ErrorMessage>{errorMessage}</ErrorMessage>}
     </>
   );
 }
+
+const ErrorMessage = styled(Content.Text)`
+  font-size: 16px;
+  color: ${colors.red};
+  padding: 16px;
+`;

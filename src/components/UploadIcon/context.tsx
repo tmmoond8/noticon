@@ -20,6 +20,8 @@ const UploadIconContext = React.createContext<{
   setLoading: (bool: boolean) => void;
   closeModal: () => void;
   unshightIcon: (icon: Noticon) => void;
+  errorMessage: string | null;
+  setErrorMessage: (message: string | null) => void;
 }>({
   step: STEPS.CHOOSE_SOURCE,
   setStep: (step: keyof typeof STEPS) => {},
@@ -37,6 +39,8 @@ const UploadIconContext = React.createContext<{
   setLoading: (bool: boolean) => {},
   closeModal: () => {},
   unshightIcon: (icon: Noticon) => {},
+  errorMessage: null,
+  setErrorMessage: (message: string | null) => {},
 });
 
 UploadIconContext.displayName = 'UploadIconContext';
