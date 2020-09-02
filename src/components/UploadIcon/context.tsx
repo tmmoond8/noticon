@@ -1,5 +1,6 @@
 import React from 'react';
-import { STEPS, ImageForamt, GifAlign, GIF_ALIGN } from './constant';
+import { STEPS } from './constant';
+import { GifAlign } from '../../types';
 import { Noticon } from '../../types';
 
 const UploadIconContext = React.createContext<{
