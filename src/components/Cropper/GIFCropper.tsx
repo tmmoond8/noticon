@@ -86,7 +86,7 @@ export default function ImageCropper(props: ImageCropperProps): JSX.Element {
           />
         )}
       </Wrapper>
-      <img hidden src={src} onLoad={handleImgLoad} crossOrigin="anonymous" />
+      <img hidden src={src} onLoad={handleImgLoad} />
     </Container>
   );
 }

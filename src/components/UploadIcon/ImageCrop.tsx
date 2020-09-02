@@ -63,7 +63,7 @@ export default function ImageCrop(): JSX.Element {
                   buttonSize="Big"
                   onClick={handleCropGIF}
                 >
-                  Crop the image
+                  Crop the GIF
                 </StyledButton>
               </StyledModalSection>
             </>
