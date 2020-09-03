@@ -49,7 +49,7 @@ export default function EditMetaData(): JSX.Element {
     try {
       const { id, imgUrl } = await requestUpload();
       const newIcon = {
-        id,
+        id: id.replace('/', '_'),
         imgUrl,
         title: metas.title,
         keywords: [metas.tag1, metas.tag2].join('‡'),
