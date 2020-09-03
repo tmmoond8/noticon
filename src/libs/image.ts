@@ -37,11 +37,6 @@ export const cropImage = (image: CanvasImageSource, crop: CropPosition) => {
   canvas.width = width;
   canvas.height = height;
   const ctx = canvas.getContext('2d');
-  console.log('image', image);
-  console.log('x', x);
-  console.log('y', y);
-  console.log('width', width);
-  console.log('height', height);
   ctx!.drawImage(image, x, y, width, height, 0, 0, width, height);
   return canvas.toDataURL();
 };
