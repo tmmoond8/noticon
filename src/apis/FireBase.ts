@@ -2,14 +2,14 @@ import firebase from 'firebase/app';
 import 'firebase/database';
 
 const firebaseConfig = {
-  apiKey: 'AIzaSyDB3GLlmL3rdyQY3NAHwaQH26c9V4DNxGM',
-  authDomain: 'noticon-7516.firebaseapp.com',
-  databaseURL: 'https://noticon-7516.firebaseio.com',
-  projectId: 'noticon-7516',
-  storageBucket: 'noticon-7516.appspot.com',
-  messagingSenderId: '376405203261',
-  appId: '1:376405203261:web:d591826b6b51384bfb4d54',
-  measurementId: 'G-VD2Z17Y5QQ',
+  apiKey: process.env.REACT_APP_FIREBASE_API_KEY,
+  authDomain: process.env.REACT_APP_AUTH_DOMAIN,
+  databaseURL: process.env.REACT_APP_DATABASE_URL,
+  projectId: process.env.REACT_APP_PROJECT_ID,
+  storageBucket: process.env.REACT_APP_STORAGE_BUCKET,
+  messagingSenderId: process.env.REACT_APP_MESSAGING_SENDER_ID,
+  appId: process.env.REACT_APP_FIREBASE_APP_ID,
+  measurementId: process.env.REACT_APP_MEASUREMENT_ID,
 };
 if (firebase.apps.length === 0) {
   firebase.initializeApp(firebaseConfig);

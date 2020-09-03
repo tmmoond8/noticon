@@ -39,7 +39,7 @@ export default class IconStore implements IconStoreInterface {
       ([iconsResponse, clicksResponse]) => {
         this.originIcons = iconsResponse.data.data.sort(
           (a: Noticon, b: Noticon) => {
-            return clicksResponse[b.id] - clicksResponse[a.id];
+            return (clicksResponse[b.id] ?? 0) - (clicksResponse[a.id] ?? 0);
           },
         );
         this.isLoaded = true;
