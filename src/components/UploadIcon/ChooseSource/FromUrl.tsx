@@ -6,7 +6,7 @@ import { Modal, Button, TextField, Content, colors } from 'notion-ui';
 import { STEPS, ACCEPT_FORMATS } from '../constant';
 import { useUploadIconContext } from '../context';
 import { imgSrc2DataURL } from '../../../libs/image';
-import { uploadTemp } from '../../../apis';
+import APIS from '../../../apis';
 import { ImageForamt } from '../../../types';
 
 export default React.memo(function ImageFromUrl(): JSX.Element {
@@ -36,7 +36,7 @@ export default React.memo(function ImageFromUrl(): JSX.Element {
     setLoading(true);
     let format, imgUrl;
     try {
-      const tempImage = await uploadTemp(imgSrc);
+      const tempImage = await APIS.Cloudinary.uploadTemp(imgSrc);
       format = tempImage.format;
       imgUrl = tempImage.imgUrl;
     } catch (error) {

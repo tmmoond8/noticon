@@ -5,7 +5,7 @@ import React from 'react';
 import { TextField, Button, Modal } from 'notion-ui';
 import { METAS, STEPS, ACCEPT_FORMATS } from './constant';
 import { useUploadIconContext } from './context';
-import { upload, append } from '../../apis';
+import APIS from '../../apis';
 import { GifAlign } from '../../types';
 
 export default function EditMetaData(): JSX.Element {
@@ -42,8 +42,12 @@ export default function EditMetaData(): JSX.Element {
   const handleUploadImage = async () => {
     let requestUpload =
       imageFormat === ACCEPT_FORMATS.GIF
-        ? () => upload(safeImgSrc, `${gifAlign?.toLocaleLowerCase()}_preset`)
-        : () => upload(croppedImgUrl || '');
+        ? () =>
+            APIS.Cloudinary.upload(
+              safeImgSrc,
+              `${gifAlign?.toLocaleLowerCase()}_preset`,
+            )
+        : () => APIS.Cloudinary.upload(croppedImgUrl || '');
 
     setLoading(true);
     try {
@@ -54,7 +58,7 @@ export default function EditMetaData(): JSX.Element {
         title: metas.title,
         keywords: [metas.tag1, metas.tag2].join('‡'),
       };
-      const { status } = await append(newIcon);
+      const { status } = await APIS.SpreadSheet.append(newIcon);
       if (status === 200) {
         unshightIcon({
           ...newIcon,

@@ -1,6 +1,6 @@
 import { observable, action, computed } from 'mobx';
 import { Noticon } from '../types';
-import * as API from '../apis';
+import APIS from '../apis';
 import { isBrowser } from '../libs/utils';
 import browserStorage from '../libs/browserStorage';
 
@@ -35,7 +35,7 @@ export default class IconStore implements IconStoreInterface {
     try {
       const {
         data: { data },
-      } = await API.get();
+      } = await APIS.SpreadSheet.get();
       const sortByDate = (a: Noticon, b: Noticon) => {
         for (let i = 0; i < a.date.length; i++) {
           if (a.date.charCodeAt(i) >= b.date.charCodeAt(i)) {
