@@ -31,7 +31,6 @@
     "react": "^16.13.1",
     "react-dom": "^16.13.1",
     "react-easy-crop": "^3.1.1",
-    "react-image-crop": "^8.6.5",
     "react-lazy-load-image-component": "^1.5.0"
   },
   "devDependencies": {
