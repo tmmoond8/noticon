@@ -62,9 +62,7 @@ export default class IconStore implements IconStoreInterface {
   @computed
   get icons() {
     if (this.search.length === 0) {
-      return this.originIcons.sort((a: Noticon, b: Noticon) => {
-        return 1;
-      });
+      return this.originIcons;
     }
     return this.originIcons.filter(
       (icon) =>

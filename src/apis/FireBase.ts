@@ -1,4 +1,5 @@
-import * as firebase from 'firebase';
+import firebase from 'firebase/app';
+import 'firebase/database';
 
 const firebaseConfig = {
   apiKey: 'AIzaSyDB3GLlmL3rdyQY3NAHwaQH26c9V4DNxGM',
@@ -26,9 +27,10 @@ class Firebase {
       });
     });
   }
-  async increase(id: string, score: number): Promise<void> {
-    const value = await this.firebase.ref(`/${id}`).once('value');
-    console.log(value);
+  async increaseClickCount(id: string): Promise<void> {
+    const target = this.firebase.ref(`/${id}`);
+    const targetValue = await target.once('value');
+    target.set(targetValue.val() + 1);
   }
 }
 export default new Firebase();

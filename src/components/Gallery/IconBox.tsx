@@ -1,13 +1,14 @@
 /** @jsx jsx */
 import { jsx } from '@emotion/core';
 import styled from '@emotion/styled';
-import { Content, colors } from 'notion-ui';
+import { Content } from 'notion-ui';
 import { useState, useCallback } from 'react';
 import { LazyLoadImage } from 'react-lazy-load-image-component';
 import Storage from '../../libs/browserStorage';
 import { Noticon } from '../../types';
 import { copyText } from '../../libs/utils';
 import { useStore } from '../../stores';
+import APIS from '../../apis';
 
 interface IconBoxProps extends Noticon {}
 
@@ -25,6 +26,7 @@ export default function IconBox(props: IconBoxProps) {
     Storage.recentUsedIcons.set(recentUsedIcons);
     copyText(noticon.imgUrl);
     setMessage('COPIED');
+    APIS.FireBase.increaseClickCount(id);
   }, [setMessage]);
 
   const handleMouseEnter = useCallback(() => {
