@@ -7,6 +7,8 @@ import browserStorage from '../libs/browserStorage';
 export interface IconStoreInterface {
   originIcons: Noticon[];
   icons: Noticon[];
+  latestIcons: Noticon[];
+  searchedIcons: Noticon[];
   recentUsedIcons: Noticon[];
   pushRecentUsedIcon: (newNoticon: Noticon) => Noticon[];
   isLoaded: boolean;
@@ -61,18 +63,12 @@ export default class IconStore implements IconStoreInterface {
 
   @computed
   get icons() {
-    if (this.search.length === 0) {
-      return this.originIcons;
-    }
-    return this.originIcons.filter(
-      (icon) =>
-        icon.title.includes(this.search) || icon.keywords.includes(this.search),
-    );
+    return this.originIcons;
   }
 
   @computed
   get latestIcons() {
-    return [...this.originIcons].sort((a: Noticon, b: Noticon) => {
+    const latest = [...this.originIcons].sort((a: Noticon, b: Noticon) => {
       for (let i = 0; i < a.date.length; i++) {
         if (a.date.charCodeAt(i) >= b.date.charCodeAt(i)) {
           return -1;
@@ -80,6 +76,15 @@ export default class IconStore implements IconStoreInterface {
       }
       return 1;
     });
+    return latest.slice(0, 12);
+  }
+
+  @computed
+  get searchedIcons() {
+    return this.originIcons.filter(
+      (icon) =>
+        icon.title.includes(this.search) || icon.keywords.includes(this.search),
+    );
   }
 
   @action
