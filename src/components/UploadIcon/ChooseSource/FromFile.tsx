@@ -11,9 +11,9 @@ import { ImageForamt } from '../../../types';
 export default React.memo(function FromFile(): JSX.Element {
   const {
     setStep,
-    preloadImgSrc,
+    safeImgSrc,
     setImageFormat,
-    setPreloadImgSrc,
+    setSafeImgSrc,
     setErrorMessage,
   } = useUploadIconContext();
 
@@ -40,7 +40,7 @@ export default React.memo(function FromFile(): JSX.Element {
       readImageBlob(
         files[0],
         (data) => {
-          setPreloadImgSrc(data);
+          setSafeImgSrc(data);
         },
         function (error) {
           fileElement.value = '';
@@ -81,7 +81,7 @@ export default React.memo(function FromFile(): JSX.Element {
         />
       </Modal.Section>
       <img
-        src={preloadImgSrc}
+        src={safeImgSrc}
         hidden
         ref={preImageRef}
         crossOrigin="anonymous"

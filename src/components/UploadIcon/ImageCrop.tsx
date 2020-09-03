@@ -11,7 +11,7 @@ import { CropPosition } from '../../types';
 
 export default function ImageCrop(): JSX.Element {
   const {
-    preloadImgSrc,
+    safeImgSrc,
     setStep,
     croppedImg,
     setCroppedImgUrl,
@@ -53,10 +53,7 @@ export default function ImageCrop(): JSX.Element {
       {imageFormat === ACCEPT_FORMATS.GIF
         ? isReady && (
             <>
-              <Cropper.GIFCropper
-                src={preloadImgSrc}
-                setGifAlign={setGifAlign}
-              />
+              <Cropper.GIFCropper src={safeImgSrc} setGifAlign={setGifAlign} />
               <StyledModalSection>
                 <StyledButton
                   buttonType="PrimaryText"
@@ -71,7 +68,7 @@ export default function ImageCrop(): JSX.Element {
         : isReady && (
             <>
               <Cropper.ImageCropper
-                src={preloadImgSrc}
+                src={safeImgSrc}
                 setCropPosition={setCropPosition}
               />
 
@@ -87,12 +84,7 @@ export default function ImageCrop(): JSX.Element {
             </>
           )}
 
-      <img
-        ref={hiddenImgRef}
-        hidden
-        src={preloadImgSrc}
-        crossOrigin="anonymous"
-      />
+      <img ref={hiddenImgRef} hidden src={safeImgSrc} crossOrigin="anonymous" />
     </>
   );
 }

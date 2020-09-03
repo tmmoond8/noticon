@@ -3,7 +3,6 @@ import { jsx } from '@emotion/core';
 import styled from '@emotion/styled';
 import React from 'react';
 import { Modal, Button, TextField, Content, colors } from 'notion-ui';
-import browser from 'browser-detect';
 import { STEPS, ACCEPT_FORMATS } from '../constant';
 import { useUploadIconContext } from '../context';
 import { imgSrc2DataURL } from '../../../libs/image';
@@ -16,13 +15,13 @@ export default React.memo(function ImageFromUrl(): JSX.Element {
     imageFormat,
     setImageFormat,
     setStep,
-    preloadImgSrc,
-    setPreloadImgSrc,
+    safeImgSrc,
+    setSafeImgSrc,
     setErrorMessage,
   } = useUploadIconContext();
 
   const [imgSrc, setImgSrc] = React.useState<string>('');
-  const [guideVisiblity, setGuideVisiblity] = React.useState(false);
+  const [preLoadImgSrc, setPreloadImgSrc] = React.useState<string>('');
 
   const handleChangeImgSrc = React.useCallback(
     (e) => {
@@ -42,7 +41,7 @@ export default React.memo(function ImageFromUrl(): JSX.Element {
       imgUrl = tempImage.imgUrl;
     } catch (error) {
       setImgSrc('');
-      setPreloadImgSrc('');
+      setSafeImgSrc('');
       setImageFormat(null);
       setLoading(false);
       setErrorMessage('Access denied : unusable file');
@@ -52,19 +51,13 @@ export default React.memo(function ImageFromUrl(): JSX.Element {
     const preImgFormat = `image/${format}`;
     setImageFormat(preImgFormat);
 
-    const { mobile, os } = browser();
+    setErrorMessage(name as string);
+    const dataURL = await imgSrc2DataURL(imgUrl, preImgFormat as string);
 
-    if (mobile && os?.includes('OS X') && preImgFormat !== ACCEPT_FORMATS.GIF) {
-      const dataURL = await imgSrc2DataURL(imgUrl, preImgFormat as string);
-
-      setPreloadImgSrc(dataURL);
-      setLoading(false);
-      setStep(STEPS.CROP_IMAGE);
-    } else {
-      setLoading(false);
-      setStep(STEPS.CROP_IMAGE);
-    }
-  }, [preloadImgSrc, setStep, imgSrc, setLoading]);
+    setSafeImgSrc(dataURL);
+    setLoading(false);
+    setStep(STEPS.CROP_IMAGE);
+  }, [safeImgSrc, setStep, imgSrc, setLoading]);
 
   React.useEffect(() => {
     if (
@@ -94,13 +87,13 @@ export default React.memo(function ImageFromUrl(): JSX.Element {
               setErrorMessage(
                 'Check your URL. Or the URL access denied. Try to download the file from the url and upload it',
               );
-            }, 500);
+            }, 1500);
           }}
         >
           Load an image
         </StyledButton>
       </Modal.Section>
-      <img hidden src={preloadImgSrc} onLoad={handleImgLoaded} />
+      <img hidden src={preLoadImgSrc} onLoad={handleImgLoaded} />
     </>
   );
 });

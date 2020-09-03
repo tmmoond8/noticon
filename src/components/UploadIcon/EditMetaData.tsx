@@ -12,7 +12,7 @@ export default function EditMetaData(): JSX.Element {
   const {
     setLoading,
     croppedImgUrl,
-    preloadImgSrc,
+    safeImgSrc,
     setStep,
     closeModal,
     unshightIcon,
@@ -42,7 +42,7 @@ export default function EditMetaData(): JSX.Element {
   const handleUploadImage = async () => {
     let requestUpload =
       imageFormat === ACCEPT_FORMATS.GIF
-        ? () => upload(preloadImgSrc, `${gifAlign?.toLocaleLowerCase()}_preset`)
+        ? () => upload(safeImgSrc, `${gifAlign?.toLocaleLowerCase()}_preset`)
         : () => upload(croppedImgUrl || '');
 
     setLoading(true);
@@ -73,7 +73,7 @@ export default function EditMetaData(): JSX.Element {
     <>
       <Form>
         {imageFormat === ACCEPT_FORMATS.GIF ? (
-          <GifImg src={preloadImgSrc} gifAlign={gifAlign as GifAlign} />
+          <GifImg src={safeImgSrc} gifAlign={gifAlign as GifAlign} />
         ) : (
           <img src={croppedImgUrl} />
         )}
@@ -144,6 +144,7 @@ const FiledGroup = styled.div`
 
 const UploadConfrimButton = styled(Button)`
   width: 100%;
+  height: 45px;
   padding: 0 16px;
   text-align: left;
   border-radius: 0;
