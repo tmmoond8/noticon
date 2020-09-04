@@ -4,36 +4,53 @@ import styled from '@emotion/styled';
 import { mobile, desktop } from '../../styles/mediaQuery';
 import { useStore, observer } from '../../stores';
 import IconBox from './IconBox';
-import { Loader } from 'notion-ui';
+import { Loader, colors } from 'notion-ui';
 
-interface GalleryProps {}
-
-export default observer(function Gallery(props: GalleryProps): JSX.Element {
+export default observer(function Gallery(): JSX.Element {
   const {
-    icon: { icons, isLoaded },
+    icon: { icons, isLoaded, latestIcons, search, searchedIcons },
   } = useStore();
   return (
     <>
-      {isLoaded ? (
-        <Grid>
-          {icons.map((icon) => (
+      {!isLoaded && <Loader.ParentFull />}
+      {isLoaded && search.length === 0 && (
+        <>
+          {search.length === 0 && (
+            <Grid caption="Latest" maxRows>
+              {latestIcons.map((icon) => (
+                <IconBox key={icon.id} {...icon} />
+              ))}
+            </Grid>
+          )}
+          <Grid caption="Popular">
+            {icons.map((icon) => (
+              <IconBox key={icon.id} {...icon} />
+            ))}
+          </Grid>
+        </>
+      )}
+      {isLoaded && search.length > 0 && (
+        <Grid caption={`Search Rsults : "${search}"`}>
+          {searchedIcons.map((icon) => (
             <IconBox key={icon.id} {...icon} />
           ))}
         </Grid>
-      ) : (
-        <Loader.ParentFull />
       )}
     </>
   );
 });
 
-const Grid = styled.ol`
+const Grid = styled.ol<{ caption: string; maxRows?: boolean }>`
   display: grid;
+  grid-template-rows: 1fr;
+  position: relative;
   grid-template-columns: repeat(3, 1fr);
+  padding: 32px 0;
 
   & > li {
     min-height: 106px;
   }
+
   ${mobile(css`
     grid-template-columns: repeat(4, 1fr);
     & > li {
@@ -50,4 +67,36 @@ const Grid = styled.ol`
       max-height: 150px;
     }
   `)}
+
+  &::after {
+    content: '${(p) => p.caption}';
+    position: absolute;
+    left: 32px;
+    top: 16px;
+    color: ${colors.grey};
+    font-size: 20px;
+    font-weight: 500;
+  }
+
+  ${(p) =>
+    p.maxRows &&
+    css`
+      li {
+        display: none;
+      }
+      li:nth-child(-n + 6) {
+        display: flex;
+      }
+      @media (min-width: 768px) {
+        li:nth-child(-n + 8) {
+          display: flex;
+        }
+      }
+
+      @media (min-width: 1024px) {
+        li:nth-child(-n + 12) {
+          display: flex;
+        }
+      }73
+    `}
 `;

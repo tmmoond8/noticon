@@ -20,13 +20,14 @@ Following items are core frontend technologies used in this project:
 - Emotion
 - TypeScript
 - MobX
+- react-easy-crop
 - Google Sheets API (for simple database)
 
 ## Run on your machine
 
 ### Prerequistes
 
-- Node.js v10^
+- Node.js v12^
 - yarn
 
 ### Installation
