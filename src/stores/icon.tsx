@@ -39,11 +39,11 @@ export default class IconStore implements IconStoreInterface {
   async fetchIcons() {
     Promise.all([APIS.SpreadSheet.get(), APIS.FireBase.getClickCounts()]).then(
       ([iconsResponse, clicksResponse]) => {
-        this.originIcons = iconsResponse.data.data
-          .map((icon) => ({ ...icon, title: icon.title.toString() }))
-          .sort((a: Noticon, b: Noticon) => {
-            return (clicksResponse[b.id] ?? 0) - (clicksResponse[a.id] ?? 0);
-          });
+        this.originIcons = iconsResponse.data.data.map((icon) => ({
+          ...icon,
+          title: icon.title.toString(),
+        }));
+        this.clickCounts = clicksResponse;
         this.isLoaded = true;
       },
     );
@@ -63,7 +63,9 @@ export default class IconStore implements IconStoreInterface {
 
   @computed
   get icons() {
-    return this.originIcons;
+    return this.originIcons.sort((a: Noticon, b: Noticon) => {
+      return (this.clickCounts[b.id] ?? 0) - (this.clickCounts[a.id] ?? 0);
+    });
   }
 
   @computed
