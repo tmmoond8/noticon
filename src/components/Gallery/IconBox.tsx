@@ -40,7 +40,7 @@ export default function IconBox(props: IconBoxProps) {
 
   return (
     <IconWrapper
-      onMouseEnter={handleMouseEnter}
+      onMouseOver={handleMouseEnter}
       onMouseLeave={handleMouseLeave}
       onClick={handleClick}
     >
