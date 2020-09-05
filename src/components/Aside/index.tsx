@@ -25,9 +25,11 @@ export default observer(function Aside(): JSX.Element {
   } = useStore();
   const modal = Modal.useModal();
   const [isDark, setIsDark] = useState(theme === 'Dark');
+
   const handleClick = useCallback((imgUrl: string) => {
     copyText(imgUrl);
   }, []);
+
   const handleToggleTheme = useCallback(() => {
     setIsDark(!isDark);
     toggleTheme();
@@ -44,6 +46,14 @@ export default observer(function Aside(): JSX.Element {
       ),
     });
   }, [modal]);
+
+  const handleClickAbout = () => {
+    const aboutLink =
+      navigator.language === 'ko-KR'
+        ? 'https://www.notion.so/taem/Noticon-afa130657dee43ea8d7d2d05ad204b30'
+        : 'https://www.notion.so/taem/Noticon-global-25373a706ffe47c6a1cb9c246f5fabf5';
+    window.open(aboutLink, '_blank');
+  };
 
   return (
     <AsideFlex>
@@ -78,6 +88,11 @@ export default observer(function Aside(): JSX.Element {
             window.open('https://github.com/tmmoond8/noticon.git', '_blank')
           }
           icon={<Icons.Github />}
+        />
+        <FeedbackMenu
+          title="About"
+          handleClick={handleClickAbout}
+          icon={<Icons.Noticon />}
         />
       </BottomMenus>
     </AsideFlex>
@@ -125,4 +140,11 @@ const BottomMenus = styled.div`
   flex: 1;
   display: flex;
   flex-direction: column-reverse;
+`;
+
+const FeedbackMenu = styled(AsideUI.Menu)`
+  flex-basis: 45px;
+  & > svg {
+    margin: 0;
+  }
 `;
