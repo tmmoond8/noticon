@@ -85,7 +85,12 @@ export default class IconStore implements IconStoreInterface {
   get searchedIcons() {
     return this.originIcons.filter(
       (icon) =>
-        icon.title.includes(this.search) || icon.keywords.includes(this.search),
+        icon.title
+          .toLocaleLowerCase()
+          .includes(this.search.toLocaleLowerCase()) ||
+        icon.keywords
+          .toLocaleLowerCase()
+          .includes(this.search.toLocaleLowerCase()),
     );
   }
 
