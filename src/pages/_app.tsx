@@ -4,6 +4,7 @@ import GlobalStyles from '../styles/globalStyles';
 import { Provider } from 'mobx-react';
 import { getStore, Stores } from '../stores';
 import { isServer } from '../libs/utils';
+import NoticonHead from '../components/NoticonHead';
 
 export default class NoticonApp extends App {
   private mobxStore: Stores;
@@ -33,6 +34,7 @@ export default class NoticonApp extends App {
     const { Component, pageProps } = this.props;
     return (
       <Provider {...this.mobxStore}>
+        <NoticonHead />
         <GlobalStyles />
         <Component {...pageProps} />
       </Provider>
