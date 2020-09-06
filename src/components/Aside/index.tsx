@@ -48,10 +48,9 @@ export default observer(function Aside(): JSX.Element {
   }, [modal]);
 
   const handleClickAbout = () => {
-    const aboutLink =
-      navigator.language === 'ko-KR'
-        ? 'https://www.notion.so/taem/Noticon-afa130657dee43ea8d7d2d05ad204b30'
-        : 'https://www.notion.so/taem/Noticon-global-25373a706ffe47c6a1cb9c246f5fabf5';
+    const aboutLink = navigator.language.includes('ko')
+      ? 'https://www.notion.so/taem/Noticon-afa130657dee43ea8d7d2d05ad204b30'
+      : 'https://www.notion.so/taem/Noticon-global-25373a706ffe47c6a1cb9c246f5fabf5';
     window.open(aboutLink, '_blank');
   };
 
