@@ -1,5 +1,5 @@
 export const Meta = {
-  Title: 'Notiton',
+  Title: 'Noticon',
   Description: 'Icon Storage for Notion',
   Image:
     'https://user-images.githubusercontent.com/11402468/63695688-2c723100-c854-11e9-905b-8bd5c9555894.png',
