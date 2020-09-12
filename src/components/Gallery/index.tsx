@@ -30,7 +30,7 @@ export default observer(function Gallery(): JSX.Element {
         </>
       )}
       {isLoaded && search.length > 0 && (
-        <Grid caption={`Search Rsults : "${search}"`}>
+        <Grid caption={`Search Results : "${search}"`}>
           {searchedIcons.map((icon) => (
             <IconBox key={icon.id} {...icon} />
           ))}
