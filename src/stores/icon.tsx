@@ -71,12 +71,7 @@ export default class IconStore implements IconStoreInterface {
   @computed
   get latestIcons() {
     const latest = [...this.originIcons].sort((a: Noticon, b: Noticon) => {
-      for (let i = 0; i < a.date.length; i++) {
-        if (a.date.charCodeAt(i) >= b.date.charCodeAt(i)) {
-          return -1;
-        }
-      }
-      return 1;
+      return b.date < a.date ? -1 : 1;
     });
     return latest.slice(0, 12);
   }

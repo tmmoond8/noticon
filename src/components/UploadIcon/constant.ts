@@ -7,6 +7,13 @@ export const METAS = {
   tag1: 'tag1' as 'tag1',
   tag2: 'tag2' as 'tag2',
 };
+
+export const PLACEHOLDER = {
+  title: 'title (required)' as 'title (required)',
+  tag1: 'tag (option)' as 'tag (option)',
+  tag2: 'another tag (option)' as 'another tag (option)',
+};
+
 export const STEPS = {
   CHOOSE_SOURCE: 'CHOOSE_SOURCE' as 'CHOOSE_SOURCE',
   CROP_IMAGE: 'CROP_IMAGE' as 'CROP_IMAGE',
