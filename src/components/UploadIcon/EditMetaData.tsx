@@ -2,24 +2,13 @@
 import { jsx } from '@emotion/core';
 import styled from '@emotion/styled';
 import React from 'react';
-import { TextField, Button, Modal } from 'notion-ui';
-import { METAS, STEPS, ACCEPT_FORMATS } from './constant';
+import { TextField, Button, Modal, Aside } from 'notion-ui';
+import { METAS, STEPS, ACCEPT_FORMATS, PLACEHOLDER } from './constant';
 import { useUploadIconContext } from './context';
 import APIS from '../../apis';
 import { GifAlign } from '../../types';
 
-export default function EditMetaData(): JSX.Element {
-  const {
-    setLoading,
-    croppedImgUrl,
-    safeImgSrc,
-    setStep,
-    closeModal,
-    unshightIcon,
-    imageFormat,
-    gifAlign,
-  } = useUploadIconContext();
-
+const useMetaInput = () => {
   const [metas, setMetas] = React.useState(
     Object.keys(METAS).reduce((accum, key) => {
       (accum as any)[key] = '';
@@ -36,6 +25,26 @@ export default function EditMetaData(): JSX.Element {
     },
     [metas],
   );
+  return {
+    metas,
+    handleInputChange,
+  };
+};
+
+export default function EditMetaData(): JSX.Element {
+  const {
+    setLoading,
+    croppedImgUrl,
+    safeImgSrc,
+    setStep,
+    closeModal,
+    unshightIcon,
+    imageFormat,
+    gifAlign,
+  } = useUploadIconContext();
+
+  const { metas, handleInputChange } = useMetaInput();
+  const asideClose = Aside.useCloseCallback();
 
   const disabled = React.useMemo(() => metas.title.length < 1, [metas.title]);
 
@@ -62,8 +71,9 @@ export default function EditMetaData(): JSX.Element {
       if (status === 200) {
         unshightIcon({
           ...newIcon,
-          date: new Date().toString(),
+          date: new Date().toISOString(),
         });
+        asideClose();
       }
     } catch (error) {
       console.error(error);
@@ -81,26 +91,16 @@ export default function EditMetaData(): JSX.Element {
         ) : (
           <img src={croppedImgUrl} />
         )}
-
         <FiledGroup className="filed-group">
-          <StyledTextField
-            id={METAS.title}
-            value={metas[METAS.title]}
-            placeholder="title (required)"
-            onChange={handleInputChange}
-          />
-          <StyledTextField
-            id={METAS.tag1}
-            value={metas[METAS.tag1]}
-            placeholder="tag (option)"
-            onChange={handleInputChange}
-          />
-          <StyledTextField
-            id={METAS.tag2}
-            value={metas[METAS.tag2]}
-            placeholder="another tag (option)"
-            onChange={handleInputChange}
-          />
+          {Object.values(METAS).map((key) => (
+            <StyledTextField
+              key={key}
+              id={key}
+              value={metas[key]}
+              placeholder={PLACEHOLDER[key]}
+              onChange={handleInputChange}
+            />
+          ))}
         </FiledGroup>
       </Form>
       <Modal.Section>
