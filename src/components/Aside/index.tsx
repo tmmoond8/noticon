@@ -77,7 +77,8 @@ export default observer(function Aside(): JSX.Element {
         <Content.Spacing size={20} />
         <ThemeMenu onClick={handleToggleTheme}>
           <Content.Text as="P" color={colors.grey60}>
-            Dark mode
+            <Icon icon="halfMoon" />
+            <span>Light mode</span>
           </Content.Text>
           <Switch switchOn={isDark} />
         </ThemeMenu>
@@ -104,13 +105,16 @@ const ThemeMenu = styled.div`
   justify-content: space-between;
   height: 45px;
   padding: 2px 14px;
+  cursor: pointer;
   &:hover {
     background-color: ${colors.grey08};
   }
   &:active {
     background-color: ${colors.grey16};
   }
-  cursor: pointer;
+  span {
+    padding: 0 0 0 8px;
+  }
 `;
 
 const AsideFlex = styled.div`
@@ -144,6 +148,7 @@ const BottomMenus = styled.div`
 const FeedbackMenu = styled(AsideUI.Menu)`
   flex-basis: 45px;
   & > svg {
+    width: 18px;
     margin: 0;
   }
 `;
