@@ -29,7 +29,7 @@ export default function NoticonHead(props: NoticonHeadProps): JSX.Element {
       }
       <link
         rel="shortcut icon"
-        href="https://static.noticon.tammolo.com/dgggcrkxq/image/upload/v1566826573/noticon/favicon_j7lf1k.ico"
+        href="https://d24wdqbfu08orq.cloudfront.net/dgggcrkxq/image/upload/v1566826573/noticon/favicon_j7lf1k.ico"
       />
     </Head>
   );
