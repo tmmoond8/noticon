@@ -47,7 +47,7 @@ export default function IconBox(props: IconBoxProps) {
       <LazyLoadImage
         alt={title}
         src={imgUrl}
-        placeholderSrc="https://static.noticon.tammolo.com/dgggcrkxq/image/upload/v1591259615/noticon/ikr2rajjnuzlw0rm1eqh.png"
+        placeholderSrc="https://d24wdqbfu08orq.cloudfront.net/dgggcrkxq/image/upload/v1591259615/noticon/ikr2rajjnuzlw0rm1eqh.png"
       />
 
       <Content.Text as="P">{title}</Content.Text>
