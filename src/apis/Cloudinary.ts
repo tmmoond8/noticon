@@ -19,7 +19,7 @@ const Upload2Cloudinary = async (
     );
     return {
       id: data.public_id,
-      imgUrl: data.secure_url.replace('res.cloudinary.com', 'static.noticon.tammolo.com'),
+      imgUrl: data.secure_url.replace('res.cloudinary.com', 'd24wdqbfu08orq.cloudfront.net'),
       format: data.format,
     };
   } catch (error) {
