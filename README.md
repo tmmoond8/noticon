@@ -20,6 +20,7 @@ Following items are core frontend technologies used in this project:
 - Emotion
 - TypeScript
 - MobX
+- Notion-UI
 - react-easy-crop
 - Google Sheets API (for simple database)
 - Firebase realtime-database
