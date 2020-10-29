@@ -84,7 +84,7 @@ const IconWrapper = styled.li`
 
   .halloween {
     position: absolute;
-    width: 60%;
+    width: 85%;
     height: auto;
     top: 50%;
     left : 50%;
