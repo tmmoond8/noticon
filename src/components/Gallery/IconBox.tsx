@@ -5,6 +5,7 @@ import { Content } from 'notion-ui';
 import { useState, useCallback } from 'react';
 import { LazyLoadImage } from 'react-lazy-load-image-component';
 import Storage from '../../libs/browserStorage';
+import getHalloweenIcon from '../../libs/halloween';
 import { Noticon } from '../../types';
 import { copyText } from '../../libs/utils';
 import { useStore } from '../../stores';
@@ -19,6 +20,7 @@ export default function IconBox(props: IconBoxProps) {
   } = useStore();
   const [message, setMessage] = useState('COPY');
   const [isHover, setIsHover] = useState(false);
+  const [halloween, setHalloween ] = useState('');
 
   const handleClick = useCallback(() => {
     const noticon: Noticon = props;
@@ -26,6 +28,7 @@ export default function IconBox(props: IconBoxProps) {
     Storage.recentUsedIcons.set(recentUsedIcons);
     copyText(noticon.imgUrl);
     setMessage('COPIED');
+    setHalloween(getHalloweenIcon(id));
     APIS.FireBase.increaseClickCount(id);
   }, [setMessage]);
 
@@ -36,6 +39,7 @@ export default function IconBox(props: IconBoxProps) {
   const handleMouseLeave = useCallback(() => {
     setIsHover(false);
     setMessage('COPY');
+    setHalloween('');
   }, [setIsHover, setMessage]);
 
   return (
@@ -52,6 +56,7 @@ export default function IconBox(props: IconBoxProps) {
 
       <Content.Text as="P">{title}</Content.Text>
       {isHover && <Message>{message}</Message>}
+      {isHover && halloween && <img className="halloween" src={halloween}/>}
     </IconWrapper>
   );
 }
@@ -75,6 +80,15 @@ const IconWrapper = styled.li`
       width: 50%;
       height: auto;
     }
+  }
+
+  .halloween {
+    position: absolute;
+    width: 60%;
+    height: auto;
+    top: 50%;
+    left : 50%;
+    transform: translate(-50%, -50%);
   }
 `;
 
