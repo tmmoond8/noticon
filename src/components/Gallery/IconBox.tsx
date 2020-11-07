@@ -19,7 +19,6 @@ export default function IconBox(props: IconBoxProps) {
   } = useStore();
   const [message, setMessage] = useState('COPY');
   const [isHover, setIsHover] = useState(false);
-  const [halloween, setHalloween ] = useState('');
 
   const handleClick = useCallback(() => {
     const noticon: Noticon = props;
@@ -37,7 +36,6 @@ export default function IconBox(props: IconBoxProps) {
   const handleMouseLeave = useCallback(() => {
     setIsHover(false);
     setMessage('COPY');
-    setHalloween('');
   }, [setIsHover, setMessage]);
 
   return (
@@ -54,7 +52,6 @@ export default function IconBox(props: IconBoxProps) {
 
       <Content.Text as="P">{title}</Content.Text>
       {isHover && <Message>{message}</Message>}
-      {isHover && halloween && <img className="halloween" src={halloween}/>}
     </IconWrapper>
   );
 }
@@ -78,15 +75,6 @@ const IconWrapper = styled.li`
       width: 50%;
       height: auto;
     }
-  }
-
-  .halloween {
-    position: absolute;
-    width: 85%;
-    height: auto;
-    top: 50%;
-    left : 50%;
-    transform: translate(-50%, -50%);
   }
 `;
 
