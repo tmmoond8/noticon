@@ -5,7 +5,6 @@ import { Content } from 'notion-ui';
 import { useState, useCallback } from 'react';
 import { LazyLoadImage } from 'react-lazy-load-image-component';
 import Storage from '../../libs/browserStorage';
-import getHalloweenIcon from '../../libs/halloween';
 import { Noticon } from '../../types';
 import { copyText } from '../../libs/utils';
 import { useStore } from '../../stores';
@@ -28,7 +27,6 @@ export default function IconBox(props: IconBoxProps) {
     Storage.recentUsedIcons.set(recentUsedIcons);
     copyText(noticon.imgUrl);
     setMessage('COPIED');
-    setHalloween(getHalloweenIcon(id));
     APIS.FireBase.increaseClickCount(id);
   }, [setMessage]);
 

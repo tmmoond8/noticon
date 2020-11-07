@@ -24,7 +24,6 @@ Following items are core frontend technologies used in this project:
 - react-easy-crop
 - Google Sheets API (for simple database)
 - Firebase realtime-database
-- Cloudinary
 
 ## Run on your machine
 
