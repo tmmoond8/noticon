@@ -3,8 +3,9 @@ import React from 'react';
 import GlobalStyles from '../styles/globalStyles';
 import { Provider } from 'mobx-react';
 import { getStore, Stores } from '../stores';
-import { isServer } from '../libs/utils';
+import { isServer, isBrowser } from '../libs/utils';
 import NoticonHead from '../components/NoticonHead';
+import { register } from '../libs/serviceWorker';
 
 export default class NoticonApp extends App {
   private mobxStore: Stores;
@@ -28,6 +29,9 @@ export default class NoticonApp extends App {
     this.mobxStore = isServer()
       ? props.initialMobxState
       : getStore(props.initialMobxState);
+    if (isBrowser()) {
+      register();
+    }
   }
 
   public render() {

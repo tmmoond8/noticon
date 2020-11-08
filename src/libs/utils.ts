@@ -36,3 +36,14 @@ export const isServer = () => {
 export const isBrowser = () => {
   return !isServer();
 };
+
+export const isLocalhost = () =>
+  Boolean(
+    (globalThis as any).location.hostname === 'localhost' ||
+      // [::1] is the IPv6 localhost address.
+      (globalThis as any).location.hostname === '[::1]' ||
+      // 127.0.0.0/8 are considered localhost for IPv4.
+      (globalThis as any).location.hostname.match(
+        /^127(?:\.(?:25[0-5]|2[0-4][0-9]|[01]?[0-9][0-9]?)){3}$/,
+      ),
+  );
