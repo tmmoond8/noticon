@@ -1,5 +1,21 @@
-import firebase from 'firebase/app';
-import 'firebase/database';
+// import firebase from 'firebase/app';
+// import 'firebase/database';
+const firebase  = require('firebase/app');
+
+
+const storage = (() => {
+  const NOTICON_HIT_KEY = 'NOTICON_HIT_KEY';
+  let init = false;
+  return {
+    save(data: Record<string, number>) {
+      if (init) return;
+      localStorage.setItem(NOTICON_HIT_KEY, JSON.stringify(data));
+    },
+    load() {
+      JSON.parse(localStorage.getItem(NOTICON_HIT_KEY) ?? "{}");
+    }
+  }
+})()
 
 const firebaseConfig = {
   apiKey: process.env.REACT_APP_FIREBASE_API_KEY,
@@ -11,26 +27,50 @@ const firebaseConfig = {
   appId: process.env.REACT_APP_FIREBASE_APP_ID,
   measurementId: process.env.REACT_APP_MEASUREMENT_ID,
 };
-if (firebase.apps.length === 0) {
-  firebase.initializeApp(firebaseConfig);
-}
+
 
 class Firebase {
-  private firebase: firebase.database.Database;
+  // private firebase: firebase.database.Database | null;
   constructor() {
-    this.firebase = firebase.database();
+    try {
+      throw Error('error');
+      // if (firebase.apps.length === 0) {
+        // firebase.initializeApp(firebaseConfig);
+        // console.log('initializeApp');
+      // }
+      // this.firebase = firebase.database();
+      // console.log('firebase');
+    } catch (error) {
+      console.error(error);
+      this.firebase = null;
+    }
+    
   }
   async getClickCounts(): Promise<any> {
     return new Promise((resolve, reject) => {
-      this.firebase.ref('/').on('value', function (data) {
-        resolve(data.toJSON() ?? {});
-      });
+      try {
+        if (this.firebase === null) throw Error('null type');
+        this.firebase.ref('/').on('value', function (data) {
+          const result = data.toJSON() ?? {};
+          storage.save(result as Record<string, number>);
+          console.log('getClickCounts');
+          resolve(result);
+        });
+      } catch (error) {
+        console.log('getClickCounts error', storage.load());
+        return Promise.resolve(storage.load());
+      }
     });
   }
   async increaseClickCount(id: string): Promise<void> {
-    const target = this.firebase.ref(`/${id}`);
-    const targetValue = await target.once('value');
-    target.set(targetValue.val() + 1);
+    try {
+      if (this.firebase === null) throw Error('null type');
+      const target = this.firebase.ref(`/${id}`);
+      const targetValue = await target.once('value');
+      target.set(targetValue.val() + 1);
+    } catch (error) {
+      console.error(error);
+    }
   }
 }
 export default new Firebase();

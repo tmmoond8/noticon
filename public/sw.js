@@ -1,11 +1,10 @@
 const CACHE_NAME = 'noticon-cache-v1';
-const urlsToCache = ['/', '/main.js', '/webpack.js'];
 
 self.addEventListener('install', function (event) {
   // Perform install steps
   event.waitUntil(
     caches.open(CACHE_NAME).then(function (cache) {
-      return cache.addAll(urlsToCache);
+      return cache.addAll([]);
     }),
   );
 });
@@ -23,6 +22,7 @@ self.addEventListener('fetch', function (event) {
       // once by cache and once by the browser for fetch, we need
       // to clone the response.
       var fetchRequest = event.request.clone();
+      console.log(event.request.url);
 
       return fetch(fetchRequest).then(function (response) {
         // Check if we received a valid response
@@ -37,6 +37,7 @@ self.addEventListener('fetch', function (event) {
         var responseToCache = response.clone();
 
         caches.open(CACHE_NAME).then(function (cache) {
+          console.log('cache', event.request.url);
           cache.put(event.request, responseToCache);
         });
 
