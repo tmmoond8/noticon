@@ -31,6 +31,7 @@ export default function NoticonHead(props: NoticonHeadProps): JSX.Element {
         rel="shortcut icon"
         href="https://noticon-static.tammolo.com/dgggcrkxq/image/upload/v1566826573/noticon/favicon_j7lf1k.ico"
       />
+      <link rel="manifest" href="/manifest.json" />
     </Head>
   );
 }

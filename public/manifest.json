@@ -1,0 +1,30 @@
+{
+  "short_name": "Noticon",
+  "name": "Noticon",
+  "icons": [
+    {
+      "src": "/favicon256.png",
+      "sizes": "256x256",
+      "type": "image/png"
+    },
+    {
+      "src": "/favicon128.png",
+      "sizes": "128x128",
+      "type": "image/png"
+    },
+    {
+      "src": "/favicon64.png",
+      "sizes": "64x64",
+      "type": "image/png"
+    },
+    {
+      "src": "/favicon32.png",
+      "sizes": "32x32",
+      "type": "image/png"
+    }
+  ],
+  "start_url": "/",
+  "background_color": "#ffffff",
+  "theme_color": "#000000",
+  "display": "fullscreen"
+}
