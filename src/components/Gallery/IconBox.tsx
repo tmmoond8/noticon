@@ -8,7 +8,7 @@ import Storage from '../../libs/browserStorage';
 import { Noticon } from '../../types';
 import { copyText } from '../../libs/utils';
 import { useStore } from '../../stores';
-import APIS from '../../apis';
+import hitMap from '../../libs/hitIcons';
 
 interface IconBoxProps extends Noticon {}
 
@@ -26,7 +26,7 @@ export default function IconBox(props: IconBoxProps) {
     Storage.recentUsedIcons.set(recentUsedIcons);
     copyText(noticon.imgUrl);
     setMessage('COPIED');
-    APIS.FireBase.increaseClickCount(id);
+    hitMap.increase(id);
   }, [setMessage]);
 
   const handleMouseEnter = useCallback(() => {

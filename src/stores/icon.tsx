@@ -1,7 +1,8 @@
 import { observable, action, computed } from 'mobx';
 import { Noticon } from '../types';
-import APIS from '../apis';
 import { isBrowser } from '../libs/utils';
+import APIS from '../apis';
+import hitMap from '../libs/hitIcons';
 import browserStorage from '../libs/browserStorage';
 
 export interface IconStoreInterface {
@@ -37,7 +38,7 @@ export default class IconStore implements IconStoreInterface {
   }
 
   async fetchIcons() {
-    Promise.all([APIS.SpreadSheet.get(), APIS.FireBase.getClickCounts()]).then(
+    Promise.all([APIS.SpreadSheet.get(), hitMap.getCounts()]).then(
       ([iconsResponse, clicksResponse]) => {
         this.originIcons = iconsResponse.data.data.map((icon) => ({
           ...icon,

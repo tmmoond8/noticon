@@ -1,5 +1,6 @@
 export enum BrowserStorageKeyEnum {
   RECENT_USED = 'RECENT_USED',
+  HIT_ICONS = 'HIT_ICONS',
 }
 
 export interface BrowserStorageMapper<E> {
@@ -28,7 +29,7 @@ export class BrowserStorage<E> {
     return this.mapper.fromJson(this.browserStorageHelper.getItem(this.key));
   }
 
-  set(target: E, temporary: boolean = false) {
+  set(target: E) {
     this.browserStorageHelper.setItem(this.key, this.mapper.toJson(target));
   }
 
