@@ -1,6 +1,6 @@
 # Noticon
 
-> the icon storage service for Notion
+> A icon storage service for Notion
 
 All images are stored safely in the [Cloudinary](https://cloudinary.com). You can search icons you want, or upload icons you do.
 
