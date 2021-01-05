@@ -18,7 +18,7 @@
     "@emotion/styled": "^10.0.27",
     "@svgr/webpack": "^5.4.0",
     "@types/firebase": "^3.2.1",
-    "axios": "^0.19.2",
+    "axios": "^0.21.1",
     "blob-util": "^2.0.2",
     "classnames": "^2.2.6",
     "dotenv": "^8.2.0",
