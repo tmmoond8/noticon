@@ -15,7 +15,7 @@ class RecentUsedIconMapper implements BrowserStorageMapper<Noticon[]> {
       return noticonArray
         .map((noticon) => ({
           ...noticon,
-          imgUrl: noticon.imgUrl.replace('res.cloudinary.com', 'noticon-static.tammolo.com'),
+          imgUrl: noticon.imgUrl.replace('noticon-static.tammolo.com', 'res.cloudinary.com'),
         }))
         .sort((a: Noticon, b: Noticon) => {
           return new Date(b.date).getTime() - new Date(a.date).getTime();
