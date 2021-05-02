@@ -10,7 +10,7 @@ import { copyText } from '../../libs/utils';
 import { useStore } from '../../stores';
 import APIS from '../../apis';
 
-interface IconBoxProps extends Noticon {}
+interface IconBoxProps extends Noticon { }
 
 export default function IconBox(props: IconBoxProps) {
   const { title, imgUrl, id, keywords, date } = props;
@@ -47,7 +47,7 @@ export default function IconBox(props: IconBoxProps) {
       <LazyLoadImage
         alt={title}
         src={imgUrl}
-        placeholderSrc="https://noticon-static.tammolo.com/dgggcrkxq/image/upload/v1591259615/noticon/ikr2rajjnuzlw0rm1eqh.png"
+        placeholderSrc="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAMgAAADIAQMAAACXljzdAAAAA1BMVEVHcEyC+tLSAAAAAXRSTlMAQObYZgAAABxJREFUWMPtwYEAAAAAw6D5U1/hAFUBAAAAAHwGFFAAAQCfIxUAAAAASUVORK5CYII="
       />
 
       <Content.Text as="P">{title}</Content.Text>
