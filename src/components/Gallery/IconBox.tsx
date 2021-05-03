@@ -44,11 +44,14 @@ export default function IconBox(props: IconBoxProps) {
       onMouseLeave={handleMouseLeave}
       onClick={handleClick}
     >
-      <LazyLoadImage
-        alt={title}
-        src={imgUrl}
-        placeholderSrc="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAMgAAADIAQMAAACXljzdAAAAA1BMVEVHcEyC+tLSAAAAAXRSTlMAQObYZgAAABxJREFUWMPtwYEAAAAAw6D5U1/hAFUBAAAAAHwGFFAAAQCfIxUAAAAASUVORK5CYII="
-      />
+      <ImageBox>
+        <LazyLoadImage
+          className="LazyLoadImage"
+          alt={title}
+          src={imgUrl}
+        />
+        <PlaceholderImage src="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAMgAAADIAQMAAACXljzdAAAAA1BMVEVHcEyC+tLSAAAAAXRSTlMAQObYZgAAABxJREFUWMPtwYEAAAAAw6D5U1/hAFUBAAAAAHwGFFAAAQCfIxUAAAAASUVORK5CYII=" />
+      </ImageBox>
 
       <Content.Text as="P">{title}</Content.Text>
       {isHover && <Message>{message}</Message>}
@@ -66,16 +69,24 @@ const IconWrapper = styled.li`
   overflow: hidden;
   cursor: pointer;
 
-  & > span {
-    width: 100%;
-    flex: 1;
-    text-align: center;
-    img {
-      margin: 32px 0 8px 0;
-      width: 50%;
-      height: auto;
-    }
+  .LazyLoadImage {
+    position: absolute;
+    width: 50%;
+    height: auto;
   }
+`;
+
+const ImageBox = styled.div`
+  position: relative;
+  flex: 1;
+  width: 100%;
+  margin: 32px 0 8px 0;
+  text-align: center;
+`;
+
+const PlaceholderImage = styled.img`
+  width: 50%;
+  height: auto;
 `;
 
 const Message = styled.li`
@@ -89,9 +100,4 @@ const Message = styled.li`
   background-color: rgba(100, 100, 100, 0.7);
   font-size: 18px;
   font-weight: 400;
-`;
-
-const HiddenTextarea = styled.textarea`
-  position: absolute;
-  left: -9999px;
 `;
