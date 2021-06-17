@@ -78,7 +78,7 @@ export default observer(function Aside(): JSX.Element {
         <ThemeMenu onClick={handleToggleTheme}>
           <Content.Text as="P" color={colors.grey60}>
             <Icon icon="halfMoon" />
-            <span>Light mode</span>
+            <span>Dark Mode</span>
           </Content.Text>
           <Switch switchOn={isDark} />
         </ThemeMenu>
