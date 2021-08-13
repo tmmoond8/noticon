@@ -4,16 +4,15 @@ import styled from '@emotion/styled';
 import { mobile, desktop } from '../../styles/mediaQuery';
 import { useStore, observer } from '../../stores';
 import IconBox from './IconBox';
-import { Loader, colors } from 'notion-ui';
+import { colors } from 'notion-ui';
 
 export default observer(function Gallery(): JSX.Element {
   const {
-    icon: { icons, isLoaded, latestIcons, search, searchedIcons },
+    icon: { icons, latestIcons, search, searchedIcons },
   } = useStore();
   return (
     <>
-      {!isLoaded && <Loader.ParentFull />}
-      {isLoaded && search.length === 0 && (
+      {search.length === 0 && (
         <>
           {search.length === 0 && (
             <Grid caption="Latest" maxRows>
@@ -29,7 +28,7 @@ export default observer(function Gallery(): JSX.Element {
           </Grid>
         </>
       )}
-      {isLoaded && search.length > 0 && (
+      {search.length > 0 && (
         <Grid caption={`Search Results : "${search}"`}>
           {searchedIcons.map((icon) => (
             <IconBox key={icon.id} {...icon} />

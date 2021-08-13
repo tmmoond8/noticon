@@ -37,16 +37,13 @@ export default class IconStore implements IconStoreInterface {
   }
 
   async fetchIcons() {
-    Promise.all([APIS.SpreadSheet.get(), APIS.FireBase.getClickCounts()]).then(
-      ([iconsResponse, clicksResponse]) => {
-        this.originIcons = iconsResponse.data.data.map((icon) => ({
-          ...icon,
-          title: icon.title.toString(),
-        }));
-        this.clickCounts = clicksResponse;
-        this.isLoaded = true;
-      },
-    );
+    const [iconsResponse, clicksResponse] = await Promise.all([APIS.SpreadSheet.get(), APIS.FireBase.getClickCounts()])
+    this.originIcons = iconsResponse.data.data.map((icon) => ({
+      ...icon,
+      title: icon.title.toString(),
+    }));
+    this.clickCounts = clicksResponse;
+    this.isLoaded = true;
   }
 
   @action
@@ -63,14 +60,19 @@ export default class IconStore implements IconStoreInterface {
 
   @computed
   get icons() {
-    return this.originIcons.sort((a: Noticon, b: Noticon) => {
+    if(!this.isLoaded) {
+      return browserStorage.sortedIcons.get();
+    }
+    const soredIcons = this.originIcons.sort((a: Noticon, b: Noticon) => {
       return (this.clickCounts[b.id] ?? 0) - (this.clickCounts[a.id] ?? 0);
-    });
+    })
+    browserStorage.sortedIcons.set(soredIcons);
+    return soredIcons;
   }
 
   @computed
   get latestIcons() {
-    const latest = [...this.originIcons].sort((a: Noticon, b: Noticon) => {
+    const latest = [...this.icons].sort((a: Noticon, b: Noticon) => {
       return b.date < a.date ? -1 : 1;
     });
     return latest.slice(0, 12);
