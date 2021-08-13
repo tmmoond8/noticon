@@ -4,8 +4,21 @@ import styled from '@emotion/styled';
 import React, { useState } from 'react';
 import debounce from 'lodash.debounce';
 import Icons from '../Icon';
-import { Content, Icon, colors } from 'notion-ui';
+import { Content, Icon, colors, Loader } from 'notion-ui';
 import { observer, useStore } from '../../stores';
+
+const Logo = observer(function () {
+  const { icon: { isLoaded } } = useStore();
+  return (
+    <>
+      {isLoaded && <NoticonLogo />}
+      {!isLoaded && <LoaderWrapper>
+        <Loader.ParentFull />
+      </LoaderWrapper>}
+      <NoticonText as="P">Noticon</NoticonText>
+    </>
+  )
+})
 
 const SearchBar = observer(function () {
   const { icon } = useStore();
@@ -22,7 +35,9 @@ const SearchBar = observer(function () {
   );
   return (
     <StyledSearchBar htmlFor="search-text">
-      <Icon icon="search" size="Huge" />
+      <>
+        {icon.isLoaded && <Icon icon="search" size="Huge" />}
+      </>
       <input
         id="search-text"
         type="text"
@@ -33,6 +48,25 @@ const SearchBar = observer(function () {
     </StyledSearchBar>
   );
 });
+
+export default {
+  LeftMenus: <Logo />,
+  RightMenus: <SearchBar />,
+};
+
+const NoticonLogo = styled(Icons.Noticon)`
+  margin: 0 4px 0 8px;
+`;
+
+const NoticonText = styled(Content.Text)`
+  margin: 4px 2px 0 4px;
+`;
+
+const LoaderWrapper = styled.div`
+  height: 100%;
+  width: 18px;
+  margin: 0 0 0 8px;
+`;
 
 const StyledSearchBar = styled.label`
   display: flex;
@@ -47,38 +81,3 @@ const StyledSearchBar = styled.label`
     font-size: 18px;
   }
 `;
-
-
-const NoticonLogo = styled(Icons.Noticon)`
-  margin: 0 4px 0 8px;
-`;
-const NoticonText = styled(Content.Text)`
-  margin: 4px 2px 0 4px;
-`;
-
-const Hits = styled.a`
-  display: flex;
-  align-items: center;
-  margin: 4px 0 0 24px;
-`;
-
-const LeftMenus = (
-  <>
-    <NoticonLogo />
-    <NoticonText as="P">Noticon</NoticonText>
-    <Hits href="https://hits.seeyoufarm.com">
-      <img src="https://hits.seeyoufarm.com/api/count/incr/badge.svg?url=https%3A%2F%2Fnoticon.tammolo.com&count_bg=%23373C3F&title_bg=%23373C3F&icon=&icon_color=%239E5454&title=hits&edge_flat=false" />
-    </Hits>
-  </>
-);
-
-const RightMenus = (
-  <>
-    <SearchBar />
-  </>
-);
-
-export default {
-  LeftMenus,
-  RightMenus,
-};
