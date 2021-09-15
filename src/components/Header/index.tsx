@@ -4,21 +4,29 @@ import styled from '@emotion/styled';
 import React, { useState } from 'react';
 import debounce from 'lodash.debounce';
 import Icons from '../Icon';
+import { desktop } from '../../styles/mediaQuery';
 import { Content, Icon, colors, Loader } from 'notion-ui';
 import { observer, useStore } from '../../stores';
 
 const Logo = observer(function () {
-  const { icon: { isLoaded } } = useStore();
+  const {
+    icon: { isLoaded },
+  } = useStore();
   return (
     <>
       {isLoaded && <NoticonLogo />}
-      {!isLoaded && <LoaderWrapper>
-        <Loader.ParentFull />
-      </LoaderWrapper>}
+      {!isLoaded && (
+        <LoaderWrapper>
+          <Loader.ParentFull />
+        </LoaderWrapper>
+      )}
       <NoticonText as="P">Noticon</NoticonText>
+      <Hitz href="https://hits.seeyoufarm.com">
+        <img src="https://hits.seeyoufarm.com/api/count/incr/badge.svg?url=https%3A%2F%2Fnoticon.tammolo.com&count_bg=%23656D72&title_bg=%23656D72&icon=&icon_color=%23000000&title=hits&edge_flat=false" />
+      </Hitz>
     </>
-  )
-})
+  );
+});
 
 const SearchBar = observer(function () {
   const { icon } = useStore();
@@ -35,9 +43,7 @@ const SearchBar = observer(function () {
   );
   return (
     <StyledSearchBar htmlFor="search-text">
-      <>
-        {icon.isLoaded && <Icon icon="search" size="Huge" />}
-      </>
+      <>{icon.isLoaded && <Icon icon="search" size="Huge" />}</>
       <input
         id="search-text"
         type="text"
@@ -71,13 +77,23 @@ const LoaderWrapper = styled.div`
 const StyledSearchBar = styled.label`
   display: flex;
   color: ${colors.grey};
+  padding-left: 8px;
   input {
     width: 100px;
-    margin: 0 0 0 8px;
+    margin: 0 0 0 2px;
     background: none;
     border: none;
     outline: none;
     color: ${colors.grey};
-    font-size: 18px;
+    font-size: 18 px;
   }
+`;
+
+const Hitz = styled.a`
+  position: relative;
+  top: 2px;
+  padding-left: 8px;
+  ${desktop(css`
+    padding-left: 20px;
+  `)};
 `;
