@@ -44,7 +44,7 @@ const Grid = styled.ol<{ caption: string; maxRows?: boolean }>`
   grid-template-rows: 1fr;
   position: relative;
   grid-template-columns: repeat(3, 1fr);
-  padding: 32px 0;
+  padding: 36px 0;
 
   & > li {
     min-height: 106px;
@@ -71,7 +71,7 @@ const Grid = styled.ol<{ caption: string; maxRows?: boolean }>`
     content: '${(p) => p.caption}';
     position: absolute;
     left: 32px;
-    top: 16px;
+    top: 10px;
     color: ${colors.grey};
     font-size: 20px;
     font-weight: 500;

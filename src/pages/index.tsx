@@ -9,10 +9,10 @@ import Header from '../components/Header';
 import { observer, useStore } from '../stores';
 
 export default observer(function Index() {
-  const { icon }  = useStore();
+  const { icon } = useStore();
   React.useEffect(() => {
-      ReactGA.initialize('UA-141390268-2');
-      ReactGA.pageview(window.location.pathname);
+    ReactGA.initialize('UA-141390268-2');
+    ReactGA.pageview(window.location.pathname);
   }, []);
   return (
     <Layout.App
@@ -20,8 +20,12 @@ export default observer(function Index() {
       rightMenus={Header.RightMenus}
       aside={<Aside />}
     >
-      {!icon.isLoaded && icon.icons.length === 0 ? (<Loader.FullScreen/>) : <Gallery />}
+      {!icon.isLoaded && icon.icons.length === 0 ? (
+        <Loader.FullScreen />
+      ) : (
+        <Gallery />
+      )}
       <Content.Spacing size={64} />
     </Layout.App>
   );
-})
+});
