@@ -52,7 +52,10 @@ export default React.memo(function ImageFromUrl(): JSX.Element {
     setImageFormat(preImgFormat);
 
     setErrorMessage(name as string);
-    const dataURL = preImgFormat === ACCEPT_FORMATS.GIF ? imgUrl : await imgSrc2DataURL(imgUrl, preImgFormat as string);
+    const dataURL =
+      preImgFormat === ACCEPT_FORMATS.GIF
+        ? imgUrl
+        : await imgSrc2DataURL(imgUrl, preImgFormat as string);
     setSafeImgSrc(dataURL);
     setLoading(false);
     setStep(STEPS.CROP_IMAGE);
@@ -73,7 +76,7 @@ export default React.memo(function ImageFromUrl(): JSX.Element {
       <ImageSrcTextField
         id="ChooseSourceImage"
         value={imgSrc}
-        placeholder="paset in https://..."
+        placeholder="https://..."
         onChange={handleChangeImgSrc}
       />
       <Modal.Section>
