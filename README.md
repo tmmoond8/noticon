@@ -4,7 +4,7 @@
 
 All images are stored safely in the [Cloudinary](https://cloudinary.com). You can search icons you want, or upload icons you do.
 
-http://noticon.tammolo.com
+https://noticon.tammolo.com
 
 [![Netlify Status](https://api.netlify.com/api/v1/badges/7cbfbeae-6a72-4dbf-9deb-85cb90a46712/deploy-status)](https://app.netlify.com/sites/noticon/deploys)
 
