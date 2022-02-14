@@ -85,7 +85,7 @@ const StyledSearchBar = styled.label`
     border: none;
     outline: none;
     color: ${colors.grey};
-    font-size: 18 px;
+    font-size: 18px;
   }
 `;
 

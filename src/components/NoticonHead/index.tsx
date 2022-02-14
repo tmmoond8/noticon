@@ -13,6 +13,10 @@ export default function NoticonHead(props: NoticonHeadProps): JSX.Element {
       <meta name="keywords" content="notion, icon" />
       <meta charSet="UTF-8" />
       <meta name="author" content={Meta.Owner}></meta>
+      <meta
+        name="viewport"
+        content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=0"
+      />
       {
         <>
           {Object.entries(OgTags).map(([key, value]) => (
