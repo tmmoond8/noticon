@@ -21,7 +21,7 @@ export default observer(function Gallery(): JSX.Element {
               ))}
             </Grid>
           )}
-          <Grid caption="Popular">
+          <Grid caption={`Popular   (${icons.length})`}>
             {icons.map((icon) => (
               <IconBox key={icon.id} {...icon} />
             ))}
