@@ -1583,6 +1583,11 @@
     protobufjs "^6.9.0"
     yargs "^15.3.1"
 
+"@netlify/plugin-nextjs@^5.11.2":
+  version "5.11.2"
+  resolved "https://registry.yarnpkg.com/@netlify/plugin-nextjs/-/plugin-nextjs-5.11.2.tgz#1fdfc7bc06d0c5341f1c30d26aee230c8ded0792"
+  integrity sha512-9Hgd/J5nP2U/Vv0teytq9uUAGppiKV9t5tzpsuMLqeqUGD9STxXwKmyZd2v8Z4THSW9rw4+8w7dH7LVlFoym2A==
+
 "@next/react-dev-overlay@9.5.1":
   version "9.5.1"
   resolved "https://registry.yarnpkg.com/@next/react-dev-overlay/-/react-dev-overlay-9.5.1.tgz#534e84fbd67f8b2ad0f7b8363ae069943a6b5e12"
