@@ -1,2 +1,9 @@
 [[plugins]]
   package = "@netlify/plugin-nextjs"
+
+[build]
+  functions = "netlify/functions"
+  publish = "build"
+
+[functions]
+  node_bundler = "esbuild"
