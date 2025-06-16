@@ -11,22 +11,39 @@ export const normalizeMap = ({
   };
 };
 
-export function unwrapStrapiData<T>(response: any): T | null {
+interface StrapiAttributes {
+  [key: string]: any;
+}
+
+interface StrapiEntity<T> {
+  id?: string | number;
+  attributes: T;
+  [key: string]: any;
+}
+
+interface StrapiResponse<T> {
+  data: T | StrapiEntity<T> | StrapiResponse<T>;
+  [key: string]: any;
+}
+
+export function unwrapStrapiData<T>(
+  response: StrapiResponse<T> | T | null,
+): T | null {
   if (!response || typeof response !== 'object') return response;
 
   if (Array.isArray(response)) {
-    return response.map(unwrapStrapiData) as any as T;
+    return response.map(unwrapStrapiData) as unknown as T;
   }
 
   if ('data' in response) {
-    return unwrapStrapiData(response.data);
+    return unwrapStrapiData(response.data) as T;
   }
 
   if ('attributes' in response) {
-    const { attributes, id, ...rest } = response;
-    const unwrappedAttributes: any = unwrapStrapiData(attributes);
+    const { attributes, id, ...rest } = response as StrapiEntity<T>;
+    const unwrappedAttributes = unwrapStrapiData(attributes);
 
-    return { id, ...unwrappedAttributes, ...rest } as T;
+    return { id, ...unwrappedAttributes, ...rest } as unknown as T;
   }
 
   if (typeof response === 'object') {
@@ -35,7 +52,7 @@ export function unwrapStrapiData<T>(response: any): T | null {
         key,
         unwrapStrapiData(value),
       ]),
-    ) as T;
+    ) as unknown as T;
   }
 
   return response as T;
