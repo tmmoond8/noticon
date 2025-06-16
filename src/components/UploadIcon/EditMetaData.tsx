@@ -66,16 +66,16 @@ export default function EditMetaData(): JSX.Element {
         imgUrl,
         title: metas.title,
         keywords: [metas.tag1, metas.tag2].join('‡'),
+        date: new Date().toISOString(),
       };
-      // TODO 추가 API
-      // const { status } = await APIS.SpreadSheet.append(newIcon);
-      // if (status === 200) {
-      //   unshightIcon({
-      //     ...newIcon,
-      //     date: new Date().toISOString(),
-      //   });
-      //   asideClose();
-      // }
+      const { status } = await APIS.SpreadSheet.append(newIcon);
+      if (status === 200) {
+        unshightIcon({
+          ...newIcon,
+          date: new Date().toISOString(),
+        });
+        asideClose();
+      }
     } catch (error) {
       console.error(error);
     }

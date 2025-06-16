@@ -9,14 +9,11 @@ export default {
     const noticons = unwrapStrapiData<Noticon[]>(data.items);
     return noticons ?? [];
   },
-  append: async (noticon: {
-    id: string;
-    imgUrl: string;
-    title: 'title';
-    keywords: string;
-  }) =>
-    await axios.get(
-      `${process.env.REACT_APP_GOOGLE_SHEET_URL}?sheetName=${process.env.REACT_APP_SHEET_NAME}`,
-      { params: noticon },
-    ),
+  append: async (noticon: Noticon) =>
+    await axios.post(`/api/create-noticon`, noticon, {
+      headers: {
+        Authorization: `Bearer ${process.env.REACT_APP_INNER_API_TOKEN}`,
+        'Content-Type': 'application/json',
+      },
+    }),
 };

@@ -23,9 +23,9 @@ export default async function handler(
 
   try {
     await createNoticon(input);
+    return res.status(200).json({ ok: true });
   } catch (error) {
+    console.error(error);
     return res.status(200).json({ ok: false });
   }
-
-  return res.status(500).json({ ok: false });
 }
