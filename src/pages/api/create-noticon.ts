@@ -11,10 +11,6 @@ export default async function handler(
     input = typeof req.body === 'string' ? JSON.parse(req.body) : req.body;
   } catch (error) {}
 
-  res.setHeader('Access-Control-Allow-Origin', 'https://www.piku.co.kr');
-  res.setHeader('Access-Control-Allow-Methods', 'POST, OPTIONS');
-  res.setHeader('Access-Control-Allow-Headers', 'Content-Type');
-
   if (req.method === 'OPTIONS') {
     res.status(204).end();
 
