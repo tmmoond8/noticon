@@ -15,7 +15,7 @@ export function unwrapStrapiData<T>(response: any): T | null {
   if (!response || typeof response !== 'object') return response;
 
   if (Array.isArray(response)) {
-    return response.map(unwrapStrapiData) as T;
+    return response.map(unwrapStrapiData) as any as T;
   }
 
   if ('data' in response) {
