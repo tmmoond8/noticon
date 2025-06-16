@@ -10,10 +10,5 @@ export default {
     return noticons ?? [];
   },
   append: async (noticon: Noticon) =>
-    await axios.post(`/api/create-noticon`, noticon, {
-      headers: {
-        Authorization: `Bearer ${process.env.REACT_APP_INNER_API_TOKEN}`,
-        'Content-Type': 'application/json',
-      },
-    }),
+    await axios.post(`/api/create-noticon`, noticon),
 };
