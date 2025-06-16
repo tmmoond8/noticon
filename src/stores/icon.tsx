@@ -37,8 +37,11 @@ export default class IconStore implements IconStoreInterface {
   }
 
   async fetchIcons() {
-    const [iconsResponse, clicksResponse] = await Promise.all([APIS.SpreadSheet.get(), APIS.FireBase.getClickCounts()])
-    this.originIcons = iconsResponse.data.data.map((icon) => ({
+    const [icons, clicksResponse] = await Promise.all([
+      APIS.SpreadSheet.get(),
+      APIS.FireBase.getClickCounts(),
+    ]);
+    this.originIcons = icons.map((icon) => ({
       ...icon,
       title: icon.title.toString(),
     }));
@@ -53,19 +56,21 @@ export default class IconStore implements IconStoreInterface {
         ...newNoticon,
         date: Date.now().toString(),
       },
-      ...this.recentUsedIcons.filter((noticon) => noticon.id !== newNoticon.id),
+      ...this.recentUsedIcons.filter(
+        (noticon) => noticon.uuid !== newNoticon.uuid,
+      ),
     ];
     return this.recentUsedIcons;
   };
 
   @computed
   get icons() {
-    if(!this.isLoaded) {
+    if (!this.isLoaded) {
       return browserStorage.sortedIcons.get();
     }
     const soredIcons = this.originIcons.sort((a: Noticon, b: Noticon) => {
-      return (this.clickCounts[b.id] ?? 0) - (this.clickCounts[a.id] ?? 0);
-    })
+      return (this.clickCounts[b.uuid] ?? 0) - (this.clickCounts[a.uuid] ?? 0);
+    });
     browserStorage.sortedIcons.set(soredIcons);
     return soredIcons;
   }

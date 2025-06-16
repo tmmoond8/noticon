@@ -1,9 +1,14 @@
 import axios, { AxiosResponse } from 'axios';
+import { getPlaceListAll } from '.././apis/noticon';
 import { Noticon } from '../types';
+import { unwrapStrapiData } from './utils';
 
 export default {
-  get: async (): Promise<AxiosResponse<{ data: Noticon[] }>> =>
-    await axios.get(`${process.env.REACT_APP_URL}/api/get-sheet`),
+  get: async (): Promise<Noticon[]> => {
+    const { data } = await getPlaceListAll();
+    const noticons = unwrapStrapiData<Noticon[]>(data.items);
+    return noticons ?? [];
+  },
   append: async (noticon: {
     id: string;
     imgUrl: string;

@@ -57,8 +57,8 @@
     "typescript": "^3.9.7"
   },
   "scripts": {
-    "dev": "next",
-    "build": "next build",
+    "dev": "NODE_OPTIONS=--openssl-legacy-provider next dev",
+    "build": "NODE_OPTIONS=--openssl-legacy-provider next build",
     "start": "next start",
     "export": "next export",
     "deploy": "yarn build && yarn export"

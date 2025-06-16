@@ -59,7 +59,7 @@ export default observer(function Aside(): JSX.Element {
       <AsideUI.Group title="Recent Used" max={5}>
         {recentUsedIcons.map((recentUsedIcon) => (
           <AsideUI.Menu
-            key={recentUsedIcon.id}
+            key={recentUsedIcon.uuid}
             title={recentUsedIcon.title}
             handleClick={() => handleClick(recentUsedIcon.imgUrl)}
             iconUrl={recentUsedIcon.imgUrl}

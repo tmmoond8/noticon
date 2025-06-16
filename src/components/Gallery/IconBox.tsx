@@ -10,10 +10,10 @@ import { copyText } from '../../libs/utils';
 import { useStore } from '../../stores';
 import APIS from '../../apis';
 
-interface IconBoxProps extends Noticon { }
+interface IconBoxProps extends Noticon {}
 
 export default function IconBox(props: IconBoxProps) {
-  const { title, imgUrl, id, keywords, date } = props;
+  const { title, imgUrl, uuid, keywords, date } = props;
   const {
     icon: { pushRecentUsedIcon },
   } = useStore();
@@ -26,7 +26,7 @@ export default function IconBox(props: IconBoxProps) {
     Storage.recentUsedIcons.set(recentUsedIcons);
     copyText(noticon.imgUrl);
     setMessage('COPIED');
-    APIS.FireBase.increaseClickCount(id);
+    APIS.FireBase.increaseClickCount(uuid);
   }, [setMessage]);
 
   const handleMouseEnter = useCallback(() => {
@@ -45,11 +45,7 @@ export default function IconBox(props: IconBoxProps) {
       onClick={handleClick}
     >
       <ImageBox>
-        <LazyLoadImage
-          className="LazyLoadImage"
-          alt={title}
-          src={imgUrl}
-        />
+        <LazyLoadImage className="LazyLoadImage" alt={title} src={imgUrl} />
         <PlaceholderImage src="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAMgAAADIAQMAAACXljzdAAAAA1BMVEVHcEyC+tLSAAAAAXRSTlMAQObYZgAAABxJREFUWMPtwYEAAAAAw6D5U1/hAFUBAAAAAHwGFFAAAQCfIxUAAAAASUVORK5CYII=" />
       </ImageBox>
 

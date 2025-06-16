@@ -62,19 +62,20 @@ export default function EditMetaData(): JSX.Element {
     try {
       const { id, imgUrl } = await requestUpload();
       const newIcon = {
-        id: id.replace('/', '_'),
+        uuid: id.replace('/', '_'),
         imgUrl,
         title: metas.title,
         keywords: [metas.tag1, metas.tag2].join('‡'),
       };
-      const { status } = await APIS.SpreadSheet.append(newIcon);
-      if (status === 200) {
-        unshightIcon({
-          ...newIcon,
-          date: new Date().toISOString(),
-        });
-        asideClose();
-      }
+      // TODO 추가 API
+      // const { status } = await APIS.SpreadSheet.append(newIcon);
+      // if (status === 200) {
+      //   unshightIcon({
+      //     ...newIcon,
+      //     date: new Date().toISOString(),
+      //   });
+      //   asideClose();
+      // }
     } catch (error) {
       console.error(error);
     }

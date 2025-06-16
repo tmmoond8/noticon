@@ -6,16 +6,16 @@ declare type VoidFunc = () => void;
 declare module '*.svg' {
   import * as React from 'react';
 
-  export const ReactComponent: React.FunctionComponent<React.SVGProps<
-    SVGSVGElement
-  >>;
+  export const ReactComponent: React.FunctionComponent<
+    React.SVGProps<SVGSVGElement>
+  >;
 
   const src: string;
   export default src;
 }
 
 export interface Noticon {
-  id: string;
+  uuid: string;
   title: string;
   imgUrl: string;
   keywords: string;
@@ -38,9 +38,9 @@ export interface ImageBlob extends Blob {
   lastModifiedDate?: Date;
 }
 
-export type ImageForamt = typeof ACCEPT_FORMATS[keyof typeof ACCEPT_FORMATS];
+export type ImageForamt = (typeof ACCEPT_FORMATS)[keyof typeof ACCEPT_FORMATS];
 
-export type GifAlign = typeof GIF_ALIGN[keyof typeof GIF_ALIGN];
+export type GifAlign = (typeof GIF_ALIGN)[keyof typeof GIF_ALIGN];
 
 export interface CroppedArea {
   x: number;

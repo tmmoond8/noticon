@@ -17,13 +17,13 @@ export default observer(function Gallery(): JSX.Element {
           {search.length === 0 && (
             <Grid caption="Latest" maxRows>
               {latestIcons.map((icon) => (
-                <IconBox key={icon.id} {...icon} />
+                <IconBox key={icon.uuid} {...icon} />
               ))}
             </Grid>
           )}
           <Grid caption={`Popular   (${icons.length})`}>
             {icons.map((icon) => (
-              <IconBox key={icon.id} {...icon} />
+              <IconBox key={icon.uuid} {...icon} />
             ))}
           </Grid>
         </>
@@ -31,7 +31,7 @@ export default observer(function Gallery(): JSX.Element {
       {search.length > 0 && (
         <Grid caption={`Search Results : "${search}"`}>
           {searchedIcons.map((icon) => (
-            <IconBox key={icon.id} {...icon} />
+            <IconBox key={icon.uuid} {...icon} />
           ))}
         </Grid>
       )}
