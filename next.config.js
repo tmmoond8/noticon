@@ -29,10 +29,4 @@ module.exports = {
     ];
     return config;
   },
-  exportPathMap: function () {
-    return {
-      '/': { page: '/' },
-      '/api/get-sheet': { page: '/api/get-sheet' },
-    };
-  },
 };
