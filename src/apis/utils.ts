@@ -36,7 +36,7 @@ export function unwrapStrapiData<T>(
   }
 
   if ('data' in response) {
-    return unwrapStrapiData(response.data) as T;
+    return unwrapStrapiData(response.data) as unknown as T;
   }
 
   if ('attributes' in response) {
